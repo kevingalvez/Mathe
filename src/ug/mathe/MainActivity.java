@@ -1,5 +1,7 @@
 package ug.mathe;
 
+import ug.mathe.calculadora.CalculadoraActivity;
+import ug.mathe.geometria.GeometriaActivity;
 import ug.mathe.graficador.GraficadorActivity;
 import android.app.Activity;
 import android.content.Intent;
@@ -27,8 +29,9 @@ public class MainActivity extends Activity {
 		btnEcuaciones = (Button) findViewById(R.id.btn_ecuaciones);
 		btnSistEcua = (Button) findViewById(R.id.btn_sistecua);
 		
-		ButtonListener listener = new ButtonListener();
-		btnGraficador.setOnClickListener(listener);
+		btnGraficador.setOnClickListener(new ButtonListener(1));
+		btnGeometria .setOnClickListener(new ButtonListener(2));
+		btnEcuaciones .setOnClickListener(new ButtonListener(3));
 	}
 
 	@Override
@@ -52,10 +55,25 @@ public class MainActivity extends Activity {
 	
 	class ButtonListener implements OnClickListener {
 
+		private int menu;
+		
+		public ButtonListener(int menu){
+			this.menu = menu;
+		}
+		
 		@Override
 		public void onClick(View v) {
-			Intent intent = new Intent(getApplicationContext(),GraficadorActivity.class);
-			startActivity(intent);
+			if (menu == 1)
+			{
+				Intent intent = new Intent(getApplicationContext(),GraficadorActivity.class);
+				startActivity(intent);
+			} else if (menu == 2) {
+				Intent intent = new Intent(getApplicationContext(),GeometriaActivity.class);
+				startActivity(intent);				
+			} else if (menu == 3) {
+				Intent intent = new Intent(getApplicationContext(),CalculadoraActivity.class);
+				startActivity(intent);				
+			}
 		}
 		
 	}

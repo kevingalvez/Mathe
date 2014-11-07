@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    >
+
+    <TextView 
+        android:id="@+id/txtview_ecua"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="17dp"
+        android:text="@string/fragment_geometria_ecuagen"
+    />    
+    
+    <TextView
+        android:id="@+id/txtViewA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtview_ecua"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="17dp"
+        android:text="@string/fragment_coef_a" />
+
+
+    <TextView
+        android:id="@+id/textViewB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtViewA"
+        android:layout_marginTop="17dp"
+        android:layout_alignLeft="@+id/txtViewA"
+        android:layout_alignRight="@+id/txtViewA"
+        android:text="@string/fragment_coef_b" />
+
+    <TextView
+        android:id="@+id/textViewC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewB"
+        android:layout_marginTop="17dp"
+        android:layout_alignLeft="@+id/textViewB"
+        android:layout_alignRight="@+id/textViewB"
+        android:text="@string/fragment_coef_c" />
+
+    <TextView
+        android:id="@+id/textViewD"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewC"
+        android:layout_marginTop="17dp"
+        android:layout_alignLeft="@+id/textViewC"
+        android:layout_alignRight="@+id/textViewC"
+        android:text="@string/fragment_coef_d" />
+
+    <TextView
+        android:id="@+id/textViewE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewD"
+        android:layout_marginTop="17dp"
+        android:layout_alignLeft="@+id/textViewD"
+        android:layout_alignRight="@+id/textViewD"
+        android:text="@string/fragment_coef_e" />
+    
+    <TextView
+        android:id="@+id/textViewF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewE"
+        android:layout_marginTop="17dp"
+        android:layout_alignLeft="@+id/textViewE"
+        android:layout_alignRight="@+id/textViewE"
+        android:text="@string/fragment_coef_f" />
+
+    <EditText
+        android:id="@+id/TxtcoefA"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/txtViewA"
+        android:layout_alignBottom="@+id/txtViewA"  
+        android:layout_toEndOf="@+id/txtViewA"
+        android:layout_marginLeft="20dp"
+        android:maxLength="10"
+        android:inputType="numberSigned|numberDecimal"
+        android:text="@string/fragment_coef_a_value"
+        android:ems="10" >
+        <requestFocus />
+    </EditText>
+    
+    <EditText
+        android:id="@+id/TxtcoefB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TxtcoefA"
+        android:layout_alignLeft="@+id/TxtcoefA"
+        android:layout_alignRight="@+id/TxtcoefA"
+        android:ems="10"
+        android:maxLength="10"
+        android:text="@string/fragment_coef_b_value"
+        android:inputType="numberSigned|numberDecimal"        
+         >
+    </EditText>    
+
+    <EditText
+        android:id="@+id/TxtcoefC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TxtcoefB"
+        android:layout_alignLeft="@+id/TxtcoefB"
+        android:layout_alignRight="@+id/TxtcoefB"
+        android:ems="10"
+        android:maxLength="10"
+        android:text="@string/fragment_coef_c_value"
+        android:inputType="numberSigned|numberDecimal"        
+         >
+    </EditText>  
+    
+    <EditText
+        android:id="@+id/TxtcoefD"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TxtcoefC"
+        android:layout_alignLeft="@+id/TxtcoefC"
+        android:layout_alignRight="@+id/TxtcoefC"
+        android:ems="10"
+        android:maxLength="10"
+        android:text="@string/fragment_coef_d_value"
+        android:inputType="numberSigned|numberDecimal"        
+         >
+    </EditText>
+    
+    <EditText
+        android:id="@+id/TxtcoefE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TxtcoefD"
+        android:layout_alignLeft="@+id/TxtcoefD"
+        android:layout_alignRight="@+id/TxtcoefD"
+        android:ems="10"
+        android:maxLength="10"
+        android:text="@string/fragment_coef_e_value"
+        android:inputType="numberSigned|numberDecimal" >
+    </EditText>    
+    
+    <EditText
+        android:id="@+id/TxtcoefF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TxtcoefE"
+        android:layout_alignLeft="@+id/TxtcoefE"
+        android:layout_alignRight="@+id/TxtcoefE"
+        android:ems="10"
+        android:maxLength="10"
+        android:text="@string/fragment_coef_f_value"
+        android:inputType="numberSigned|numberDecimal"        
+         >
+    </EditText>
+    
+    <TextView 
+        android:id="@+id/txtview_resp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_graficar"
+        android:text="@string/vacio"        
+    />
+    
+
+        <Button
+        android:id="@+id/btn_calcular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="@string/btn_calcular" />
+    
+        <Button
+        android:id="@+id/btn_graficar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_calcular"
+        android:text="@string/btn_graficar" />        
+</RelativeLayout>
+

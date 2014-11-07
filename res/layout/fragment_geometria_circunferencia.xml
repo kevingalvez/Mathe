@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?><RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/fragment_geometria_circunferencia"
+     >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/circunferencia"
+        android:contentDescription="@string/image_geometria_circunferencia" 
+        />
+    
+    <TextView
+        android:id="@+id/txtViewH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView1"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="17dp"
+        android:text="@string/fragment_coef_h" />
+
+
+    <TextView
+        android:id="@+id/textViewK"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtViewH"
+        android:layout_marginTop="17dp"
+        android:layout_alignLeft="@+id/txtViewH"
+        android:layout_alignRight="@+id/txtViewH"
+        android:text="@string/fragment_coef_k" />
+
+    <TextView
+        android:id="@+id/textViewR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewK"
+        android:layout_marginTop="17dp"
+        android:layout_alignLeft="@+id/textViewK"
+        android:layout_alignRight="@+id/textViewK"
+        android:text="@string/fragment_coef_r" />   
+        
+    <EditText
+        android:id="@+id/TxtcoefcirH"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/txtViewH"
+        android:layout_alignBottom="@+id/txtViewH"  
+        android:layout_toEndOf="@+id/txtViewH"
+        android:layout_marginLeft="20dp"
+        android:maxLength="10"
+        android:inputType="numberSigned|numberDecimal"
+        android:text="@string/fragment_coef_a_value"
+        android:ems="10" >
+        <requestFocus />
+    </EditText>
+    
+    <EditText
+        android:id="@+id/TxtcoefcirK"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TxtcoefcirH"
+        android:layout_alignLeft="@+id/TxtcoefcirH"
+        android:layout_alignRight="@+id/TxtcoefcirH"
+        android:ems="10"
+        android:maxLength="10"
+        android:text="@string/fragment_coef_b_value"
+        android:inputType="numberSigned|numberDecimal"        
+         >
+    </EditText>    
+
+    <EditText
+        android:id="@+id/TxtcoefcirR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TxtcoefcirK"
+        android:layout_alignLeft="@+id/TxtcoefcirK"
+        android:layout_alignRight="@+id/TxtcoefcirK"
+        android:ems="10"
+        android:maxLength="10"
+        android:text="@string/fragment_coef_c_value"
+        android:inputType="numberSigned|numberDecimal"  
+          >
+    </EditText> 
+      
+    
+    <TextView 
+        android:id="@+id/txtview_respCircunferencia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_graficarCircunferencia"
+        android:text="@string/vacio"        
+    />    
+         <Button
+        android:id="@+id/btn_calcularCircunferencia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="@string/btn_calcular" />
+    
+        <Button
+        android:id="@+id/btn_graficarCircunferencia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/btn_calcularCircunferencia"
+        android:text="@string/btn_graficar" /> 
+    
+
+</RelativeLayout>

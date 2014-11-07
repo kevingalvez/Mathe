@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/fragment_geometria_elipse"
+     >
+    
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/elipse"
+        android:contentDescription="@string/image_geometria_circunferencia" 
+        />
+    
+    <TextView
+        android:id="@+id/txtViewH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView1"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="17dp"
+        android:text="@string/fragment_coef_h" />
+
+
+    <TextView
+        android:id="@+id/textViewK"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtViewH"
+        android:layout_marginTop="17dp"
+        android:layout_alignLeft="@+id/txtViewH"
+        android:layout_alignRight="@+id/txtViewH"
+        android:text="@string/fragment_coef_k" />
+
+    <TextView
+        android:id="@+id/textViewA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewK"
+        android:layout_marginTop="17dp"
+        android:layout_alignLeft="@+id/textViewK"
+        android:layout_alignRight="@+id/textViewK"
+        android:text="@string/fragment_coef_distA" />  
+        
+    <TextView
+        android:id="@+id/textViewB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewA"
+        android:layout_marginTop="17dp"
+        android:layout_alignLeft="@+id/textViewA"
+        android:layout_alignRight="@+id/textViewA"
+        android:text="@string/fragment_coef_distB" />     
+        
+    <EditText
+        android:id="@+id/TxtcoefeliH"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/txtViewH"
+        android:layout_alignBottom="@+id/txtViewH"  
+        android:layout_toEndOf="@+id/txtViewH"
+        android:layout_marginLeft="20dp"
+        android:maxLength="10"
+        android:inputType="numberSigned|numberDecimal"
+        android:text="@string/fragment_coef_h_value"
+        android:ems="10" >
+        <requestFocus />
+    </EditText>
+    
+    <EditText
+        android:id="@+id/TxtcoefeliK"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TxtcoefeliH"
+        android:layout_alignLeft="@+id/TxtcoefeliH"
+        android:layout_alignRight="@+id/TxtcoefeliH"
+        android:ems="10"
+        android:maxLength="10"
+        android:text="@string/fragment_coef_k_value"
+        android:inputType="numberSigned|numberDecimal"        
+         >
+    </EditText>    
+
+    <EditText
+        android:id="@+id/TxtcoefeliA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TxtcoefeliK"
+        android:layout_alignLeft="@+id/TxtcoefeliK"
+        android:layout_alignRight="@+id/TxtcoefeliK"
+        android:ems="10"
+        android:maxLength="10"
+        android:text="@string/fragment_coef_distA_value"
+        android:inputType="numberSigned|numberDecimal"  
+          >
+    </EditText> 
+    
+    <EditText
+        android:id="@+id/TxtcoefeliB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TxtcoefeliA"
+        android:layout_alignLeft="@+id/TxtcoefeliA"
+        android:layout_alignRight="@+id/TxtcoefeliA"
+        android:ems="10"
+        android:maxLength="10"
+        android:text="@string/fragment_coef_distB_value"
+        android:inputType="numberSigned|numberDecimal"  
+          >
+    </EditText>     
+      
+    
+    <TextView 
+        android:id="@+id/txtview_respElipse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_graficarElipse"
+        android:text="@string/vacio"        
+    />    
+         <Button
+        android:id="@+id/btn_calcularElipse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="@string/btn_calcular" />
+    
+        <Button
+        android:id="@id/btn_graficarElipse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_calcularElipse"
+        android:text="@string/btn_graficar" /> 
+</RelativeLayout>

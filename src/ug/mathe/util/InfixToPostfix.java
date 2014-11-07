@@ -9,6 +9,7 @@ public class InfixToPostfix {
     private int n = 100;
     private boolean signo;
     private double[] coeficientes;
+    private String apostfix;
     
     public InfixToPostfix(String expr)
     {
@@ -17,13 +18,15 @@ public class InfixToPostfix {
         numeros = new Stack(n);
         parentesis = new Stack(n);
         coeficientes = new double[n];
+        apostfix = "";
     }
     
     private void init(){
         simbolos.init();
         numeros.init();
         parentesis.init();
-        signo = false; 
+        signo = false;
+        apostfix = "";
         for (int i = 0; i < n; i++)
             coeficientes[i] = 0.0;
     }
@@ -34,9 +37,10 @@ public class InfixToPostfix {
         switch (c) {
             case '(': result = 0; break;
             case '+': case '-': result = 1; break;
-            case '*': case '/': case '~': result = 2; break;             
+            case '*': case '/': result = 2; break;             
             case '^': result = 3; break;
-            case 's': case 'c': case 't': case 'l': case 'e': result = 4; break;
+            case '~': result = 4; break;
+            case 's': case 'c': case 't': case 'l': case 'e': case 'q': result = 5; break;
         }
         return result;
     }
@@ -65,7 +69,11 @@ public class InfixToPostfix {
 	} catch (NumberFormatException nfe){
 		return false;
 	}
-    }        
+    }
+    
+    public double getData(int idx){
+    	return coeficientes[idx];
+    }
     
     private boolean parseo(String expr)
     {
@@ -93,6 +101,7 @@ public class InfixToPostfix {
         result = result.replaceAll("cos", "c");
         result = result.replaceAll("tan", "t");
         result = result.replaceAll("ln", "l");
+        result = result.replaceAll("sqrt", "q");
         return result;
     }
     
@@ -142,7 +151,7 @@ public class InfixToPostfix {
                         i++;
                         signo = true;
                     break;
-                    case 's': case 'c': case 't': case 'l': case 'e':
+                    case 's': case 'c': case 't': case 'l': case 'e': case 'q':
                         if (signo) postfix +=verifica_signo('*');
                         signo = true;
                         postfix +=verifica_signo(expr.charAt(i));
@@ -159,6 +168,7 @@ public class InfixToPostfix {
         {
             throw new Exception("Parentesis mal balanceados");
         }
+        this.apostfix = postfix;
         return postfix;
     	} catch (Exception e) {
     		throw new Exception(e.getMessage());
@@ -170,12 +180,13 @@ public class InfixToPostfix {
     {
         try
         {
-            String postfix  = ConvertToPostfix();
+        	if (this.apostfix.equals(""))
+        		this.apostfix  = ConvertToPostfix();
             double a = 0.0, b = 0.0;
 
-            for (int i = 0; i < postfix.length(); i++)
+            for (int i = 0; i < this.apostfix.length(); i++)
             {
-                switch (postfix.charAt(i)) {
+                switch (this.apostfix.charAt(i)) {
                     case '#': 
                         numeros.Push((double)coeficientes[i]);
                         break;
@@ -238,6 +249,10 @@ public class InfixToPostfix {
                         a = (Double)numeros.Pop();
                         numeros.Push(Math.exp(a));
                         break;
+                    case 'q':
+                        a = (Double)numeros.Pop();
+                        numeros.Push(Math.sqrt(a));
+                        break;                        
                 }
 
             }

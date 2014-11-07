@@ -35,6 +35,31 @@ public class Graph2d {
         longitudY = (int)(ys-yi);
     }
     
+    public void setZoomIn(){
+    	this.limiX -= 1;
+    	this.limiY -= 1;
+    	this.limsX += 1;
+    	this.limiY += 1;
+    	longitudY = (int)(this.limsY-this.limiY);
+    	longitudX = (int)(this.limsX-this.limiX);
+    }
+    
+    public void setZoomOut(){
+    	this.limiX += 1;
+    	this.limiY += 1;
+    	this.limsX -= 1;
+    	this.limiY -= 1;
+    	longitudY = (int)(this.limsY-this.limiY);
+    	longitudX = (int)(this.limsX-this.limiX);    	
+    }
+    
+    public void setMove(int x, int y){
+    	this.limsX += x;
+    	this.limiX = this.limsX-this.longitudX;
+    	this.limsY += y;    	
+    	this.limiY = this.limsY-this.longitudY;
+    }
+        
     public void setStep(int presicion)
     {
         step = (double)1/presicion;
@@ -49,6 +74,16 @@ public class Graph2d {
     {
         return (scalaY - (int)(scalaY*(puntoY-limiY)/longitudY+margenY));
     }
+    
+    public double ConvertToPuntoX(double pixelX)
+    {
+        return ((pixelX-margenX)*longitudX+limiX*scalaX)/scalaX;
+    }
+    
+    public double ConvertToPuntoY(double pixelY)
+    {
+        return (scalaY*limiY-longitudY*(pixelY-scalaY-margenY))/scalaY;
+    }    
     
     public void setExpr(String expr)
     {
