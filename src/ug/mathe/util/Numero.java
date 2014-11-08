@@ -10,6 +10,12 @@ public class Numero {
 		this.exponente = exponente;
 	}
 	
+	public Numero(Numero datos) {
+		this.coeficiente = datos.coeficiente;
+		this.variable = datos.variable;
+		this.exponente = datos.exponente;
+	}	
+	
 	public double getCof(){
 		return this.coeficiente;
 	}
@@ -22,15 +28,16 @@ public class Numero {
 		return this.variable;
 	}
 	
-	public void getCof(double coeficiente){
+	public void setCof(double coeficiente){
 		this.coeficiente = coeficiente;
 	}
 	
-	public void getExp(double exponente) {
+	public void setExp(double exponente) {
 		this.exponente =  exponente;
 	}	
 	
-	public void getVar(String variable) {
+	public void setVar(String variable) {
 		this.variable = variable;
 	}
+	
 }

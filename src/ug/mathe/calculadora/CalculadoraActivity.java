@@ -260,7 +260,7 @@ public class CalculadoraActivity extends Activity  implements OnClickListener {
 								case 'x': case 'y':
 									pila.Push(String.valueOf(apostfix.charAt(i)));
 								break;
-								case '*': case '/': case '+': case '-':
+								case '*': case '/': case '+': case '-': case '^':
 										Nodo nodo = new Nodo(String.valueOf(apostfix.charAt(i)));
 										if (!pila.isEmpty()) {
 											int j = 0;
@@ -288,14 +288,15 @@ public class CalculadoraActivity extends Activity  implements OnClickListener {
 						}
 						Arbol ar = new Arbol((Nodo)pilaexpr.Pop());
 						Algebra al = new Algebra(ar);
-						al.Expand();
+						Toast.makeText(getApplicationContext(), al.Expand(), Toast.LENGTH_LONG).show();
+						//al.Expand();
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					
 				
-				} else if (val == 0) 
+				} else if (val == 1) 
 				{
 				
 				InfixToPostfix a = new InfixToPostfix(cadena);
