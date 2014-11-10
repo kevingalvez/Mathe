@@ -52,6 +52,150 @@ public class Algebra {
 		return false;
 	}
 	
+	
+	private Nodo DistderProducto(Nodo nodo1, Nodo nodo2) {
+		Nodo result = null;
+		if (nodo1.getValor().equals("^")) {
+			String dato1 = "", dato2 = "", dato3 = "", dato4="";
+			if (nodo1.getHojaIzquierda() != null  && nodo1.getHojaDerecha() != null)
+			{
+			dato1 = nodo1.getHojaIzquierda().getValor();
+			dato2 = nodo1.getHojaDerecha().getValor();
+			} else
+				dato1 = nodo1.getValor();
+			
+			if (nodo2.getHojaIzquierda() != null && nodo2.getHojaDerecha() != null)
+			{
+				dato3 = nodo2.getHojaIzquierda().getValor();
+				dato4 = nodo2.getHojaDerecha().getValor();
+			} else
+				dato3 = nodo2.getValor();
+			
+			if (isNumeric(dato3) || (isVar(dato3) && !dato1.equals(dato3))) {
+				result = new Nodo("*");
+				result.setHojaIzquierda(nodo1);
+				result.setHojaDerecha(new Nodo(dato3));
+			} else if (isVar(dato3) && dato1.equals(dato3)) {
+				result = new Nodo("^");
+				result.setHojaIzquierda(nodo1);
+				result.setHojaDerecha(new Nodo(String.valueOf(Double.valueOf(dato2) + 1)));				
+			}
+		} if (nodo2.getValor().equals("^")) {
+			String dato1 = "", dato2 = "", dato3 = "", dato4="";
+			if (nodo1.getHojaIzquierda() != null  && nodo1.getHojaDerecha() != null)
+			{
+			dato1 = nodo1.getHojaIzquierda().getValor();
+			dato2 = nodo1.getHojaDerecha().getValor();
+			} else
+				dato1 = nodo1.getValor();
+			
+			if (nodo2.getHojaIzquierda() != null && nodo2.getHojaDerecha() != null)
+			{
+				dato3 = nodo2.getHojaIzquierda().getValor();
+				dato4 = nodo2.getHojaDerecha().getValor();
+			} else
+				dato3 = nodo2.getValor();
+			
+			if (isNumeric(dato1) || (isVar(dato1) && !dato3.equals(dato1))) {
+				result = new Nodo("*");
+				result.setHojaIzquierda(nodo2);
+				result.setHojaDerecha(new Nodo(dato1));
+			} else if (isVar(dato1) && dato1.equals(dato1)) {
+				result = new Nodo("^");
+				result.setHojaIzquierda(nodo2);
+				result.setHojaDerecha(new Nodo(String.valueOf(Double.valueOf(dato4) + 1)));				
+			}			
+		} else {
+			String dato1 = "", dato2 = "", dato3 = "", dato4="";
+			if (nodo1.getHojaIzquierda() != null  && nodo1.getHojaDerecha() != null)
+			{
+			dato1 = nodo1.getHojaIzquierda().getValor();
+			dato2 = nodo1.getHojaDerecha().getValor();
+			} else
+				dato1 = nodo1.getValor();
+			
+			if (nodo2.getHojaIzquierda() != null && nodo2.getHojaDerecha() != null)
+			{
+				dato3 = nodo2.getHojaIzquierda().getValor();
+				dato4 = nodo2.getHojaDerecha().getValor();
+			} else
+				dato3 = nodo2.getValor();
+				
+			Stack num = new Stack(4);
+			double res = 0.0;
+			int exp = 0;
+			boolean exist_numero = false, exist_var = false;
+			if (isNumeric(dato1)) {
+				num.Push(dato1);
+				exist_numero = true;
+			}
+			else if (!dato1.equals("")) {
+				exp++;
+				exist_var = true;
+			}
+			if (isNumeric(dato2)){
+				exist_numero = true;
+				num.Push(dato2);
+			}
+			else if (!dato2.equals("")) {
+				exp++;
+				exist_var = true;
+			}
+			if (isNumeric(dato3)) { 
+				num.Push(dato3);
+				exist_numero = true;
+			}
+			else if (!dato3.equals("")) {
+				exp++;
+				exist_var = true;
+			}
+			if (isNumeric(dato4)) { 
+				num.Push(dato4);
+				exist_numero = true;
+			}
+			else if (!dato4.equals("")) {
+				exp++;
+				exist_var = true;
+			}
+			
+			if (!num.isEmpty())
+				res = Double.valueOf(num.Pop().toString());
+			while (!num.isEmpty()) {
+				res = res*Double.valueOf(num.Pop().toString());
+			}
+			
+			if (!exist_numero && exist_var)
+				res = 1;
+			
+			if (!exist_var) {
+				result = new Nodo(String.valueOf(res));
+			}
+			else
+			if (exp == 1) {
+				if (res != 1) {
+					result = new Nodo("*");
+					result.setHojaIzquierda(new Nodo(String.valueOf(res)));
+					result.setHojaDerecha(new Nodo(String.valueOf("x")));
+				} else {
+					result = new Nodo("x");	
+				}
+			} else {
+				if (res != 1) {
+					result = new Nodo("*");
+					result.setHojaIzquierda(new Nodo(String.valueOf(res)));
+					result.setHojaDerecha(new Nodo(String.valueOf("^")));
+					result.getHojaDerecha().setHojaIzquierda(new Nodo(String.valueOf("x")));
+					result.getHojaDerecha().setHojaDerecha(new Nodo(String.valueOf(String.valueOf(exp)))); 
+				} else {
+					result = new Nodo("^");
+					result.setHojaIzquierda(new Nodo(String.valueOf("x")));
+					result.setHojaDerecha(new Nodo(String.valueOf(String.valueOf(exp))));						
+				}
+			}
+		}
+		return result;
+	}
+	
 	private Nodo Distder(Nodo nodoizq, Nodo nododer, String signo) {
 		Nodo result =  new Nodo(signo);
 		boolean val = true;
@@ -59,91 +203,10 @@ public class Algebra {
 		{
 			if (isHoja(nododer.getHojaIzquierda())) {
 				val = false;
-				String dato1 = "", dato2 = "", dato3 = "", dato4="";
-				if (nodoizq.getHojaIzquierda() != null  && nodoizq.getHojaDerecha() != null)
-				{
-				dato1 = nodoizq.getHojaIzquierda().getValor();
-				dato2 = nodoizq.getHojaDerecha().getValor();
-				} else
-					dato1 = nodoizq.getValor();
-				
-				if (nododer.getHojaIzquierda().getHojaIzquierda() != null && nododer.getHojaIzquierda().getHojaDerecha() != null)
-				{
-					dato3 = nododer.getHojaIzquierda().getHojaIzquierda().getValor();
-					dato4 = nododer.getHojaIzquierda().getHojaDerecha().getValor();
-				} else
-					dato3 = nododer.getHojaIzquierda().getValor();
-					
-				Stack num = new Stack(4);
-				double res = 0.0;
-				int exp = 0;
-				boolean exist_numero = false, exist_var = false;
-				if (isNumeric(dato1)) {
-					num.Push(dato1);
-					exist_numero = true;
-				}
-				else if (!dato1.equals("")) {
-					exp++;
-					exist_var = true;
-				}
-				if (isNumeric(dato2)){
-					exist_numero = true;
-					num.Push(dato2);
-				}
-				else if (!dato2.equals("")) {
-					exp++;
-					exist_var = true;
-				}
-				if (isNumeric(dato3)) { 
-					num.Push(dato3);
-					exist_numero = true;
-				}
-				else if (!dato3.equals("")) {
-					exp++;
-					exist_var = true;
-				}
-				if (isNumeric(dato4)) { 
-					num.Push(dato4);
-					exist_numero = true;
-				}
-				else if (!dato4.equals("")) {
-					exp++;
-					exist_var = true;
-				}
-				
-				if (!num.isEmpty())
-					res = Double.valueOf(num.Pop().toString());
-				while (!num.isEmpty()) {
-					res = res*Double.valueOf(num.Pop().toString());
-				}
-				
-				if (!exist_numero && exist_var)
-					res = 1;
-				
-				if (exp == 1) {
-					if (res != 1) {
-						result.setHojaIzquierda(new Nodo("*"));
-						result.getHojaIzquierda().setHojaIzquierda(new Nodo(String.valueOf(res)));
-						result.getHojaIzquierda().setHojaDerecha(new Nodo(String.valueOf("x")));
-					} else {
-						result.setHojaIzquierda(new Nodo("x"));	
-					}
-				} else {
-					if (res != 1) {
-						result.setHojaIzquierda(new Nodo("*"));
-						result.getHojaIzquierda().setHojaIzquierda(new Nodo(String.valueOf(res)));
-						result.getHojaIzquierda().setHojaDerecha(new Nodo(String.valueOf("^")));
-						result.getHojaIzquierda().getHojaDerecha().setHojaIzquierda(new Nodo(String.valueOf("x")));
-						result.getHojaIzquierda().getHojaDerecha().setHojaDerecha(new Nodo(String.valueOf(String.valueOf(exp)))); 
-					} else {
-						result.setHojaIzquierda(new Nodo("^"));
-						result.getHojaIzquierda().setHojaIzquierda(new Nodo(String.valueOf("x")));
-						result.getHojaIzquierda().setHojaDerecha(new Nodo(String.valueOf(String.valueOf(exp))));						
-					}
-					
-				}			
-			} 
-		} 
+				result.setHojaIzquierda(DistderProducto(nodoizq,nododer.getHojaIzquierda()));
+			}
+		}
+		
 		if (val) {
 		result.setHojaIzquierda(new Nodo("*"));
 		result.getHojaIzquierda().setHojaIzquierda(nodoizq);
@@ -153,88 +216,7 @@ public class Algebra {
 		if (isHoja(nodoizq)){
 			if (isHoja(nododer.getHojaDerecha())) {	
 				val = false;
-				String dato1 = "", dato2 = "", dato3 = "", dato4="";
-				if (nodoizq.getHojaIzquierda() != null  && nodoizq.getHojaDerecha() != null)
-				{
-				dato1 = nodoizq.getHojaIzquierda().getValor();
-				dato2 = nodoizq.getHojaDerecha().getValor();
-				} else
-					dato1 = nodoizq.getValor();
-				if (nododer.getHojaDerecha().getHojaIzquierda() != null && nododer.getHojaDerecha().getHojaDerecha() != null)
-				{
-					dato3 = nododer.getHojaDerecha().getHojaIzquierda().getValor();
-					dato4 = nododer.getHojaDerecha().getHojaDerecha().getValor();
-				} else
-					dato3 = nododer.getHojaDerecha().getValor();
-				Stack num = new Stack(4);
-				double res = 0.0;
-				int exp = 0;
-				boolean exist_numero = false, exist_var = false;
-				if (isNumeric(dato1)) {
-					num.Push(dato1);
-					exist_numero = true;
-				}
-				else if (!dato1.equals("")) {
-					exp++;
-					exist_var = true;
-				}
-				if (isNumeric(dato2)){
-					exist_numero = true;
-					num.Push(dato2);
-				}
-				else if (!dato2.equals("")) {
-					exp++;
-					exist_var = true;
-				}
-				if (isNumeric(dato3)) { 
-					num.Push(dato3);
-					exist_numero = true;
-				}
-				else if (!dato3.equals("")) {
-					exp++;
-					exist_var = true;
-				}
-				if (isNumeric(dato4)) { 
-					num.Push(dato4);
-					exist_numero = true;
-				}
-				else if (!dato4.equals("")) {
-					exp++;
-					exist_var = true;
-				}
-				
-				if (!num.isEmpty())
-					res = Double.valueOf(num.Pop().toString());
-				while (!num.isEmpty()) {
-					res = res*Double.valueOf(num.Pop().toString());
-				}
-				
-				if (!exist_numero && exist_var)
-					res = 1;				
-				
-				if (exp == 1) {
-					if (res != 1)
-					{
-						result.setHojaDerecha(new Nodo("*"));
-						result.getHojaDerecha().setHojaIzquierda(new Nodo(String.valueOf(res)));
-						result.getHojaDerecha().setHojaDerecha(new Nodo(String.valueOf("x")));
-					} else {
-						result.setHojaDerecha(new Nodo("x"));
-					}
-				} else {
-					if (res != 1)
-					{
-						result.setHojaDerecha(new Nodo("*"));
-						result.getHojaDerecha().setHojaIzquierda(new Nodo(String.valueOf(res)));
-						result.getHojaDerecha().setHojaDerecha(new Nodo(String.valueOf("^")));
-						result.getHojaDerecha().getHojaDerecha().setHojaIzquierda(new Nodo(String.valueOf("x")));
-						result.getHojaDerecha().getHojaDerecha().setHojaDerecha(new Nodo(String.valueOf(String.valueOf(exp))));
-					} else {
-						result.setHojaDerecha(new Nodo("^"));
-						result.getHojaDerecha().setHojaIzquierda(new Nodo(String.valueOf("x")));
-						result.getHojaDerecha().setHojaDerecha(new Nodo(String.valueOf(String.valueOf(exp))));						
-					}
-				}
+				result.setHojaDerecha(DistderProducto(nodoizq,nododer.getHojaDerecha()));
 			} 
 		}
 		
@@ -253,194 +235,24 @@ public class Algebra {
 		if (isHoja(nodoizq.getHojaIzquierda())) {
 			if (isHoja(nododer)) {
 				val = false;
-				String dato1 = "", dato2 = "", dato3 = "", dato4="";
-				if (nodoizq.getHojaIzquierda().getHojaIzquierda() != null  && nodoizq.getHojaIzquierda().getHojaDerecha() != null)
-				{
-				dato1 = nodoizq.getHojaIzquierda().getHojaIzquierda().getValor();
-				dato2 = nodoizq.getHojaIzquierda().getHojaDerecha().getValor();
-				} else
-					dato1 = nodoizq.getHojaIzquierda().getValor();
-				
-				if (nododer.getHojaIzquierda() != null && nododer.getHojaDerecha() != null)
-				{
-					dato3 = nododer.getHojaIzquierda().getValor();
-					dato4 = nododer.getHojaDerecha().getValor();
-				} else
-					dato3 = nododer.getValor();
-					
-				Stack num = new Stack(4);
-				double res = 0.0;
-				int exp = 0;
-				boolean exist_numero = false, exist_var = false;
-				if (isNumeric(dato1)) {
-					num.Push(dato1);
-					exist_numero = true;
-				}
-				else if (!dato1.equals("")) {
-					exp++;
-					exist_var = true;
-				}
-				if (isNumeric(dato2)){
-					exist_numero = true;
-					num.Push(dato2);
-				}
-				else if (!dato2.equals("")) {
-					exp++;
-					exist_var = true;
-				}
-				if (isNumeric(dato3)) { 
-					num.Push(dato3);
-					exist_numero = true;
-				}
-				else if (!dato3.equals("")) {
-					exp++;
-					exist_var = true;
-				}
-				if (isNumeric(dato4)) { 
-					num.Push(dato4);
-					exist_numero = true;
-				}
-				else if (!dato4.equals("")) {
-					exp++;
-					exist_var = true;
-				}
-				
-				if (!num.isEmpty())
-					res = Double.valueOf(num.Pop().toString());
-				while (!num.isEmpty()) {
-					res = res*Double.valueOf(num.Pop().toString());
-				}
-				
-				if (!exist_numero && exist_var)
-					res = 1;
-				
-				if (exp == 1) {
-					if (res != 1) {
-						result.setHojaIzquierda(new Nodo("*"));
-						result.getHojaIzquierda().setHojaIzquierda(new Nodo(String.valueOf(res)));
-						result.getHojaIzquierda().setHojaDerecha(new Nodo(String.valueOf("x")));						
-					} else {
-						result.setHojaIzquierda(new Nodo("x"));
-					}
-					
-				} else {
-					
-					if (res != 1) {
-						result.setHojaIzquierda(new Nodo("*"));
-						result.getHojaIzquierda().setHojaIzquierda(new Nodo(String.valueOf(res)));
-						result.getHojaIzquierda().setHojaDerecha(new Nodo(String.valueOf("^")));
-						result.getHojaIzquierda().getHojaDerecha().setHojaIzquierda(new Nodo(String.valueOf("x")));
-						result.getHojaIzquierda().getHojaDerecha().setHojaDerecha(new Nodo(String.valueOf(String.valueOf(exp)))); 
-					} else {
-						result.setHojaIzquierda(new Nodo("^"));
-						result.getHojaIzquierda().setHojaIzquierda(new Nodo(String.valueOf("x")));
-						result.getHojaIzquierda().setHojaDerecha(new Nodo(String.valueOf(String.valueOf(exp))));						
-					}
-					
-					if (res != 1) {				
-							result.setHojaIzquierda(new Nodo("*"));
-							result.getHojaIzquierda().setHojaIzquierda(new Nodo(String.valueOf(res)));
-							result.getHojaIzquierda().setHojaDerecha(new Nodo(String.valueOf("^")));
-							result.getHojaIzquierda().getHojaDerecha().setHojaIzquierda(new Nodo(String.valueOf("x")));
-							result.getHojaIzquierda().getHojaDerecha().setHojaDerecha(new Nodo(String.valueOf(String.valueOf(exp))));
-					} else {
-						result.setHojaIzquierda(new Nodo("^"));
-						result.getHojaIzquierda().setHojaIzquierda(new Nodo(String.valueOf("x")));
-						result.getHojaIzquierda().setHojaDerecha(new Nodo(String.valueOf(String.valueOf(exp))));						
-					}
-				}			
+				result.setHojaIzquierda(DistderProducto(nodoizq.getHojaIzquierda(),nododer));
 			}
-			}
+		}
+		
 		if (val){		
 				result.setHojaIzquierda(new Nodo("*"));
 				result.getHojaIzquierda().setHojaIzquierda(nodoizq.getHojaIzquierda());
 				result.getHojaIzquierda().setHojaDerecha(nododer);		
-			}
+		}
+		
 		val = true;
-		if (isHoja(nodoizq)) {
-			if (isHoja(nododer.getHojaDerecha())) {	
-				String dato1 = "", dato2 = "", dato3 = "", dato4="";
-				if (nodoizq.getHojaDerecha().getHojaIzquierda() != null  && nodoizq.getHojaDerecha().getHojaDerecha() != null)
-				{
-				dato1 = nodoizq.getHojaDerecha().getHojaIzquierda().getValor();
-				dato2 = nodoizq.getHojaDerecha().getHojaDerecha().getValor();
-				} else
-					dato1 = nodoizq.getHojaDerecha().getValor();
-				if (nododer.getHojaIzquierda() != null && nododer.getHojaDerecha() != null)
-				{
-					dato3 = nododer.getHojaIzquierda().getValor();
-					dato4 = nododer.getHojaDerecha().getValor();
-				} else
-					dato3 = nododer.getValor();
-				Stack num = new Stack(4);
-				double res = 0.0;
-				int exp = 0;
-				boolean exist_numero = false, exist_var = false;
-				if (isNumeric(dato1)) {
-					num.Push(dato1);
-					exist_numero = true;
-				}
-				else if (!dato1.equals("")) {
-					exp++;
-					exist_var = true;
-				}
-				if (isNumeric(dato2)){
-					exist_numero = true;
-					num.Push(dato2);
-				}
-				else if (!dato2.equals("")) {
-					exp++;
-					exist_var = true;
-				}
-				if (isNumeric(dato3)) { 
-					num.Push(dato3);
-					exist_numero = true;
-				}
-				else if (!dato3.equals("")) {
-					exp++;
-					exist_var = true;
-				}
-				if (isNumeric(dato4)) { 
-					num.Push(dato4);
-					exist_numero = true;
-				}
-				else if (!dato4.equals("")) {
-					exp++;
-					exist_var = true;
-				}
-				
-				if (!num.isEmpty())
-					res = Double.valueOf(num.Pop().toString());
-				while (!num.isEmpty()) {
-					res = res*Double.valueOf(num.Pop().toString());
-				}
-				
-				if (!exist_numero && exist_var)
-					res = 1;				
-				
-				if (exp == 1) {
-					if (res != 1) {
-						result.setHojaDerecha(new Nodo("*"));
-						result.getHojaDerecha().setHojaIzquierda(new Nodo(String.valueOf(res)));
-						result.getHojaDerecha().setHojaDerecha(new Nodo(String.valueOf("x")));
-					} else {
-						result.setHojaDerecha(new Nodo("x"));
-					}
-				} else {
-					if (res != 1) {
-						result.setHojaDerecha(new Nodo("*"));
-						result.getHojaDerecha().setHojaIzquierda(new Nodo(String.valueOf(res)));
-						result.getHojaDerecha().setHojaDerecha(new Nodo(String.valueOf("^")));
-						result.getHojaDerecha().getHojaDerecha().setHojaIzquierda(new Nodo(String.valueOf("x")));
-						result.getHojaDerecha().getHojaDerecha().setHojaDerecha(new Nodo(String.valueOf(String.valueOf(exp))));
-					} else {
-						result.setHojaDerecha(new Nodo("^"));
-						result.getHojaDerecha().setHojaIzquierda(new Nodo(String.valueOf("x")));
-						result.getHojaDerecha().setHojaDerecha(new Nodo(String.valueOf(String.valueOf(exp))));						
-					}
-				}
+		
+		if (isHoja(nodoizq.getHojaDerecha())) {
+			if (isHoja(nododer)) {
+				val = false;
+				result.setHojaDerecha(DistderProducto(nodoizq.getHojaDerecha(),nododer));
 			} 
-			}
+		}
 		if (val) {
 				result.setHojaDerecha(new Nodo("*"));
 				result.getHojaDerecha().setHojaIzquierda(nodoizq.getHojaDerecha());
@@ -560,40 +372,93 @@ public class Algebra {
 			dato2 = nodo.getHojaIzquierda().getHojaIzquierda().getValor();
 			dato3 = nodo.getHojaIzquierda().getHojaDerecha().getValor();
 			result = new Numero(Double.valueOf(dato1),dato2,Double.valueOf(dato3));
-		} 
+		}  else if (nodo.getValor().equals("^") && nodo.getHojaIzquierda().getValor().equals("-") && nodo.getHojaIzquierda().getHojaIzquierda().getValor().equals("0")) {
+			String dato1 = "", dato2 = "", dato3 = "";
+			dato1 = "1";
+			dato2 = nodo.getHojaIzquierda().getHojaDerecha().getValor();
+			dato3 = nodo.getHojaDerecha().getValor();
+			result = new Numero(Double.valueOf(dato1)*-1,dato2,Double.valueOf(dato3));
+		} else if (nodo.getValor().equals("^") && nodo.getHojaDerecha().getValor().equals("-") && nodo.getHojaDerecha().getHojaIzquierda().getValor().equals("0")) {
+			String dato1 = "", dato2 = "", dato3 = "";
+			dato1 = "1";
+			dato2 = nodo.getHojaDerecha().getHojaDerecha().getValor();
+			dato3 = nodo.getHojaIzquierda().getValor();
+			result = new Numero(Double.valueOf(dato1)*-1,dato2,Double.valueOf(dato3));
+		}  else if (nodo.getValor().equals("*") && nodo.getHojaIzquierda().getValor().equals("-") && nodo.getHojaIzquierda().getHojaIzquierda().getValor().equals("0")) {
+			String dato1 = "", dato2 = "", dato3 = "";
+			if (isNumeric(nodo.getHojaIzquierda().getHojaDerecha().getValor())) {
+				dato1 = nodo.getHojaIzquierda().getHojaDerecha().getValor();
+				dato2 = "";
+				dato3 = "1";
+			} else if (isVar(nodo.getHojaIzquierda().getHojaDerecha().getValor())) {
+				dato1 = "1";
+				dato2 = nodo.getHojaIzquierda().getHojaDerecha().getValor();
+				dato3 = "1";
+			}
+			result = new Numero(Double.valueOf(dato1)*-1,dato2,Double.valueOf(dato3));
+		} else if (nodo.getValor().equals("*") && nodo.getHojaDerecha().getValor().equals("-") && nodo.getHojaDerecha().getHojaIzquierda().getValor().equals("0")) {
+			String dato1 = "", dato2 = "", dato3 = "";
+			if (isNumeric(nodo.getHojaDerecha().getHojaDerecha().getValor())) {
+				dato1 = nodo.getHojaDerecha().getHojaDerecha().getValor();
+				dato2 = "";
+				dato3 = "1";
+			} else if (isVar(nodo.getHojaDerecha().getHojaDerecha().getValor())) {
+				dato1 = "1";
+				dato2 = nodo.getHojaDerecha().getHojaDerecha().getValor();
+				dato3 = "1";
+			}			
+
+			result = new Numero(Double.valueOf(dato1)*-1,dato2,Double.valueOf(dato3));
+		}
 		return result;
 	}
 	
-	private void Simplificar(Nodo nodo) {
+	private void Simplificar(Nodo nodo, boolean minus) {
 	    if (nodo != null) {
 	    	boolean val = true;
 	    	if ((nodo.getValor().equals("-") || nodo.getValor().equals("+")) && isHoja(nodo.getHojaDerecha())) {
 	    		Numero aux = dato(nodo.getHojaDerecha()); 
 	    		if (nodo.getValor().equals("-")) {
+	    				aux.setCof(!minus?aux.getCof()*-1:aux.getCof());
+	    		} else if (minus){
 	    			aux.setCof(aux.getCof()*-1);
 	    		}
 	    		num.Push(aux);
 	    		if (isNumeric(nodo.getHojaIzquierda().getValor())||isVar(nodo.getHojaIzquierda().getValor())) {
 		    		Numero aux2 = dato(nodo.getHojaIzquierda()); 
+		    		if (minus){
+		    			aux2.setCof(aux2.getCof()*-1);	
+		    		}
 		    		num.Push(aux2);
+		    		val = false;
 	    		}
-	    	} else if (nodo.getValor().equals("*")) { 
+	    	} else if (isNumeric(nodo.getValor()) || isVar(nodo.getValor())) {
 	    		Numero aux = dato(nodo); 
-	    		if (nodo.getValor().equals("-")) {
+	    		if (minus){
 	    			aux.setCof(aux.getCof()*-1);
+	    		}
+	    		num.Push(aux);
+	    	}
+	    	else if (nodo.getValor().equals("*")) { 
+	    		Numero aux = dato(nodo); 
+	    		if (minus) {
+	    			aux.setCof(aux.getCof()*-1);
+	    			//aux.setCof(aux.getCof()*-1);
 	    		}
 	    		num.Push(aux);
 	    		val = false;
 	    	} else if (nodo.getValor().equals("^")) { 
 	    		Numero aux = dato(nodo);
+	    		if (minus) 
+	    			aux.setCof(aux.getCof()*-1);	    		
 	    		num.Push(aux);
+	    		val = false;
 	    	} else if (!(isNumeric(nodo.getValor())||isVar(nodo.getValor()))) {
-	    		if (nodo.getHojaDerecha().getValor().equals("-") || nodo.getHojaDerecha().getValor().equals("+"))
-	    			Simplificar(nodo.getHojaDerecha());
+	    			Simplificar(nodo.getHojaDerecha(), nodo.getValor().equals("-")?!minus:minus);
 	    	}
 	    	
 	    	if (val)
-	    		Simplificar(nodo.getHojaIzquierda());
+	    		Simplificar(nodo.getHojaIzquierda(),minus);
 	    }		
 	}
 	
@@ -677,8 +542,9 @@ public class Algebra {
 			expander = false;
 			ar = new Arbol(Order(ar.getRaiz()));
 			ar.Order(ar.getRaiz());
-		}		
-		Simplificar(ar.getRaiz());
+		}	
+		ar.Order(ar.getRaiz());
+		Simplificar(ar.getRaiz(),false);
 		String result = evaluarNum();
 		return result; 
 		//ar.Order(ar.getRaiz());

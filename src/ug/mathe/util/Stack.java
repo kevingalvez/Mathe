@@ -65,5 +65,9 @@ public class Stack {
         else
             return true;
     }
+    
+    public int length(){
+    	return this.index;
+    }
 }
 

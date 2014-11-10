@@ -6,7 +6,7 @@ public class Arbol {
 
     /* Atributos */
     private Nodo raiz;
-
+    private boolean insert;
     /* Contructories */    
     public Arbol( String valor ) {
         this.raiz = new Nodo( valor );
@@ -25,36 +25,54 @@ public class Arbol {
         this.raiz = raiz;
     }
 
+	private boolean isNumeric(String cadena){
+		try {
+			Double.parseDouble(cadena);
+			return true;
+		} catch (NumberFormatException nfe){
+			return false;
+		}
+	}
+	
+	private boolean isVar(String cadena){
+		if (cadena.equals("x") || cadena.equals("y"))
+			return true;
+		else
+			return false;
+	}	
+    	
     private void addNodo( Nodo nodo, Nodo raiz ) {
-        /* 2.- Partiendo de la raíz preguntamos: Nodo == null ( o no existe ) ? */
-        if ( raiz == null ) {
-            /* 
-             * 3.- En caso afirmativo X pasa a ocupar el lugar del nodo y ya 
-             * hemos ingresado nuestro primer dato. 
-             * ==== EDITO =====
-             * Muchas gracias a @Espectro por la corrección de esta línea
-             */
-            this.setRaiz(nodo);
-        }
-        else {
-        /* 4.- En caso negativo preguntamos: X < Nodo */
-            /* 
-             * 5.- En caso de ser menor pasamos al Nodo de la IZQUIERDA del
-             * que acabamos de preguntar y repetimos desde el paso 2 
-             * partiendo del Nodo al que acabamos de visitar 
-             */
-            if (raiz.getHojaIzquierda() == null) {
-                raiz.setHojaIzquierda(nodo);
-            }
-            else if (raiz.getHojaDerecha() == null) {
-            	raiz.setHojaDerecha(nodo);
-            } else {
-            	addNodo( nodo , raiz.getHojaIzquierda() );
-            }
-        }
+    	if (!(isNumeric(raiz.getValor()) || isVar(raiz.getValor()))) {
+	   		if (raiz.getHojaDerecha() == null && !(isNumeric(raiz.getValor()) || isVar(raiz.getValor()))) {
+	   			if (!nodo.getValor().equals("~"))
+	   				raiz.setHojaDerecha(nodo);
+	   			else {
+	   				raiz.setHojaDerecha(new Nodo("-"));
+	   				raiz.getHojaDerecha().setHojaIzquierda(new Nodo("0"));
+	   			}
+	   			insert = true;
+	   		} else {
+	    		addNodo(nodo,raiz.getHojaDerecha());
+	    		if (!insert) {
+	    			if (raiz.getHojaIzquierda() == null && !(isNumeric(raiz.getValor()) || isVar(raiz.getValor()))) {
+	    				if (!nodo.getValor().equals("~"))
+	    					raiz.setHojaIzquierda(nodo);
+	    				else {
+	    					raiz.setHojaIzquierda(new Nodo("-"));
+	    					raiz.getHojaIzquierda().setHojaIzquierda(new Nodo("0"));
+	    				}
+	    				insert = true;
+	    			} else {
+	    				addNodo(nodo,raiz.getHojaIzquierda());
+	    			}
+	    		}
+	    			
+	   		}
+    	}
     }
-
+    
     public void addNodo( Nodo nodo ) {
+    	insert = false;
         this.addNodo( nodo , this.raiz );
     }
     

@@ -23,6 +23,30 @@ import android.widget.Toast;
 public class CalculadoraActivity extends Activity  implements OnClickListener {
 
 	EditText expr;
+	private String[] ecuaciones = {"3x*(2x-1)-5x+1=0", 
+									"(x+1)*(x-1)=0" ,
+									"2x*(8x-5)-9=9x-1" ,
+									"2x^2-1+2x^2-5x=0" ,
+									"3*(x^2-1)=0" ,
+									"3*(3x-1)=0",
+									"2x^2-7x+3=0",
+									"-x^2+7x-10=0",
+									"2x-3=1-2x+x^2",
+									"18=6x+x*(x-13)",
+									"-3*(4x+1)-18=0"};
+
+	private String[] soluciones = {"x1=1.193,x2=0.139", 
+			"x1=1,x2=-1" ,
+			"x1=1.51,x=-0.329" ,
+			"x1=-0.175,x=1.425" ,
+			"x=-1,x2=1",
+			"x=0.33333",
+			"x1=3,x2=0.5",
+			"x1=5,x2=2",
+			"x1=2,x=2",
+			"x1=9,x2=-2",
+			"x=1.75"};	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -238,7 +262,9 @@ public class CalculadoraActivity extends Activity  implements OnClickListener {
 					expr.setSelection(ind);
 			break;
 			case R.id.btn_solve:
-				String cadena = ((EditText)findViewById(R.id.txtexpr)).getText().toString();
+				for (int k = 0; k < ecuaciones.length; k++) {
+				//String cadena = ((EditText)findViewById(R.id.txtexpr)).getText().toString();
+					String cadena = ecuaciones[k];
 				int val = cadena.split("=").length;
 				if (val == 2)
 				{
@@ -249,22 +275,37 @@ public class CalculadoraActivity extends Activity  implements OnClickListener {
 					try {
 						String apostfix = a.ConvertToPostfix();
 						Log.i("INFIXTOPOSTFIX",apostfix);
-						//Arbol ar = new Arbol(new Nodo(String.valueOf(apostfix.charAt(apostfix.length()-1))));
+						Arbol ar = new Arbol(new Nodo(String.valueOf(apostfix.charAt(apostfix.length()-1))));
 						ug.mathe.util.Stack pila = new ug.mathe.util.Stack(255);
 						ug.mathe.util.Stack pilaexpr = new ug.mathe.util.Stack(255);
-						for (int i = 0; i < apostfix.length(); i++){
-							switch (apostfix.charAt(i)) {
+						int cambio = 0;
+						//for (int i = 0; i < apostfix.length(); i++){
+						for (int i = apostfix.length()-2; i >= 0 ; i--) {
+							if (apostfix.charAt(i) == '#')
+								ar.addNodo(new Nodo(String.valueOf(a.getData(i))));
+							else
+								ar.addNodo(new Nodo(String.valueOf(apostfix.charAt(i))));
+							/*switch (apostfix.charAt(i)) {
 								case '#':
 									pila.Push(a.getData(i));
+									cambio = cambio!=2?cambio+1:2;
 								break;
 								case 'x': case 'y':
 									pila.Push(String.valueOf(apostfix.charAt(i)));
+									cambio = cambio!=2?cambio+1:2;
 								break;
 								case '*': case '/': case '+': case '-': case '^':
 										Nodo nodo = new Nodo(String.valueOf(apostfix.charAt(i)));
 										if (!pila.isEmpty()) {
+											int ciclo = 2;
+											if ((i+1) != apostfix.length())
+												if (cambio==1)
+												switch (apostfix.charAt(i+1)) {
+													case '*': case '/': case '+': case '-': case '^': ciclo = 1; break;
+												}
+											cambio = 0;
 											int j = 0;
-											while (!pila.isEmpty() && j < 2) {
+											while (!pila.isEmpty() && j < ciclo) {
 												switch (j) {
 													case 0:
 														nodo.setHojaDerecha(new Nodo(String.valueOf(pila.Pop())));
@@ -284,11 +325,15 @@ public class CalculadoraActivity extends Activity  implements OnClickListener {
 											pilaexpr.Push(nodo);
 										}
 									break;
-							}
+							}*/
 						}
-						Arbol ar = new Arbol((Nodo)pilaexpr.Pop());
+						if (k >= 10 )
+						{
+						//Arbol ar = new Arbol((Nodo)pilaexpr.Pop());
 						Algebra al = new Algebra(ar);
+						Log.i("SOLVE",al.Expand() + ">>>" + soluciones[k] );
 						Toast.makeText(getApplicationContext(), al.Expand(), Toast.LENGTH_LONG).show();
+						}
 						//al.Expand();
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
@@ -310,6 +355,7 @@ public class CalculadoraActivity extends Activity  implements OnClickListener {
 				}
 				} else {
 					Toast.makeText(getApplicationContext(), "Expresion invalida", Toast.LENGTH_LONG).show();
+				}
 				}
 			break;
 			case R.id.btn_graph:
