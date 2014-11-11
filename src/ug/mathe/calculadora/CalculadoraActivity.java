@@ -45,7 +45,7 @@ public class CalculadoraActivity extends Activity  implements OnClickListener {
 			"x1=5,x2=2",
 			"x1=2,x=2",
 			"x1=9,x2=-2",
-			"x=1.75"};	
+			"x=-1.75"};	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -262,9 +262,9 @@ public class CalculadoraActivity extends Activity  implements OnClickListener {
 					expr.setSelection(ind);
 			break;
 			case R.id.btn_solve:
-				for (int k = 0; k < ecuaciones.length; k++) {
-				//String cadena = ((EditText)findViewById(R.id.txtexpr)).getText().toString();
-					String cadena = ecuaciones[k];
+				//for (int k = 0; k < ecuaciones.length; k++) {
+				String cadena = ((EditText)findViewById(R.id.txtexpr)).getText().toString();
+					//String cadena = ecuaciones[k];
 				int val = cadena.split("=").length;
 				if (val == 2)
 				{
@@ -327,13 +327,12 @@ public class CalculadoraActivity extends Activity  implements OnClickListener {
 									break;
 							}*/
 						}
-						if (k >= 10 )
-						{
 						//Arbol ar = new Arbol((Nodo)pilaexpr.Pop());
 						Algebra al = new Algebra(ar);
-						Log.i("SOLVE",al.Expand() + ">>>" + soluciones[k] );
-						Toast.makeText(getApplicationContext(), al.Expand(), Toast.LENGTH_LONG).show();
-						}
+						//Log.i("SOLVE",al.Expand() + ">>>" + soluciones[k] );
+						String res = al.Expand();
+						Log.i("SOLVE",al.Expand());
+						Toast.makeText(getApplicationContext(), res, Toast.LENGTH_LONG).show();
 						//al.Expand();
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
@@ -356,7 +355,7 @@ public class CalculadoraActivity extends Activity  implements OnClickListener {
 				} else {
 					Toast.makeText(getApplicationContext(), "Expresion invalida", Toast.LENGTH_LONG).show();
 				}
-				}
+				
 			break;
 			case R.id.btn_graph:
 				Intent intent = new Intent(getApplicationContext(),GraficadorActivity.class);

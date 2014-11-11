@@ -44,23 +44,13 @@ public class Arbol {
     private void addNodo( Nodo nodo, Nodo raiz ) {
     	if (!(isNumeric(raiz.getValor()) || isVar(raiz.getValor()))) {
 	   		if (raiz.getHojaDerecha() == null && !(isNumeric(raiz.getValor()) || isVar(raiz.getValor()))) {
-	   			if (!nodo.getValor().equals("~"))
-	   				raiz.setHojaDerecha(nodo);
-	   			else {
-	   				raiz.setHojaDerecha(new Nodo("-"));
-	   				raiz.getHojaDerecha().setHojaIzquierda(new Nodo("0"));
-	   			}
+   				raiz.setHojaDerecha(nodo);
 	   			insert = true;
 	   		} else {
 	    		addNodo(nodo,raiz.getHojaDerecha());
 	    		if (!insert) {
 	    			if (raiz.getHojaIzquierda() == null && !(isNumeric(raiz.getValor()) || isVar(raiz.getValor()))) {
-	    				if (!nodo.getValor().equals("~"))
-	    					raiz.setHojaIzquierda(nodo);
-	    				else {
-	    					raiz.setHojaIzquierda(new Nodo("-"));
-	    					raiz.getHojaIzquierda().setHojaIzquierda(new Nodo("0"));
-	    				}
+    					raiz.setHojaIzquierda(nodo);
 	    				insert = true;
 	    			} else {
 	    				addNodo(nodo,raiz.getHojaIzquierda());

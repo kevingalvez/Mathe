@@ -372,43 +372,6 @@ public class Algebra {
 			dato2 = nodo.getHojaIzquierda().getHojaIzquierda().getValor();
 			dato3 = nodo.getHojaIzquierda().getHojaDerecha().getValor();
 			result = new Numero(Double.valueOf(dato1),dato2,Double.valueOf(dato3));
-		}  else if (nodo.getValor().equals("^") && nodo.getHojaIzquierda().getValor().equals("-") && nodo.getHojaIzquierda().getHojaIzquierda().getValor().equals("0")) {
-			String dato1 = "", dato2 = "", dato3 = "";
-			dato1 = "1";
-			dato2 = nodo.getHojaIzquierda().getHojaDerecha().getValor();
-			dato3 = nodo.getHojaDerecha().getValor();
-			result = new Numero(Double.valueOf(dato1)*-1,dato2,Double.valueOf(dato3));
-		} else if (nodo.getValor().equals("^") && nodo.getHojaDerecha().getValor().equals("-") && nodo.getHojaDerecha().getHojaIzquierda().getValor().equals("0")) {
-			String dato1 = "", dato2 = "", dato3 = "";
-			dato1 = "1";
-			dato2 = nodo.getHojaDerecha().getHojaDerecha().getValor();
-			dato3 = nodo.getHojaIzquierda().getValor();
-			result = new Numero(Double.valueOf(dato1)*-1,dato2,Double.valueOf(dato3));
-		}  else if (nodo.getValor().equals("*") && nodo.getHojaIzquierda().getValor().equals("-") && nodo.getHojaIzquierda().getHojaIzquierda().getValor().equals("0")) {
-			String dato1 = "", dato2 = "", dato3 = "";
-			if (isNumeric(nodo.getHojaIzquierda().getHojaDerecha().getValor())) {
-				dato1 = nodo.getHojaIzquierda().getHojaDerecha().getValor();
-				dato2 = "";
-				dato3 = "1";
-			} else if (isVar(nodo.getHojaIzquierda().getHojaDerecha().getValor())) {
-				dato1 = "1";
-				dato2 = nodo.getHojaIzquierda().getHojaDerecha().getValor();
-				dato3 = "1";
-			}
-			result = new Numero(Double.valueOf(dato1)*-1,dato2,Double.valueOf(dato3));
-		} else if (nodo.getValor().equals("*") && nodo.getHojaDerecha().getValor().equals("-") && nodo.getHojaDerecha().getHojaIzquierda().getValor().equals("0")) {
-			String dato1 = "", dato2 = "", dato3 = "";
-			if (isNumeric(nodo.getHojaDerecha().getHojaDerecha().getValor())) {
-				dato1 = nodo.getHojaDerecha().getHojaDerecha().getValor();
-				dato2 = "";
-				dato3 = "1";
-			} else if (isVar(nodo.getHojaDerecha().getHojaDerecha().getValor())) {
-				dato1 = "1";
-				dato2 = nodo.getHojaDerecha().getHojaDerecha().getValor();
-				dato3 = "1";
-			}			
-
-			result = new Numero(Double.valueOf(dato1)*-1,dato2,Double.valueOf(dato3));
 		}
 		return result;
 	}
@@ -438,6 +401,8 @@ public class Algebra {
 	    			aux.setCof(aux.getCof()*-1);
 	    		}
 	    		num.Push(aux);
+	    	} else if (nodo.getValor().equals("~")) {
+	    		Simplificar(nodo.getHojaDerecha(),!minus);
 	    	}
 	    	else if (nodo.getValor().equals("*")) { 
 	    		Numero aux = dato(nodo); 
