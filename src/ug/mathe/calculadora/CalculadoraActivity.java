@@ -269,7 +269,7 @@ public class CalculadoraActivity extends Activity  implements OnClickListener {
 				if (val == 2)
 				{
 					String[] arr = cadena.split("=");
-					String ecuacion = arr[0] + "-(" + arr[1] +")";
+					String ecuacion = "-(" + arr[1] +")+" + arr[0];
 					InfixToPostfix a = new InfixToPostfix(ecuacion);
 					
 					try {

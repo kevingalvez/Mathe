@@ -40,7 +40,7 @@ public class Arbol {
 		else
 			return false;
 	}	
-    	
+	    	
     private void addNodo( Nodo nodo, Nodo raiz ) {
     	if (!(isNumeric(raiz.getValor()) || isVar(raiz.getValor()))) {
 	   		if (raiz.getHojaDerecha() == null && !(isNumeric(raiz.getValor()) || isVar(raiz.getValor()))) {
@@ -56,7 +56,6 @@ public class Arbol {
 	    				addNodo(nodo,raiz.getHojaIzquierda());
 	    			}
 	    		}
-	    			
 	   		}
     	}
     }
