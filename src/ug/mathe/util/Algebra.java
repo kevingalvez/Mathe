@@ -1,13 +1,35 @@
 package ug.mathe.util;
 
+import android.util.Log;
+import android.widget.Toast;
+
 public class Algebra {
 
 	private Arbol ar;
 	private boolean expander;
 	private Stack num = new Stack(255); 
 	String postoder = "";
+	
 	public Algebra(Arbol ar){
 		this.ar = ar;
+	}
+	
+	public Algebra(String expr) {
+		InfixToPostfix a = new InfixToPostfix(expr);
+		try {
+			String apostfix = a.ConvertToPostfix();
+			Log.i("INFIXTOPOSTFIX",apostfix);
+			Arbol ar = new Arbol(new Nodo(String.valueOf(apostfix.charAt(apostfix.length()-1))));
+			for (int i = apostfix.length()-2; i >= 0 ; i--) {
+				if (apostfix.charAt(i) == '#')
+					ar.addNodo(new Nodo(String.valueOf(a.getData(i))));
+				else
+					ar.addNodo(new Nodo(String.valueOf(apostfix.charAt(i))));
+			}
+			this.ar = ar;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
 	}
 		
 	private boolean isDist(String a) {
@@ -513,5 +535,112 @@ public class Algebra {
 		String result = evaluarNum();
 		return result; 
 		//ar.Order(ar.getRaiz());
+	}
+	
+	
+	private Nodo Deriva(Nodo nodo) {
+			Nodo n = null;
+		    if (nodo != null) {
+		    	if (nodo.getValor().equals("+" )) {
+		    		n = new Nodo("+");
+		    		n.setHojaIzquierda(Deriva(nodo.getHojaIzquierda()));
+		    		n.setHojaDerecha(Deriva(nodo.getHojaDerecha()));
+		    	} else if (nodo.getValor().equals("-" )) {
+		    		n = new Nodo("-");
+		    		n.setHojaIzquierda(Deriva(nodo.getHojaIzquierda()));
+		    		n.setHojaDerecha(Deriva(nodo.getHojaDerecha()));		    		
+		    	} else if (nodo.getValor().equals("*" )) {
+		    		n = new Nodo("+");
+		    		n.setHojaIzquierda(new Nodo("*"));
+		    		n.getHojaIzquierda().setHojaIzquierda(Deriva(nodo.getHojaIzquierda()));
+		    		n.getHojaIzquierda().setHojaDerecha(nodo.getHojaDerecha());
+		    		n.setHojaDerecha(new Nodo("*"));
+		    		n.getHojaDerecha().setHojaIzquierda(nodo.getHojaIzquierda());
+		    		n.getHojaDerecha().setHojaDerecha(Deriva(nodo.getHojaDerecha()));	    		
+		    	} else if (nodo.getValor().equals("/" )) {
+		    		n = new Nodo("/");
+		    		n.setHojaIzquierda(new Nodo("-"));
+		    		n.getHojaIzquierda().setHojaIzquierda(new Nodo("*"));
+		    		n.getHojaIzquierda().getHojaIzquierda().setHojaIzquierda(Deriva(nodo.getHojaIzquierda()));
+		    		n.getHojaIzquierda().getHojaIzquierda().setHojaDerecha(nodo.getHojaDerecha());
+		    		n.getHojaIzquierda().setHojaDerecha(new Nodo("*"));
+		    		n.getHojaIzquierda().getHojaDerecha().setHojaIzquierda(nodo.getHojaIzquierda());
+		    		n.getHojaIzquierda().getHojaDerecha().setHojaDerecha(Deriva(nodo.getHojaDerecha()));
+		    		
+		    		n.setHojaDerecha(new Nodo("^"));
+		    		n.getHojaDerecha().setHojaIzquierda(nodo.getHojaDerecha());
+		    		n.getHojaDerecha().setHojaDerecha(new Nodo("2"));
+		    	} else if (nodo.getValor().equals("^" )) {
+		    		n = new Nodo("*");
+		    		n.setHojaIzquierda(new Nodo("^"));
+		    		n.getHojaIzquierda().setHojaIzquierda(new Nodo("*"));
+		    		n.getHojaIzquierda().getHojaIzquierda().setHojaIzquierda(nodo.getHojaDerecha());
+		    		n.getHojaIzquierda().getHojaIzquierda().setHojaDerecha(nodo.getHojaIzquierda());
+		    		
+		    		n.getHojaIzquierda().setHojaDerecha(new Nodo("-"));
+		    		n.getHojaIzquierda().getHojaDerecha().setHojaIzquierda(nodo.getHojaDerecha());
+		    		n.getHojaIzquierda().getHojaDerecha().setHojaDerecha(new Nodo("1"));
+		    		
+		    		n.setHojaDerecha(Deriva(nodo.getHojaIzquierda()));
+		    	} else if (nodo.getValor().equals("c")) {
+		    		n = new Nodo("*");
+		    		n.setHojaIzquierda(new Nodo("~"));
+		    		n.getHojaIzquierda().setHojaDerecha(new Nodo("s"));
+		    		n.getHojaIzquierda().getHojaDerecha().setHojaDerecha(nodo.getHojaDerecha());
+		    		
+		    		n.setHojaDerecha(Deriva(nodo.getHojaDerecha()));
+		    	} else if (nodo.getValor().equals("s")) {
+		    		n = new Nodo("*");
+		    		n.setHojaIzquierda(new Nodo("c"));
+		    		n.getHojaIzquierda().setHojaDerecha(nodo.getHojaDerecha());
+		    		
+		    		n.setHojaDerecha(Deriva(nodo.getHojaDerecha()));		    		
+		    		
+		    	} else if (nodo.getValor().equals("t")) {
+		    		n = new Nodo("*");
+		    		Nodo temp = new Nodo("/");
+		    		temp.setHojaIzquierda(new Nodo("s"));
+		    		temp.getHojaIzquierda().setHojaDerecha(nodo.getHojaDerecha());
+		    		temp.setHojaDerecha(new Nodo("c"));
+		    		temp.getHojaDerecha().setHojaDerecha(nodo.getHojaDerecha());		    		
+		    		
+		    		n.setHojaIzquierda(Deriva(temp));	    		
+		    		n.setHojaDerecha(Deriva(nodo.getHojaDerecha()));		    				    		
+		    	} else if (nodo.getValor().equals("e")) {
+		    		n = new Nodo("*");
+		    		n.setHojaIzquierda(new Nodo("e"));
+		    		n.getHojaIzquierda().setHojaDerecha(nodo.getHojaDerecha());
+		    		
+		    		n.setHojaDerecha(Deriva(nodo.getHojaDerecha()));
+		    	} else if (nodo.getValor().equals("l")) {
+		    		n = new Nodo("*");
+		    		n.setHojaIzquierda(new Nodo("/"));
+		    		n.getHojaIzquierda().setHojaIzquierda(new Nodo("1"));
+		    		n.getHojaIzquierda().setHojaDerecha(nodo.getHojaDerecha());
+		    		
+		    		n.setHojaDerecha(Deriva(nodo.getHojaDerecha()));
+		    	} else if (nodo.getValor().equals("q")) {
+		    		n = new Nodo("*");
+		    		n.setHojaIzquierda(new Nodo("/"));
+		    		n.getHojaIzquierda().setHojaIzquierda(new Nodo("1"));
+		    		n.getHojaIzquierda().setHojaDerecha(new Nodo("q"));
+		    		n.getHojaIzquierda().getHojaDerecha().setHojaDerecha(nodo.getHojaDerecha());
+		    		
+		    		n.setHojaDerecha(Deriva(nodo.getHojaDerecha()));
+		    	}
+		    	else if (isNumeric(nodo.getValor())) {
+		    		n = new Nodo("0");
+		    	} else if (isVar(nodo.getValor())) {
+		    		n = new Nodo("1");
+		    	}
+		    }
+	    	return n;			
+	}
+	
+	public String Diff() {
+		String result = "";
+		ar = new Arbol(Deriva(ar.getRaiz()));
+		ar.Order(ar.getRaiz());
+		return result;
 	}
 }

@@ -41,6 +41,7 @@
     <string name="btn_parizq">(</string>
     <string name="btn_parder">)</string>
     <string name="btn_solve">solve</string>
+    <string name="btn_diff">diff</string>
     <string name="btn_graph">graph</string>    
     
     

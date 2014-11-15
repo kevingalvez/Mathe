@@ -116,6 +116,8 @@ public class CalculadoraActivity extends Activity  implements OnClickListener {
         boton.setOnClickListener(this);
         boton = (Button)findViewById(R.id.btn_solve);
         boton.setOnClickListener(this);
+        boton = (Button)findViewById(R.id.btn_diff);
+        boton.setOnClickListener(this);        
         boton = (Button)findViewById(R.id.btn_graph);
         boton.setOnClickListener(this);        
 	}
@@ -357,6 +359,11 @@ public class CalculadoraActivity extends Activity  implements OnClickListener {
 				}
 				
 			break;
+			case R.id.btn_diff:
+				String diff = ((EditText)findViewById(R.id.txtexpr)).getText().toString();
+				Algebra al = new Algebra(diff);
+				al.Diff();
+				break;
 			case R.id.btn_graph:
 				Intent intent = new Intent(getApplicationContext(),GraficadorActivity.class);
 				expr = (EditText)findViewById(R.id.txtexpr);

@@ -282,10 +282,19 @@
             android:text="@string/btn_solve" />
         
         <Button
-            android:id="@+id/btn_graph"
+            android:id="@+id/btn_diff"
             android:layout_width="wrap_content"
             android:layout_height="55dp"
             android:layout_alignLeft="@+id/btn_igual"
+            android:layout_alignRight="@+id/btn_igual"
+            android:layout_below="@+id/btn_igual"
+            android:text="@string/btn_diff" />        
+        
+        <Button
+            android:id="@+id/btn_graph"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_alignLeft="@+id/btn_suma"
             android:layout_alignRight="@+id/btn_suma"
             android:layout_below="@+id/btn_igual"
             android:text="@string/btn_graph" />         
