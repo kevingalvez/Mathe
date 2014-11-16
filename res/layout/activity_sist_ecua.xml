@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="ug.mathe.calculadora.CalculadoraActivity" >
+    tools:context="ug.mathe.SistEcuaActivity" >
 
     <EditText
         android:id="@+id/txtexpr"
@@ -41,57 +41,57 @@
             android:text="@string/btn_y" />
         
         <Button
-            android:id="@+id/btn_sqrt"
+            android:id="@+id/btn_z"
             android:layout_width="80dp"
             android:layout_height="55dp"
             android:layout_alignBaseline="@+id/btn_y"
             android:layout_alignBottom="@+id/btn_y"
             android:layout_toRightOf="@+id/btn_y"            
-            android:text="@string/btn_sqrt" />        
+            android:text="@string/btn_z" />        
     
         <Button
-            android:id="@+id/btn_del"
+            android:id="@+id/btn_w"
             android:layout_width="80dp"
             android:layout_height="55dp"
-            android:layout_alignBaseline="@+id/btn_sqrt"
-            android:layout_alignBottom="@+id/btn_sqrt"
-            android:layout_toRightOf="@+id/btn_sqrt"            
-            android:text="@string/btn_del" />        
+            android:layout_alignBaseline="@+id/btn_z"
+            android:layout_alignBottom="@+id/btn_z"
+            android:layout_toRightOf="@+id/btn_z"            
+            android:text="@string/btn_w" />        
         <Button
-            android:id="@+id/btn_sen"
+            android:id="@+id/btn_a"
             android:layout_width="80dp"
             android:layout_height="55dp"
             android:layout_alignLeft="@+id/btn_x"
             android:layout_alignRight="@+id/btn_x"
             android:layout_below="@+id/btn_x"            
-            android:text="@string/btn_sen" />
+            android:text="@string/btn_a" />
         
         <Button
-            android:id="@+id/btn_cos"
+            android:id="@+id/btn_b"
             android:layout_width="80dp"
             android:layout_height="55dp"
-            android:layout_alignBaseline="@+id/btn_sen"
-            android:layout_alignBottom="@+id/btn_sen"
-            android:layout_toRightOf="@+id/btn_sen"
-            android:text="@string/btn_cos" />
+            android:layout_alignLeft="@+id/btn_y"
+            android:layout_alignRight="@+id/btn_y"
+            android:layout_below="@+id/btn_y"  
+            android:text="@string/btn_b" />
         
         <Button
-            android:id="@+id/btn_tan"
+            android:id="@+id/btn_c"
             android:layout_width="80dp"
             android:layout_height="55dp"
-            android:layout_alignBaseline="@+id/btn_cos"
-            android:layout_alignBottom="@+id/btn_cos"
-            android:layout_toRightOf="@+id/btn_cos"
-            android:text="@string/btn_tan" />   
+            android:layout_alignLeft="@+id/btn_z"
+            android:layout_alignRight="@+id/btn_z"
+            android:layout_below="@+id/btn_z"  
+            android:text="@string/btn_c" />   
             
         <Button
-            android:id="@+id/btn_ln"
+            android:id="@+id/btn_d"
             android:layout_width="80dp"
             android:layout_height="55dp"
-            android:layout_alignBaseline="@+id/btn_cos"
-            android:layout_alignBottom="@+id/btn_cos"
-            android:layout_toRightOf="@+id/btn_tan"
-            android:text="@string/btn_ln" />
+            android:layout_alignLeft="@+id/btn_w"
+            android:layout_alignRight="@+id/btn_w"
+            android:layout_below="@+id/btn_w"  
+            android:text="@string/btn_d" />
         
         <Button
             android:id="@+id/btn_parizq"
@@ -299,5 +299,6 @@
             android:layout_alignRight="@+id/btn_suma"
             android:layout_below="@+id/btn_igual"
             android:text="@string/btn_graph" />         
+
 
 </RelativeLayout>

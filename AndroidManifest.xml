@@ -34,9 +34,13 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="ug.mathe.calculadora.CalculadoraActivity"
+            android:name=".calculadora.CalculadoraActivity"
             android:label="@string/title_activity_calculadora"
             android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".SistEcuaActivity"
+            android:label="@string/title_activity_sist_ecua" >
         </activity>
     </application>
 

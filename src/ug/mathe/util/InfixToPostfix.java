@@ -144,7 +144,7 @@ public class InfixToPostfix {
                             postfix += verifica_signo(expr.charAt(i));
                             i++;
                         break;
-                    case 'x': case 'y':
+                    case 'x': case 'y': case 'z': case 'w':
                         if (signo) postfix +=verifica_signo('*');
 
                         postfix += expr.charAt(i);
@@ -156,7 +156,8 @@ public class InfixToPostfix {
                         signo = true;
                         postfix +=verifica_signo(expr.charAt(i));
                         i++;
-                    break;                        
+                    break;  
+                    default: throw new Exception(expr.charAt(i) + " Caracter invalido");
                 }
             }
             while (!simbolos.isEmpty())

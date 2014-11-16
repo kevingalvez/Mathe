@@ -3,14 +3,14 @@ package ug.mathe.calculadora;
 import ug.mathe.R;
 import ug.mathe.graficador.GraficadorActivity;
 import ug.mathe.util.Algebra;
-import ug.mathe.util.Arbol;
 import ug.mathe.util.InfixToPostfix;
-import ug.mathe.util.Nodo;
+import ug.mathe.util.Matrices;
+import ug.mathe.util.Numero;
+import ug.mathe.util.Stack;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,7 +33,8 @@ public class CalculadoraActivity extends Activity  implements OnClickListener {
 									"-x^2+7x-10=0",
 									"2x-3=1-2x+x^2",
 									"18=6x+x*(x-13)",
-									"-3*(4x+1)-18=0"};
+									"-3*(4x+1)-18=0",
+									"x*(1+x-3)-5x=-x+5"};
 
 	private String[] soluciones = {"x1=1.193,x2=0.139", 
 			"x1=1,x2=-1" ,
@@ -45,7 +46,8 @@ public class CalculadoraActivity extends Activity  implements OnClickListener {
 			"x1=5,x2=2",
 			"x1=2,x=2",
 			"x1=9,x2=-2",
-			"x=-1.75"};	
+			"x=-1.75",
+			"x1=6.74,x2=-0.74"};	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -141,113 +143,116 @@ public class CalculadoraActivity extends Activity  implements OnClickListener {
 		return super.onOptionsItemSelected(item);
 	}
 
+	private void escribir(String carac) {
+		//expr = (EditText)findViewById(R.id.txtexpr);
+		//expr.append("0");
+		expr = (EditText)findViewById(R.id.txtexpr);
+		int ind =expr.getSelectionEnd();
+		String s = expr.getText().toString(), nuevo="";
+		
+		if (s.length() == 0) {
+			expr.setText(carac);
+			expr.setSelection(expr.getText().length());
+		} else if (s.length() == ind) {
+			expr.append(carac);
+		} else {
+			int j=0;
+			for (int i=0; i<s.length()+1;i++){
+				if (i!=ind) {
+					nuevo += s.charAt(j);
+					j++;
+				}
+				else
+					nuevo += carac;
+			}
+			
+			expr.setText(nuevo);
+			if (ind>=0)
+				expr.setSelection(ind);
+		}
+	}
+	
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 			case R.id.btn_0:
-				expr = (EditText)findViewById(R.id.txtexpr);
-				expr.append(  "0");
+				escribir("0");
 			break;
 			case R.id.btn_1:
-				expr = (EditText)findViewById(R.id.txtexpr);
-				expr.append(  "1");
+				escribir("1");
 			break;
 			case R.id.btn_2:
-				expr = (EditText)findViewById(R.id.txtexpr);
-				expr.append(  "2");
+				escribir("2");
 			break;
 			case R.id.btn_3:
-				expr = (EditText)findViewById(R.id.txtexpr);
-				expr.append(  "3");
+				escribir("3");
 			break;
 			case R.id.btn_4:
-				expr = (EditText)findViewById(R.id.txtexpr);
-				expr.append(  "4");
+				escribir("4");
 			break;
 			case R.id.btn_5:
-				expr = (EditText)findViewById(R.id.txtexpr);
-				expr.append(  "5");
+				escribir("5");
 			break;
 			case R.id.btn_6:
-				expr = (EditText)findViewById(R.id.txtexpr);
-				expr.append(  "6");
+				escribir("6");
 			break;
 			case R.id.btn_7:
-				expr = (EditText)findViewById(R.id.txtexpr);
-				expr.append(  "7");
+				escribir("7");
 			break;
 			case R.id.btn_8:
-				expr = (EditText)findViewById(R.id.txtexpr);
-				expr.append(  "8");
+				escribir("8");
 			break;
 			case R.id.btn_9:
-				expr = (EditText)findViewById(R.id.txtexpr);
-				expr.append(  "9");
+				escribir("9");
 			break;
 			case R.id.btn_x:
-				expr = (EditText)findViewById(R.id.txtexpr);
-				expr.append(  "x");
+				escribir("x");
 			break;
 			case R.id.btn_y:
-				expr = (EditText)findViewById(R.id.txtexpr);
-				expr.append(  "y");
+				escribir("y");
 			break;
 			case R.id.btn_division:
-				expr = (EditText)findViewById(R.id.txtexpr);
-				expr.append(  "/");
+				escribir("/");
 			break;
 			case R.id.btn_multiplicacion:
-				expr = (EditText)findViewById(R.id.txtexpr);
-				expr.append(  "*");
+				escribir("*");
 			break;
 			case R.id.btn_resta:
-				expr = (EditText)findViewById(R.id.txtexpr);
-				expr.append(  "-");
+				escribir("-");
 			break;
 			case R.id.btn_suma:
-				expr = (EditText)findViewById(R.id.txtexpr);
-				expr.append(  "+");
+				escribir("+");
 			break;
 			case R.id.btn_punto:
-				expr = (EditText)findViewById(R.id.txtexpr);
-				expr.append(  ".");
+				escribir(".");
 			break;
 			case R.id.btn_eleva:
-				expr = (EditText)findViewById(R.id.txtexpr);
-				expr.append(  "^");
+				escribir("^");
 			break;
 			case R.id.btn_sen:
-				expr = (EditText)findViewById(R.id.txtexpr);
-				expr.append(  "sen(");
+				escribir("sen(");
 			break;
 			case R.id.btn_cos:
-				expr = (EditText)findViewById(R.id.txtexpr);
-				expr.append(  "cos(");
+				escribir("cos(");
 			break;
 			case R.id.btn_tan:
-				expr = (EditText)findViewById(R.id.txtexpr);
-				expr.append(  "tan(");
+				escribir("tan(");
 			break;
 			case R.id.btn_ln:
-				expr = (EditText)findViewById(R.id.txtexpr);
-				expr.append(  "ln(");
+				escribir("ln(");
 			break;
 			case R.id.btn_e:
-				expr = (EditText)findViewById(R.id.txtexpr);
-				expr.append(  "e(");
+				escribir("e(");
 			break;
 			case R.id.btn_sqrt:
-				expr = (EditText)findViewById(R.id.txtexpr);
-				expr.append(  "sqrt(");
+				escribir("sqrt(");
 			break;
 			case R.id.btn_parizq:
-				expr = (EditText)findViewById(R.id.txtexpr);
-				expr.append(  "(");
+				escribir("(");
 			break;
 			case R.id.btn_parder:
-				expr = (EditText)findViewById(R.id.txtexpr);
-				expr.append(  ")");
+				escribir(")");
 			break;
 			case R.id.btn_del:
 				expr = (EditText)findViewById(R.id.txtexpr);
@@ -264,105 +269,103 @@ public class CalculadoraActivity extends Activity  implements OnClickListener {
 					expr.setSelection(ind);
 			break;
 			case R.id.btn_solve:
+				
+				
 				//for (int k = 0; k < ecuaciones.length; k++) {
 				String cadena = ((EditText)findViewById(R.id.txtexpr)).getText().toString();
-					//String cadena = ecuaciones[k];
-				int val = cadena.split("=").length;
-				if (val == 2)
-				{
-					String[] arr = cadena.split("=");
-					String ecuacion = "-(" + arr[1] +")+" + arr[0];
-					InfixToPostfix a = new InfixToPostfix(ecuacion);
-					
-					try {
-						String apostfix = a.ConvertToPostfix();
-						Log.i("INFIXTOPOSTFIX",apostfix);
-						Arbol ar = new Arbol(new Nodo(String.valueOf(apostfix.charAt(apostfix.length()-1))));
-						ug.mathe.util.Stack pila = new ug.mathe.util.Stack(255);
-						ug.mathe.util.Stack pilaexpr = new ug.mathe.util.Stack(255);
-						int cambio = 0;
-						//for (int i = 0; i < apostfix.length(); i++){
-						for (int i = apostfix.length()-2; i >= 0 ; i--) {
-							if (apostfix.charAt(i) == '#')
-								ar.addNodo(new Nodo(String.valueOf(a.getData(i))));
-							else
-								ar.addNodo(new Nodo(String.valueOf(apostfix.charAt(i))));
-							/*switch (apostfix.charAt(i)) {
-								case '#':
-									pila.Push(a.getData(i));
-									cambio = cambio!=2?cambio+1:2;
-								break;
-								case 'x': case 'y':
-									pila.Push(String.valueOf(apostfix.charAt(i)));
-									cambio = cambio!=2?cambio+1:2;
-								break;
-								case '*': case '/': case '+': case '-': case '^':
-										Nodo nodo = new Nodo(String.valueOf(apostfix.charAt(i)));
-										if (!pila.isEmpty()) {
-											int ciclo = 2;
-											if ((i+1) != apostfix.length())
-												if (cambio==1)
-												switch (apostfix.charAt(i+1)) {
-													case '*': case '/': case '+': case '-': case '^': ciclo = 1; break;
-												}
-											cambio = 0;
-											int j = 0;
-											while (!pila.isEmpty() && j < ciclo) {
-												switch (j) {
-													case 0:
-														nodo.setHojaDerecha(new Nodo(String.valueOf(pila.Pop())));
-													break;
-													case 1:
-														nodo.setHojaIzquierda(new Nodo(String.valueOf(pila.Pop())));
-													break;													
-												}
-												j++;
-											}
-											if (j == 1)
-												nodo.setHojaIzquierda((Nodo)pilaexpr.Pop());
-											pilaexpr.Push(nodo);
-										} else {
-											nodo.setHojaDerecha((Nodo)pilaexpr.Pop());
-											nodo.setHojaIzquierda((Nodo)pilaexpr.Pop());
-											pilaexpr.Push(nodo);
-										}
-									break;
-							}*/
+				//String cadena = ecuaciones[k];
+				int ecuas = cadena.split(";").length;
+				if (ecuas > 1) {
+					Algebra[] al = new Algebra[ecuas];
+					String[] expr = cadena.split(";");
+					Matrices ma = new Matrices();
+		            double[][] a = { { 1, 1, 1, 6 },
+	                        { 1, 0, 1, 4 },
+	                        { 1, 1, 0, 3 } };
+		            double[][] p = new double[ecuas][ecuas + 1];
+		            double [] r = new double[ecuas];
+		            String[] var = new String[ecuas + 1];
+		            boolean ingr = true;
+					for (int i = 0; i < ecuas; i++) {
+						String[] arr = expr[i].split("=");
+						String ecuacion = "-(" + arr[1] +")+" + arr[0];
+						al[i] = new Algebra(ecuacion);
+						Stack coef = al[i].coef();
+						double[] b = new double[ecuas + 1];
+						while (!coef.isEmpty()) {
+							Numero num = (Numero)coef.Pop();
+							if (!num.getVar().equals("")) {
+								switch (num.getVar().charAt(0)) {
+									case 'x': b[0] = num.getCof(); break;
+									case 'y': b[1] = num.getCof(); break;
+									case 'z': b[2] = num.getCof(); break;
+									case 'w': b[3] = num.getCof(); break;
+								}
+							} else {
+								b[ecuas] = num.getCof()*-1;
+							}
 						}
-						//Arbol ar = new Arbol((Nodo)pilaexpr.Pop());
-						Algebra al = new Algebra(ar);
-						//Log.i("SOLVE",al.Expand() + ">>>" + soluciones[k] );
-						String res = al.Expand();
-						Log.i("SOLVE",al.Expand());
-						Toast.makeText(getApplicationContext(), res, Toast.LENGTH_LONG).show();
-						//al.Expand();
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						p[i] = b;
 					}
+					if (ma.GaussianElimination(p, r)) {
+						String result = "";
+						for (int i = 0; i < r.length; i++) {
+							switch (i) {
+							case 0: result += "x=" + r[i] + " "; break;
+							case 1: result += "y=" + r[i] + " "; break;
+							case 2: result += "z=" + r[i] + " "; break;
+							case 3: result += "w=" + r[i] + " "; break;
+						}							 
+						}
+						Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+					}
+				} 
+				else 
+				{
+					int val = cadena.split("=").length;
+					if (val == 2)
+					{
+						String[] arr = cadena.split("=");
+						String ecuacion = "-(" + arr[1] +")+" + arr[0];
+						Algebra al = new Algebra(ecuacion);					
+						try {
+							String res = al.Expand();
+							//Log.i("SOLVE",al.Expand() + " SOLUC " + soluciones[k]);
+							Toast.makeText(getApplicationContext(), res, Toast.LENGTH_LONG).show();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						
 					
-				
-				} else if (val == 1) 
-				{
-				
-				InfixToPostfix a = new InfixToPostfix(cadena);
-				expr = (EditText)findViewById(R.id.txtexpr);
-				try 
-				{
-					expr.setText(String.valueOf(a.evaluar(0)));
-					expr.setSelection(expr.length());
-				} catch (Exception e) {
-					Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+					} else if (val == 1) 
+					{
+					
+					InfixToPostfix a = new InfixToPostfix(cadena);
+					expr = (EditText)findViewById(R.id.txtexpr);
+					try 
+					{
+						expr.setText(String.valueOf(a.evaluar(0)));
+						expr.setSelection(expr.length());
+					} catch (Exception e) {
+						Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+					}
+					} else {
+						Toast.makeText(getApplicationContext(), "Expresion invalida", Toast.LENGTH_LONG).show();
+					}
 				}
-				} else {
-					Toast.makeText(getApplicationContext(), "Expresion invalida", Toast.LENGTH_LONG).show();
-				}
-				
+				//  }
 			break;
 			case R.id.btn_diff:
 				String diff = ((EditText)findViewById(R.id.txtexpr)).getText().toString();
 				Algebra al = new Algebra(diff);
-				al.Diff();
+				expr = (EditText)findViewById(R.id.txtexpr);
+				try 
+				{
+					expr.setText(al.Diff());
+					expr.setSelection(expr.length());
+				} catch (Exception e) {
+					Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+				}				
 				break;
 			case R.id.btn_graph:
 				Intent intent = new Intent(getApplicationContext(),GraficadorActivity.class);
@@ -370,13 +373,10 @@ public class CalculadoraActivity extends Activity  implements OnClickListener {
 				intent.putExtra("funciones", expr.getText()+";");
 				intent.putExtra("parametros", "-10,10,-10,10");
 				startActivity(intent);
-				//expr = (EditText)findViewById(R.id.txtexpr);
-				//expr.append(  "graph(");
-		break;			
+		break;
 			case R.id.btn_igual:
 					// Implementar la calcu
-				expr = (EditText)findViewById(R.id.txtexpr);
-				expr.append("=");
+				escribir("=");
 			break;			
 		}
 		expr = (EditText)findViewById(R.id.txtexpr);

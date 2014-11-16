@@ -5,7 +5,7 @@
     <string name="hello_world">Esto es una prueba</string>
     <string name="action_settings">Settings</string>
     <string name="funcion"></string>
-    <string name="vacio"></string>
+    <string name="vacio">x+y+z=6;x+z=4;x+y=3</string>
     <string name="btn_graficador">Graficador 2D</string>
     <string name="btn_geometria">Geometria Analitica</string>
     <string name="btn_ecuaciones">Algebra</string>
@@ -24,6 +24,12 @@
     <string name="btn_0">0</string>
     <string name="btn_x">x</string>
     <string name="btn_y">y</string>
+    <string name="btn_z">z</string>
+    <string name="btn_w">w</string>
+    <string name="btn_a">a</string>
+    <string name="btn_b">b</string>
+    <string name="btn_c">c</string>
+    <string name="btn_d">d</string>
     <string name="btn_del">Del</string>
     <string name="btn_division">/</string>
     <string name="btn_multiplicacion">*</string>
@@ -42,9 +48,7 @@
     <string name="btn_parder">)</string>
     <string name="btn_solve">solve</string>
     <string name="btn_diff">diff</string>
-    <string name="btn_graph">graph</string>    
-    
-    
+    <string name="btn_graph">graph</string>
     <string name="image_geometria_circunferencia">Circunferencia</string>
     <string name="title_activity_graficador">Graficador 2D</string>
     <string name="title_activity_geometria">Geometria Analitica</string>
@@ -79,5 +83,6 @@
     <string name="fragment_coef_p_value"></string>
     <string name="fragment_geometria_ecuagen">Ax^2+Bxy+Cy^2+Dx+Ey+F</string>
     <string name="title_activity_calculadora">Calculadora</string>
+    <string name="title_activity_sist_ecua">SistEcuaActivity</string>
 
 </resources>

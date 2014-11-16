@@ -49,7 +49,7 @@ public class Algebra {
 	}
 	
 	private boolean isVar(String cadena){
-		if (cadena.equals("x") || cadena.equals("y"))
+		if (cadena.equals("x") || cadena.equals("y") || cadena.equals("z") || cadena.equals("w"))
 			return true;
 		else
 			return false;
@@ -456,7 +456,7 @@ public class Algebra {
 			x1 = (-b+Math.sqrt(Math.pow(b, 2)-4*a*c))/(2*a);
 			x2 = (-b-Math.sqrt(Math.pow(b, 2)-4*a*c))/(2*a);
 			result = "X1= " + x1 + "; X2= " + x2;
-		} else if (a == 0) {
+		} else if (a == 0 && b != 0) {
 			x1 = -c/b;
 			result = "X= " + x1;
 		} else if (a == 0 && b == 0) {
@@ -537,7 +537,6 @@ public class Algebra {
 		//ar.Order(ar.getRaiz());
 	}
 	
-	
 	private Nodo Deriva(Nodo nodo) {
 			Nodo n = null;
 		    if (nodo != null) {
@@ -548,6 +547,9 @@ public class Algebra {
 		    	} else if (nodo.getValor().equals("-" )) {
 		    		n = new Nodo("-");
 		    		n.setHojaIzquierda(Deriva(nodo.getHojaIzquierda()));
+		    		n.setHojaDerecha(Deriva(nodo.getHojaDerecha()));		    		
+		    	} else if (nodo.getValor().equals("~" )) {
+		    		n = new Nodo("~");
 		    		n.setHojaDerecha(Deriva(nodo.getHojaDerecha()));		    		
 		    	} else if (nodo.getValor().equals("*" )) {
 		    		n = new Nodo("+");
@@ -641,6 +643,66 @@ public class Algebra {
 		String result = "";
 		ar = new Arbol(Deriva(ar.getRaiz()));
 		ar.Order(ar.getRaiz());
+		result = toString(ar.getRaiz());
 		return result;
+	}
+		
+	public String toString(Nodo nodo) {
+
+		String signo = "", izq = "", der = "";
+	    if (nodo != null) {
+	    	if (nodo.getValor().equals("*") || nodo.getValor().equals("/") || nodo.getValor().equals("^")) {
+	    		
+	    		if (!(isNumeric(nodo.getHojaDerecha().getValor())||isVar(nodo.getHojaDerecha().getValor()))) {
+	    			der = "(" + toString(nodo.getHojaDerecha()) + ")";
+	    		} else {
+	    			der = toString(nodo.getHojaDerecha());
+	    		}
+	    		signo = nodo.getValor();
+	    		if (!(isNumeric(nodo.getHojaIzquierda().getValor())||isVar(nodo.getHojaIzquierda().getValor()))) {
+	    			izq = "(" +toString(nodo.getHojaIzquierda()) + ")";
+	    		} else {
+	    			izq = toString(nodo.getHojaIzquierda());
+	    		}	    		
+	    	} else if (nodo.getValor().equals("-") || nodo.getValor().equals("~")) { 
+	    		if (!(isNumeric(nodo.getHojaDerecha().getValor())||isVar(nodo.getHojaDerecha().getValor()))) {
+	    			der = "(" + toString(nodo.getHojaDerecha()) + ")";
+	    		} else {
+	    			der = toString(nodo.getHojaDerecha());
+	    		}
+	    		signo = "-";
+	    		
+	    		izq = toString(nodo.getHojaIzquierda());
+	    	} else if (nodo.getValor().equals("+")) {
+	    		der = toString(nodo.getHojaDerecha());
+	    		signo = "+";
+	    		izq = toString(nodo.getHojaIzquierda());	    		
+	    	}  else if (nodo.getValor().equals("c") 
+	    			|| nodo.getValor().equals("s") 
+	    			|| nodo.getValor().equals("t") 
+	    			|| nodo.getValor().equals("e") || nodo.getValor().equals("l") || nodo.getValor().equals("q")) {
+	    		der = "(" + toString(nodo.getHojaDerecha()) + ")";
+	    		switch (nodo.getValor().charAt(0)) {
+	    			case 'c': signo = "cos"; break;
+	    			case 's': signo = "sen"; break;
+	    			case 't': signo = "tan"; break;
+	    			case 'e': signo = "e"; break;
+	    			case 'l': signo = "ln"; break;
+	    			case 'q': signo = "sqrt"; break;
+	    		}
+	    		izq = toString(nodo.getHojaIzquierda());
+	    	} else if (isNumeric(nodo.getValor()) || isVar(nodo.getValor())) {
+	    		izq = "";
+	    		signo = nodo.getValor();
+	    		der = "";
+	    	}
+	    }
+    	return izq + signo + der;		
+	}
+
+
+	public Stack coef() {
+		Simplificar(ar.getRaiz(),false);
+		return this.num;
 	}
 }
