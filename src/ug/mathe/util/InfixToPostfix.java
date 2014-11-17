@@ -264,5 +264,96 @@ public class InfixToPostfix {
         	throw new Exception(e.getMessage());
         }
     }
+    
+    public double evaluar(double x, double y) throws Exception
+    {
+        try
+        {
+        	if (this.apostfix.equals(""))
+        		this.apostfix  = ConvertToPostfix();
+            double a = 0.0, b = 0.0;
+
+            for (int i = 0; i < this.apostfix.length(); i++)
+            {
+                switch (this.apostfix.charAt(i)) {
+                    case '#': 
+                        numeros.Push((double)coeficientes[i]);
+                        break;
+
+                    case 'x':
+                    	numeros.Push(x);
+                    	break; 
+                	case 'y':
+                        numeros.Push(y);
+                        break;
+                    case '+':
+                        a = (Double)numeros.Pop();
+                        b = (Double)numeros.Pop();
+                        numeros.Push(b + a);
+                        break;
+                    case '-': 
+                        a = (Double)numeros.Pop();
+                        b = (Double)numeros.Pop();
+                        numeros.Push(b - a);                    
+                        break;                    
+                    case '*': 
+                        a = (Double)numeros.Pop();
+                        b = (Double)numeros.Pop();
+                        numeros.Push(b * a);                    
+                        break;                                        
+                    case '/':
+                        a = (Double)numeros.Pop();
+                        b = (Double)numeros.Pop();
+                        if (Double.isNaN(b / a))
+                        	throw new  Exception("Division no definido");                           
+                        numeros.Push(b / a);                    
+                        break;
+                    case '~':
+                        a = (Double)numeros.Pop();
+                        numeros.Push(-a);                    
+                        break;
+                    case '^':
+                        a = (Double)numeros.Pop();
+                        b = (Double)numeros.Pop();
+                        numeros.Push(Math.pow(b, a));                    
+                        break;                    
+                    case 's':
+                        a = (Double)numeros.Pop();
+                        numeros.Push(Math.sin(a));
+                        break;                         
+                    case 'c':
+                        a = (Double)numeros.Pop();
+                        numeros.Push(Math.cos(a));
+                        break;                         
+                    case 't':
+                        a = (Double)numeros.Pop();
+                        if (Double.isNaN(Math.tan(a)))
+                        	throw new  Exception("Tangente no definido");                        
+                        numeros.Push(Math.tan(a));
+                        break;                         
+                    case 'l':
+                        a = (Double)numeros.Pop();
+                        if (Double.isNaN(Math.log(a)))
+                        	throw new  Exception("Logaritmo no definido");
+                        numeros.Push(Math.log(a));
+                        break;                                                 
+                    case 'e':
+                        a = (Double)numeros.Pop();
+                        numeros.Push(Math.exp(a));
+                        break;
+                    case 'q':
+                        a = (Double)numeros.Pop();
+                        numeros.Push(Math.sqrt(a));
+                        break;                        
+                }
+
+            }
+            return (Double)numeros.Pop();
+        
+        } catch (Exception e) {
+            //System.err.println(e.getMessage());
+        	throw new Exception(e.getMessage());
+        }
+    }    
 }
 

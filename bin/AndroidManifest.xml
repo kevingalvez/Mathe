@@ -42,6 +42,10 @@
             android:name=".SistEcuaActivity"
             android:label="@string/title_activity_sist_ecua" >
         </activity>
+        <activity
+            android:name="ug.mathe.graficador.Graficador3dActivity"
+            android:label="@string/title_activity_graficador3d" >
+        </activity>
     </application>
 
 </manifest>

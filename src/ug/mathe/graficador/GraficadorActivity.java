@@ -1,5 +1,6 @@
 package ug.mathe.graficador;
 
+import ug.mathe.MainActivity;
 import ug.mathe.R;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -10,6 +11,7 @@ import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -90,7 +92,7 @@ public class GraficadorActivity extends Activity {
 			
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-
+				try {
 			    // get pointer index from the event object
 			    int pointerIndex = event.getActionIndex();
 
@@ -128,9 +130,9 @@ public class GraficadorActivity extends Activity {
 				        }
 			    		
 			            if ((ini_x-fin_x) > 100)
-			            	grap.setMove(-1, 0);
-			            else if (ini_x-fin_x < -100)
 			            	grap.setMove(1, 0);
+			            else if (ini_x-fin_x < -100)
+			            	grap.setMove(-1, 0);
 			            	
 			            
 			            if (ini_y-fin_y > 100)
@@ -212,7 +214,11 @@ public class GraficadorActivity extends Activity {
 			    }
 			    //invalidate();
 
-			    return true;				
+			    return true;	
+				} catch (Exception ex) {
+						Log.e(MainActivity.TAG,GraficadorActivity.class.toString() + " - Error en Touch!");
+						return false;
+				}
 				// TODO Auto-generated method stub
 				
 				/*Log.i("TOUCH","evento="+String.valueOf((int)(e.getAction())));
@@ -286,7 +292,7 @@ public class GraficadorActivity extends Activity {
 		    }
 				
    			 return false;*/
-			}
+			}			
 		});
 	}
 

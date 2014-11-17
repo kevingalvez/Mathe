@@ -1,7 +1,7 @@
 package ug.mathe.calculadora;
 
 import ug.mathe.R;
-import ug.mathe.graficador.GraficadorActivity;
+import ug.mathe.graficador.Graficador3dActivity;
 import ug.mathe.util.Algebra;
 import ug.mathe.util.InfixToPostfix;
 import ug.mathe.util.Matrices;
@@ -23,31 +23,6 @@ import android.widget.Toast;
 public class CalculadoraActivity extends Activity  implements OnClickListener {
 
 	EditText expr;
-	private String[] ecuaciones = {"3x*(2x-1)-5x+1=0", 
-									"(x+1)*(x-1)=0" ,
-									"2x*(8x-5)-9=9x-1" ,
-									"2x^2-1+2x^2-5x=0" ,
-									"3*(x^2-1)=0" ,
-									"3*(3x-1)=0",
-									"2x^2-7x+3=0",
-									"-x^2+7x-10=0",
-									"2x-3=1-2x+x^2",
-									"18=6x+x*(x-13)",
-									"-3*(4x+1)-18=0",
-									"x*(1+x-3)-5x=-x+5"};
-
-	private String[] soluciones = {"x1=1.193,x2=0.139", 
-			"x1=1,x2=-1" ,
-			"x1=1.51,x=-0.329" ,
-			"x1=-0.175,x=1.425" ,
-			"x=-1,x2=1",
-			"x=0.33333",
-			"x1=3,x2=0.5",
-			"x1=5,x2=2",
-			"x1=2,x=2",
-			"x1=9,x2=-2",
-			"x=-1.75",
-			"x1=6.74,x2=-0.74"};	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -279,13 +254,8 @@ public class CalculadoraActivity extends Activity  implements OnClickListener {
 					Algebra[] al = new Algebra[ecuas];
 					String[] expr = cadena.split(";");
 					Matrices ma = new Matrices();
-		            double[][] a = { { 1, 1, 1, 6 },
-	                        { 1, 0, 1, 4 },
-	                        { 1, 1, 0, 3 } };
 		            double[][] p = new double[ecuas][ecuas + 1];
 		            double [] r = new double[ecuas];
-		            String[] var = new String[ecuas + 1];
-		            boolean ingr = true;
 					for (int i = 0; i < ecuas; i++) {
 						String[] arr = expr[i].split("=");
 						String ecuacion = "-(" + arr[1] +")+" + arr[0];
@@ -368,10 +338,10 @@ public class CalculadoraActivity extends Activity  implements OnClickListener {
 				}				
 				break;
 			case R.id.btn_graph:
-				Intent intent = new Intent(getApplicationContext(),GraficadorActivity.class);
+				Intent intent = new Intent(getApplicationContext(),Graficador3dActivity.class);
 				expr = (EditText)findViewById(R.id.txtexpr);
 				intent.putExtra("funciones", expr.getText()+";");
-				intent.putExtra("parametros", "-10,10,-10,10");
+				intent.putExtra("parametros", "-5,5,-5,5,-5,5");
 				startActivity(intent);
 		break;
 			case R.id.btn_igual:

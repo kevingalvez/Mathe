@@ -17,7 +17,7 @@ public class MainActivity extends Activity {
 	Button btnGeometria;
 	Button btnEcuaciones;
 	Button btnSistEcua;
-	public static final String TAG = MainActivity.class.toString();
+	public static final String TAG = "MATHE";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

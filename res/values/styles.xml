@@ -17,4 +17,9 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
+    <style name="SingleGradient">
+		<item name="android:background">@drawable/selector_gradient</item>
+		<item name="android:padding">@dimen/button_padding</item>
+		<item name="android:textColor">@drawable/selector_color</item>
+	</style>
 </resources>

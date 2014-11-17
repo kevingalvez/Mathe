@@ -794,10 +794,42 @@ containing a value of this type.
         public static final int abc_split_action_bar_is_narrow=0x7f060002;
     }
     public static final class color {
-        public static final int abc_search_url_text_holo=0x7f070003;
+        public static final int abc_search_url_text_holo=0x7f070023;
         public static final int abc_search_url_text_normal=0x7f070000;
         public static final int abc_search_url_text_pressed=0x7f070002;
         public static final int abc_search_url_text_selected=0x7f070001;
+        public static final int disabled_and_focused_border=0x7f07001f;
+        public static final int disabled_and_focused_end=0x7f07001e;
+        public static final int disabled_and_focused_end_multi=0x7f070022;
+        public static final int disabled_and_focused_start=0x7f07001d;
+        public static final int disabled_and_focused_start_multi=0x7f070021;
+        public static final int disabled_and_focused_text=0x7f070020;
+        public static final int disabled_border=0x7f070019;
+        public static final int disabled_end=0x7f070018;
+        public static final int disabled_end_multi=0x7f07001c;
+        public static final int disabled_start=0x7f070017;
+        public static final int disabled_start_multi=0x7f07001b;
+        public static final int disabled_text=0x7f07001a;
+        public static final int focused_border=0x7f070011;
+        public static final int focused_end=0x7f070010;
+        public static final int focused_end_multi=0x7f070014;
+        public static final int focused_end_multi_1=0x7f070016;
+        public static final int focused_start=0x7f07000f;
+        public static final int focused_start_multi=0x7f070013;
+        public static final int focused_start_multi_1=0x7f070015;
+        public static final int focused_text=0x7f070012;
+        public static final int normal_border=0x7f070005;
+        public static final int normal_end=0x7f070004;
+        public static final int normal_end_multi=0x7f070008;
+        public static final int normal_start=0x7f070003;
+        public static final int normal_start_multi=0x7f070007;
+        public static final int normal_text=0x7f070006;
+        public static final int pressed_border=0x7f07000b;
+        public static final int pressed_end=0x7f07000a;
+        public static final int pressed_end_multi=0x7f07000e;
+        public static final int pressed_start=0x7f070009;
+        public static final int pressed_start_multi=0x7f07000d;
+        public static final int pressed_text=0x7f07000c;
     }
     public static final class dimen {
         /**  Default height of an action bar. 
@@ -892,6 +924,12 @@ containing a value of this type.
          */
         public static final int activity_horizontal_margin=0x7f080011;
         public static final int activity_vertical_margin=0x7f080012;
+        public static final int button_height=0x7f080017;
+        public static final int button_padding=0x7f080013;
+        public static final int corner_radius=0x7f080014;
+        public static final int half_button_height=0x7f080018;
+        public static final int layer_padding=0x7f080016;
+        public static final int stroke_width=0x7f080015;
     }
     public static final class drawable {
         public static final int abc_ab_bottom_solid_dark_holo=0x7f020000;
@@ -982,10 +1020,24 @@ containing a value of this type.
         public static final int abc_textfield_searchview_right_holo_dark=0x7f020055;
         public static final int abc_textfield_searchview_right_holo_light=0x7f020056;
         public static final int circunferencia=0x7f020057;
-        public static final int elipse=0x7f020058;
-        public static final int hiperbola=0x7f020059;
-        public static final int ic_launcher=0x7f02005a;
-        public static final int parabola=0x7f02005b;
+        public static final int disabled=0x7f020058;
+        public static final int disabled_and_focused=0x7f020059;
+        public static final int disabled_and_focused_multi=0x7f02005a;
+        public static final int disabled_multi=0x7f02005b;
+        public static final int elipse=0x7f02005c;
+        public static final int focused=0x7f02005d;
+        public static final int focused_multi=0x7f02005e;
+        public static final int hiperbola=0x7f02005f;
+        public static final int ic_launcher=0x7f020060;
+        public static final int normal=0x7f020061;
+        public static final int normal_multi=0x7f020062;
+        public static final int parabola=0x7f020063;
+        public static final int pressed=0x7f020064;
+        public static final int pressed_multi=0x7f020065;
+        public static final int selector_color=0x7f020066;
+        public static final int selector_gradient=0x7f020067;
+        public static final int selector_gradient_all_in_one=0x7f020068;
+        public static final int selector_multi_gradients=0x7f020069;
     }
     public static final class id {
         public static final int TxtcoefA=0x7f050085;
@@ -1200,23 +1252,25 @@ containing a value of this type.
         public static final int activity_calculadora=0x7f030017;
         public static final int activity_geometria=0x7f030018;
         public static final int activity_graficador=0x7f030019;
-        public static final int activity_main=0x7f03001a;
-        public static final int activity_sist_ecua=0x7f03001b;
-        public static final int fragment_geometria_circunferencia=0x7f03001c;
-        public static final int fragment_geometria_elipse=0x7f03001d;
-        public static final int fragment_geometria_general=0x7f03001e;
-        public static final int fragment_geometria_hiperbola=0x7f03001f;
-        public static final int fragment_geometria_parabola=0x7f030020;
-        public static final int fragment_planoxy=0x7f030021;
-        public static final int support_simple_spinner_dropdown_item=0x7f030022;
+        public static final int activity_graficador3d=0x7f03001a;
+        public static final int activity_main=0x7f03001b;
+        public static final int activity_sist_ecua=0x7f03001c;
+        public static final int fragment_geometria_circunferencia=0x7f03001d;
+        public static final int fragment_geometria_elipse=0x7f03001e;
+        public static final int fragment_geometria_general=0x7f03001f;
+        public static final int fragment_geometria_hiperbola=0x7f030020;
+        public static final int fragment_geometria_parabola=0x7f030021;
+        public static final int fragment_planoxy=0x7f030022;
+        public static final int support_simple_spinner_dropdown_item=0x7f030023;
     }
     public static final class menu {
         public static final int calculadora=0x7f0c0000;
         public static final int geometria=0x7f0c0001;
         public static final int graficador=0x7f0c0002;
-        public static final int graph2d=0x7f0c0003;
-        public static final int main=0x7f0c0004;
-        public static final int sist_ecua=0x7f0c0005;
+        public static final int graficador3d=0x7f0c0003;
+        public static final int graph2d=0x7f0c0004;
+        public static final int main=0x7f0c0005;
+        public static final int sist_ecua=0x7f0c0006;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -1335,6 +1389,7 @@ containing a value of this type.
         public static final int title_activity_calculadora=0x7f0a005e;
         public static final int title_activity_geometria=0x7f0a003f;
         public static final int title_activity_graficador=0x7f0a003e;
+        public static final int title_activity_graficador3d=0x7f0a0060;
         public static final int title_activity_sist_ecua=0x7f0a005f;
         public static final int title_fragment_circunferencia=0x7f0a0041;
         public static final int title_fragment_elipse=0x7f0a0043;
@@ -1370,6 +1425,7 @@ containing a value of this type.
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f0b0084;
+        public static final int SingleGradient=0x7f0b0085;
         /**  Mimic text appearance in select_dialog_item.xml 
          */
         public static final int TextAppearance_AppCompat_Base_CompactMenu_Dialog=0x7f0b0063;
