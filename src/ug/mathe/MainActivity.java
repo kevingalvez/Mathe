@@ -24,12 +24,10 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		//setContentView(new MyView(this));
-		btnGraficador = (Button) findViewById(R.id.btn_graficador);
+
 		btnGeometria = (Button) findViewById(R.id.btn_geometria);
 		btnEcuaciones = (Button) findViewById(R.id.btn_ecuaciones);
-		btnSistEcua = (Button) findViewById(R.id.btn_sistecua);
 		
-		btnGraficador.setOnClickListener(new ButtonListener(1));
 		btnGeometria .setOnClickListener(new ButtonListener(2));
 		btnEcuaciones .setOnClickListener(new ButtonListener(3));
 	}

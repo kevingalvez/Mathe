@@ -1,18 +1,18 @@
 package ug.mathe.geometria;
 
 import ug.mathe.R;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBar.Tab;
 import android.support.v7.app.ActionBar.TabListener;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar.Tab;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class GeometriaActivity extends ActionBarActivity implements TabListener{
+public class GeometriaActivity extends ActionBarActivity implements TabListener {
 
 	Fragment[] fragments = new Fragment[] {
 					new GeoGenFragment()

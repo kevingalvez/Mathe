@@ -92,7 +92,7 @@
         android:id="@+id/txtview_respParabola"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btn_calcularParabola"
+        android:layout_above="@+id/btn_graficarParabola"
         android:text="@string/vacio"        
     />    
          <Button
@@ -108,6 +108,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btn_calcularParabola"
-        android:text="@string/btn_graficar" /> 
+        android:text="@string/btn_graficar" />  
         
 </RelativeLayout>

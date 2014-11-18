@@ -5,7 +5,7 @@
     <string name="hello_world">Esto es una prueba</string>
     <string name="action_settings">Settings</string>
     <string name="funcion"></string>
-    <string name="vacio">x^2+y^2</string>
+    <string name="vacio"></string>
     <string name="btn_graficador">Graficador 2D</string>
     <string name="btn_geometria">Geometria Analitica</string>
     <string name="btn_ecuaciones">Algebra</string>
@@ -30,13 +30,15 @@
     <string name="btn_b">b</string>
     <string name="btn_c">c</string>
     <string name="btn_d">d</string>
-    <string name="btn_del">Del</string>
+    <string name="btn_del">DEL</string>
     <string name="btn_division">/</string>
     <string name="btn_multiplicacion">*</string>
     <string name="btn_resta">-</string>
     <string name="btn_suma">+</string>
     <string name="btn_igual">=</string>
     <string name="btn_punto">.</string>
+    <string name="btn_puntoycoma">;</string>
+    <string name="btn_coma">,</string>
     <string name="btn_eleva">^</string>
     <string name="btn_sen">sen</string>
     <string name="btn_cos">cos</string>
@@ -69,12 +71,12 @@
     <string name="fragment_coef_distA">A</string>
     <string name="fragment_coef_distB">B</string>
     <string name="fragment_coef_p">P</string>
-    <string name="fragment_coef_a_value">1</string>
-    <string name="fragment_coef_b_value">0</string>
-    <string name="fragment_coef_c_value">4</string>
-    <string name="fragment_coef_d_value">-6</string>
-    <string name="fragment_coef_e_value">-16</string>
-    <string name="fragment_coef_f_value">21</string>
+    <string name="fragment_coef_a_value"></string>
+    <string name="fragment_coef_b_value"></string>
+    <string name="fragment_coef_c_value"></string>
+    <string name="fragment_coef_d_value"></string>
+    <string name="fragment_coef_e_value"></string>
+    <string name="fragment_coef_f_value"></string>
     <string name="fragment_coef_h_value"></string>
     <string name="fragment_coef_k_value"></string>
     <string name="fragment_coef_r_value"></string>
@@ -85,5 +87,6 @@
     <string name="title_activity_calculadora">Calculadora</string>
     <string name="title_activity_sist_ecua">Sistema de Ecuaciones</string>
     <string name="title_activity_graficador3d">Graficador 3D</string>
+    <string name="title_activity_result">ResultActivity</string>
 
 </resources>

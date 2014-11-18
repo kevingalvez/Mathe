@@ -267,6 +267,19 @@ public class GeometriaAnalitica {
 		return result;
 	}
 	
+	public String getFuncCanonica(){
+		ResolverCanonica();
+		Resolver();
+		String result = "";
+		if (!this.fx.equals(""))
+		{
+			result = this.fx;
+			if (!this.gx.equals(""))
+				result += ";" + this.gx;
+		}
+		return result;
+	}	
+	
 	public String getParam(){
 		String result = "";
 		switch (this.tipo) {

@@ -38,6 +38,10 @@ public class GraficadorActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_graficador);
+		
+		EditText a = (EditText)findViewById(R.id.txtFuncion);
+		a.setKeyListener(null);
+		
 		mActivePointers = new SparseArray<PointF>();
 		Bundle bundle = getIntent().getExtras();
 		//funciones = bundle.getString("funciones").split(";");

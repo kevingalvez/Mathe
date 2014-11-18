@@ -9,40 +9,21 @@
     tools:context="ug.mathe.MainActivity" >
 
     <Button
-        android:id="@+id/btn_graficador"
+        android:id="@+id/btn_ecuaciones"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignLeft="@+id/btn_geometria"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="45dp"
-        android:text="@string/btn_graficador" />
+        android:layout_marginTop="35dp"
+        android:text="@string/btn_ecuaciones" />
 
     <Button
         android:id="@+id/btn_geometria"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/btn_graficador"
-        android:layout_below="@+id/btn_graficador"
-        android:layout_marginTop="16dp"
-        android:text="@string/btn_geometria" />
-
-    <Button
-        android:id="@+id/btn_ecuaciones"
-        style="@style/SingleGradient"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/btn_geometria"
-        android:layout_below="@+id/btn_geometria"
-        android:layout_marginTop="24dp"
-        android:text="@string/btn_ecuaciones" />
-    
-    <Button
-        android:id="@+id/btn_sistecua"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/btn_ecuaciones"
         android:layout_below="@+id/btn_ecuaciones"
-        android:layout_marginTop="24dp"
-        android:text="@string/btn_sistecua" />
-
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="27dp"
+        android:text="@string/btn_geometria" />
+    
 </RelativeLayout>

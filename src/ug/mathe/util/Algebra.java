@@ -1,7 +1,6 @@
 package ug.mathe.util;
 
 import android.util.Log;
-import android.widget.Toast;
 
 public class Algebra {
 

@@ -155,6 +155,7 @@ public class Graph3d {
   		  	double paso3 = step;
   		  	double paso4 = step;
   		  	
+  		  	
             while (puntoY <= this.limsY) {
             	  try {
             		  puntoZ = (a.evaluar(this.limiX,puntoY)*alt);
@@ -165,7 +166,7 @@ public class Graph3d {
             	  }
             	  catch (Exception e)
             	  {
-            		  
+            		  asinto = true;
             	  }
             	  
             	  puntoX = this.limiX;
@@ -176,28 +177,33 @@ public class Graph3d {
             		  vector[1] = puntoZ;
             		  actX =  ConvertToPixelX3d(puntoX,puntoY, puntoZ);
             		  actY = ConvertToPixelY3d(puntoX,puntoY,puntoZ);
-            		  } catch (Exception ex) {
-            			  
-            		  }
             		  
-            		    if (asinto) {
+            		  
+            		  if (!asinto) {
+            			  canvas.drawLine(lineaX, lineaY, actX, actY,paint);
+                          lineaX = actX;
+                          lineaY = actY;
+            		  } else {
+                          lineaX = actX;
+                          lineaY = actY;
+                          asinto = false;
+            		  }
+
+            		  } catch (Exception ex) {
+            			  asinto = true;
+            		  }
+            		    puntoX = puntoX + paso3;            		  
+            		  
+            		    /*if (asinto) {
             		     try {
-            		    	 
-            		    		 canvas.drawLine(lineaX, lineaY, actX, actY,paint);
-            		    	 //canvas.drawPoint(ConvertToPixelX3d(puntoX,puntoY,(a.evaluar(puntoX,puntoY)*alt)), ConvertToPixelY3d(puntoX,puntoY,(a.evaluar(puntoX,puntoY)*alt)), paint);
-                   		  	//lineaX = ConvertToPixelX3d(puntoX,puntoY,(a.evaluar(puntoX,puntoY)*alt));
-                   		  	//lineaY = ConvertToPixelY3d(puntoX,puntoY,(a.evaluar(puntoX,puntoY)*alt));
+            		    		 canvas.drawLine(lineaX, lineaY, actX, actY,paint);           		    		 
             		     } catch (Exception ex) {
-            		    	 
             		     }
             		     asinto = false;
             		     //control = true;
             		    }
             		    else if ((!asinto) && (((vector[0]+ 2 *((this.scalaY / 2) -30)/12.56) < vector[1]) || ((vector[0]-2*((this.scalaY / 2) -30)/12.56) > vector[1]))) {
             		     try {
-	                  		  //lineaX = ConvertToPixelX3d(puntoX,puntoY,(a.evaluar(puntoX,puntoY)*alt));
-	                          //lineaY = ConvertToPixelY3d(puntoX,puntoY,(a.evaluar(puntoX,puntoY)*alt));  
-	                          //canvas.drawPoint(ConvertToPixelX3d(puntoX,puntoY,(a.evaluar(puntoX,puntoY)*alt)), ConvertToPixelY3d(puntoX,puntoY,(a.evaluar(puntoX,puntoY)*alt)), paint);
             		    	 canvas.drawLine(lineaX, lineaY, actX, actY,paint);
             		     } catch (Exception ex) {
             		    	 
@@ -221,20 +227,21 @@ public class Graph3d {
             		    }
             		    puntoX = puntoX + paso3;
                         lineaX = actX;
-                        lineaY = actY;
+                        lineaY = actY;*/
             	  }
             	  puntoY = puntoY + paso4;
             }
             
             puntoX = this.limiX;
-
+            asinto = false;
             while (puntoX <= this.limsX) {
              try {
             	puntoZ = (a.evaluar(puntoX,this.limiX)*alt);
        		  	lineaX = ConvertToPixelX3d(puntoX,this.limiX, puntoZ);
-       		  	lineaY = ConvertToPixelY3d(puntoX,this.limiX, puntoZ);            	 
+       		  	lineaY = ConvertToPixelY3d(puntoX,this.limiX, puntoZ); 
+   		  	
              } catch (Exception ex) {
-            	 
+            	 asinto = true;
              }
 
              puntoY = this.limiY;
@@ -244,13 +251,23 @@ public class Graph3d {
                vector[1] = puntoZ;
      		  actX =  ConvertToPixelX3d(puntoX,puntoY,puntoZ);
      		  actY = ConvertToPixelY3d(puntoX,puntoY,puntoZ);
+      		  if (!asinto) {
+    			  canvas.drawLine(lineaX, lineaY, actX, actY,paint);
+                  lineaX = actX;
+                  lineaY = actY;
+    		  } else {
+                  lineaX = actX;
+                  lineaY = actY;
+                  asinto = false;
+    		  }   
                }
                catch (Exception ex) {
+            	   asinto = true;
                }
-
+               puntoY = puntoY + paso4;
                //image2.canvas.Pen.color:=clblue;
 
-               if (asinto) {
+              /* if (asinto) {
                 try {
                 	//canvas.drawPoint( ConvertToPixelX3d(puntoX,puntoY,(a.evaluar(puntoX,puntoY)*alt)) ,ConvertToPixelY3d(puntoX,puntoY,(a.evaluar(puntoX,puntoY)*alt)),paint );
                 	canvas.drawLine(lineaX, lineaY, actX, actY,paint);
@@ -287,7 +304,7 @@ public class Graph3d {
                }
                puntoY = puntoY + paso4;
                lineaX = actX;
-               lineaY = actY;
+               lineaY = actY;*/
              }
              puntoX = puntoX + paso3;
             }

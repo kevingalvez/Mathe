@@ -62,9 +62,8 @@ public class GeoCircunFragment extends Fragment {
 				this.radio = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.TxtcoefcirR)).getText()));				
 				
 				GeometriaAnalitica geo = new GeometriaAnalitica(this.centroX, this.centroY, 0.0, 0.0, 0.0, this.radio, 'c');
-				geo.ResolverCanonica();
 				Intent intent = new Intent(getActivity(),GraficadorActivity.class);
-				intent.putExtra("funciones", geo.getFunc());
+				intent.putExtra("funciones", geo.getFuncCanonica());
 				intent.putExtra("parametros", geo.getParam());
 				startActivity(intent);				
 			}

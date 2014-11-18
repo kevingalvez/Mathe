@@ -33,11 +33,13 @@ public class Graficador3dActivity extends Activity {
 	double ini_x, ini_y, fin_x, fin_y;
 	private SparseArray<PointF> mActivePointers;
 	
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_graficador3d);
+		
+		EditText a = (EditText)findViewById(R.id.txtFuncion);
+		a.setKeyListener(null);
 		mActivePointers = new SparseArray<PointF>();
 		Bundle bundle = getIntent().getExtras();
 		//funciones = bundle.getString("funciones").split(";");
@@ -77,7 +79,7 @@ public class Graficador3dActivity extends Activity {
 				    grap.setLimitesY(-10, 10);
 				    grap.setLimitesZ(-10, 10);
 			    }
-			    grap.setStep(25); 		        
+			    grap.setStep(2); 		        
 		        grap.dibujaplano(canvas, paint);
 		        
 		        for (int i = 0; i < func.length;i++) {

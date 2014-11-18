@@ -343,6 +343,8 @@ public class InfixToPostfix {
                         break;
                     case 'q':
                         a = (Double)numeros.Pop();
+                        if (Double.isNaN(Math.sqrt(a)))
+                        	throw new  Exception("Raiz cuadrada no definido");                        
                         numeros.Push(Math.sqrt(a));
                         break;                        
                 }

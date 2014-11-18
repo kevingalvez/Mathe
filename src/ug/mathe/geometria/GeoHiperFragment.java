@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -62,9 +62,8 @@ public class GeoHiperFragment extends Fragment {
 				this.distB = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.TxtcoefhipB)).getText()));
 				
 				GeometriaAnalitica geo = new GeometriaAnalitica(this.centroX, this.centroY, this.distA, this.distB, 0.0, 0.0, 'h');
-				geo.Resolver();
 				Intent intent = new Intent(getActivity(),GraficadorActivity.class);
-				intent.putExtra("funciones", geo.getFunc());
+				intent.putExtra("funciones", geo.getFuncCanonica());
 				intent.putExtra("parametros", geo.getParam());
 				startActivity(intent);				
 			}
