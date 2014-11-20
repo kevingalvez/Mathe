@@ -5,16 +5,16 @@
     android:orientation="vertical" 
     >
 
-    <TextView 
+    <TextView
         android:id="@+id/txtview_ecua"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="5dp"
         android:text="@string/fragment_geometria_ecuagen"
-    />    
+        android:textSize="20dp" />
     
     <TextView
         android:id="@+id/txtViewA"
@@ -27,23 +27,13 @@
 
 
     <TextView
-        android:id="@+id/textViewB"
+        android:id="@+id/textViewC"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtViewA"
         android:layout_marginTop="17dp"
         android:layout_alignLeft="@+id/txtViewA"
         android:layout_alignRight="@+id/txtViewA"
-        android:text="@string/fragment_coef_b" />
-
-    <TextView
-        android:id="@+id/textViewC"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewB"
-        android:layout_marginTop="17dp"
-        android:layout_alignLeft="@+id/textViewB"
-        android:layout_alignRight="@+id/textViewB"
         android:text="@string/fragment_coef_c" />
 
     <TextView
@@ -91,27 +81,15 @@
         <requestFocus />
     </EditText>
     
-    <EditText
-        android:id="@+id/TxtcoefB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/TxtcoefA"
-        android:layout_alignLeft="@+id/TxtcoefA"
-        android:layout_alignRight="@+id/TxtcoefA"
-        android:ems="10"
-        android:maxLength="10"
-        android:text="@string/fragment_coef_b_value"
-        android:inputType="numberSigned|numberDecimal"        
-         >
-    </EditText>    
+   
 
     <EditText
         android:id="@+id/TxtcoefC"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/TxtcoefB"
-        android:layout_alignLeft="@+id/TxtcoefB"
-        android:layout_alignRight="@+id/TxtcoefB"
+        android:layout_below="@+id/TxtcoefA"
+        android:layout_alignLeft="@+id/TxtcoefA"
+        android:layout_alignRight="@+id/TxtcoefA"
         android:ems="10"
         android:maxLength="10"
         android:text="@string/fragment_coef_c_value"
@@ -184,4 +162,3 @@
         android:layout_above="@+id/btn_calcular"
         android:text="@string/btn_graficar" />        
 </RelativeLayout>
-

@@ -132,27 +132,36 @@ public class Graph2d {
         	InfixToPostfix a = new InfixToPostfix(this.expr);
             double puntoX = this.limiX;
             boolean iter = true;
-            int actX = 0,actY = 0;
+            int actX = 0,actY = 0, lineaY = 0, lineaX = 0;
             paint.setColor(Color.parseColor("#DF0101"));
             while (puntoX < this.limsX)
             {
             	double puntoY = 0.0;
                 try
                 {
-                	puntoY = a.evaluar(puntoX);
-                    int lineaY = this.ConvertToPixelY(puntoY);
-                    int lineaX = this.ConvertToPixelX(puntoX);
+              		puntoY = a.evaluar(puntoX);
+                	actY = this.ConvertToPixelY(puntoY);
+                	actX = this.ConvertToPixelX(puntoX);
                     if (iter)
+                    {
                         canvas.drawLine(lineaX, lineaY, lineaX, lineaY,paint);
                     	//canvas.drawCircle(lineaX, lineaY, 1, paint);
+                        lineaX = actX;
+                        lineaY = actY;
+                        iter = false;
+                    }
                     else
+                    {
                     	//canvas.drawLine(actX, actY, lineaX, lineaY,paint);
                     	canvas.drawLine(lineaX, lineaY, actX, actY, paint);
                     	//canvas.drawCircle(actX, actY, 1, paint);
-                    
-                    actX = lineaX;
+                        lineaX = actX;
+                        lineaY = actY;
+                        
+                    }
+                    /*actX = lineaX;
                     actY = lineaY;
-                    iter = false;
+                    iter = false;*/
                 } catch (Exception e) {
                 	Log.i("Graficador",e.getMessage());
                 	iter = true;

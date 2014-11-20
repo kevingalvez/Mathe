@@ -184,7 +184,7 @@ public class InfixToPostfix {
         	if (this.apostfix.equals(""))
         		this.apostfix  = ConvertToPostfix();
             double a = 0.0, b = 0.0;
-
+            numeros.init();
             for (int i = 0; i < this.apostfix.length(); i++)
             {
                 switch (this.apostfix.charAt(i)) {
@@ -213,9 +213,12 @@ public class InfixToPostfix {
                     case '/':
                         a = (Double)numeros.Pop();
                         b = (Double)numeros.Pop();
-                        if (Double.isNaN(b / a))
-                        	throw new  Exception("Division no definido");                           
-                        numeros.Push(b / a);                    
+                        b = b / a;
+                        if (Double.isNaN(b))
+                        	throw new  Exception("Division no definido");      
+                        if (Double.isInfinite((b)))
+                        	throw new  Exception("Division entre cero");                          
+                        numeros.Push(b);                    
                         break;
                     case '~':
                         a = (Double)numeros.Pop();
@@ -224,7 +227,10 @@ public class InfixToPostfix {
                     case '^':
                         a = (Double)numeros.Pop();
                         b = (Double)numeros.Pop();
-                        numeros.Push(Math.pow(b, a));                    
+                        b =  Math.pow(b, a);
+                        if (Double.isNaN(b) || Double.isInfinite(b))
+                        	throw new  Exception("Funcion no definida");
+                        numeros.Push(b);                    
                         break;                    
                     case 's':
                         a = (Double)numeros.Pop();
@@ -236,15 +242,17 @@ public class InfixToPostfix {
                         break;                         
                     case 't':
                         a = (Double)numeros.Pop();
-                        if (Double.isNaN(Math.tan(a)))
+                        a = Math.tan(a);
+                        if (Double.isNaN(a) || Double.isInfinite(a))
                         	throw new  Exception("Tangente no definido");                        
-                        numeros.Push(Math.tan(a));
+                        numeros.Push(a);
                         break;                         
                     case 'l':
                         a = (Double)numeros.Pop();
-                        if (Double.isNaN(Math.log(a)))
+                        a = Math.log(a);
+                        if (Double.isNaN(a) || Double.isInfinite(a))
                         	throw new  Exception("Logaritmo no definido");
-                        numeros.Push(Math.log(a));
+                        numeros.Push(a);
                         break;                                                 
                     case 'e':
                         a = (Double)numeros.Pop();
@@ -252,7 +260,10 @@ public class InfixToPostfix {
                         break;
                     case 'q':
                         a = (Double)numeros.Pop();
-                        numeros.Push(Math.sqrt(a));
+                        a = Math.sqrt(a);
+                        if (Double.isNaN(a) || Double.isInfinite(a))
+                        	throw new  Exception("Raiz no definida");
+                        numeros.Push(a);
                         break;                        
                 }
 
@@ -272,7 +283,7 @@ public class InfixToPostfix {
         	if (this.apostfix.equals(""))
         		this.apostfix  = ConvertToPostfix();
             double a = 0.0, b = 0.0;
-
+            numeros.init();
             for (int i = 0; i < this.apostfix.length(); i++)
             {
                 switch (this.apostfix.charAt(i)) {

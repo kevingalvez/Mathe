@@ -117,7 +117,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btn_graficarElipse"
-        android:text="@string/vacio"        
+        android:text="@string/vacio"
+        android:textSize="20dp"         
     />    
          <Button
         android:id="@+id/btn_calcularElipse"

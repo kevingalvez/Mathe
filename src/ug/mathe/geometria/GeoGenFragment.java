@@ -35,7 +35,7 @@ public class GeoGenFragment extends Fragment {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				this.a = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.TxtcoefA)).getText()));
-				this.b = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.TxtcoefB)).getText()));
+				//this.b = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.TxtcoefB)).getText()));
 				this.c = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.TxtcoefC)).getText()));
 				this.d = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.TxtcoefD)).getText()));
 				this.e = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.TxtcoefE)).getText()));
@@ -61,7 +61,7 @@ public class GeoGenFragment extends Fragment {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				this.a = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.TxtcoefA)).getText()));
-				this.b = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.TxtcoefB)).getText()));
+				//this.b = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.TxtcoefB)).getText()));
 				this.c = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.TxtcoefC)).getText()));
 				this.d = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.TxtcoefD)).getText()));
 				this.e = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.TxtcoefE)).getText()));

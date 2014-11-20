@@ -97,8 +97,8 @@ public class TecladoFragment extends Fragment implements  OnClickListener {
         boton.setOnClickListener(this);
         boton = (Button)getActivity().findViewById(R.id.btn_puntoycoma);
         boton.setOnClickListener(this);        
-        boton = (Button)getActivity().findViewById(R.id.btn_coma);
-        boton.setOnClickListener(this);        
+        /*boton = (Button)getActivity().findViewById(R.id.btn_coma);
+        boton.setOnClickListener(this);*/        
         boton = (Button)getActivity().findViewById(R.id.btn_del);
         boton.setOnClickListener(this);
         boton = (Button)getActivity().findViewById(R.id.btn_igual);
@@ -247,9 +247,9 @@ public class TecladoFragment extends Fragment implements  OnClickListener {
 			case R.id.btn_puntoycoma:
 				escribir(";");
 			break;
-			case R.id.btn_coma:
+			/*case R.id.btn_coma:
 				escribir(",");
-			break;			
+			break;*/			
 			case R.id.btn_del:
 				expr = (EditText)getActivity().findViewById(R.id.txtexpr);
 				int ind =expr.getSelectionEnd()-1;

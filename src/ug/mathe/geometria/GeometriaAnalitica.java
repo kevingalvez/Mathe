@@ -173,8 +173,8 @@ public class GeometriaAnalitica {
 		this.angulo = 0.0;
 		/*this.fx = "k-sqrt(-h^2+2*h*x+r^2-x^2)";
 		this.gx = "k+sqrt(-h^2+2*h*x+r^2-x^2)";*/
-		this.fx = this.centroY+"+("+this.radio+"^2-(x-"+this.centroX+")^2)^(1/2)";
-		this.gx = this.centroY+"-("+this.radio+"^2-(x-"+this.centroX+")^2)^(1/2)";
+		this.fx = this.centroY+"+sqrt("+this.radio+"^2-(x-"+this.centroX+")^2)";
+		this.gx = this.centroY+"-sqrt("+this.radio+"^2-(x-"+this.centroX+")^2)";
 		/*this.fx = this.centroY+"-sqrt(-"+this.centroX+"^2+2*"+this.centroX+"*x+"+this.radio+"^2-x^2)";
 		this.gx = this.centroY+"+sqrt(-"+this.centroX+"^2+2*"+this.centroX+"*x+"+this.radio+"^2-x^2)";*/
 	}	
@@ -352,34 +352,34 @@ public class GeometriaAnalitica {
 	
 	public String toStringCanonica(){
 		String result = "";
+		String a = "", c = "", d = "", e = "", f = "";
 		switch (this.tipo){
-			case 'h':
-					result = this.a+"*X^2+"+
-								this.c+"*Y^2+"+
+			case 'h': case 'c': case 'e':
+					a = this.a+"*X^2";
+					c = String.valueOf((this.c >= 0)?"+"+this.c+"*Y^2":this.c+"*Y^2");
+					d = String.valueOf((this.d >= 0)?"+"+this.d+"*X":this.d+"*X");
+					e = String.valueOf((this.e >= 0)?"+"+this.e+"*Y":this.e+"*Y");
+					f = String.valueOf((this.f >= 0)?"+"+this.f:this.f+"");
+					f += "=0";
+					result = a + c + d + e + f;
+					/*result = this.a+"*X^2"+
+								(+"*Y^2" +
 								this.d+"*X+"+
 								this.e+"*Y+"+
-								this.f;				
+								this.f;*/				
 				break;
 			case 'p':
-				result = this.a+"*X^2+"+
+				a = this.a+"*X^2";
+				d = String.valueOf((this.d >= 0)?"+"+this.d+"*X":this.d+"*X");
+				e = String.valueOf((this.e >= 0)?"+"+this.e+"*Y":this.e+"*Y");
+				f = String.valueOf((this.f >= 0)?"+"+this.f:this.f+"");
+				f += "=0";
+				result = a + c + d + e + f;
+				/*result = this.a+"*X^2+"+
 						this.d+"*X+"+
 						this.e+"*Y+"+
-						this.f;
-			break; 
-			case 'c':
-				result = this.a+"*X^2+"+
-						this.c+"*Y^2+"+
-						this.d+"*X+"+
-						this.e+"*Y+"+
-						this.f;
-				break;
-			case 'e':
-				result = this.a+"*X^2+"+
-						this.c+"*Y^2+"+
-						this.d+"*X+"+
-						this.e+"*Y+"+
-						this.f;
-				break; 			
+						this.f;*/
+			break; 		
 		}
 		return result;
 	}	
