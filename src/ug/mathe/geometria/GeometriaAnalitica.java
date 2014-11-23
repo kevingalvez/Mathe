@@ -356,23 +356,23 @@ public class GeometriaAnalitica {
 		switch (this.tipo){
 			case 'h': case 'c': case 'e':
 					a = this.a+"*X^2";
-					c = String.valueOf((this.c >= 0)?"+"+this.c+"*Y^2":this.c+"*Y^2");
-					d = String.valueOf((this.d >= 0)?"+"+this.d+"*X":this.d+"*X");
-					e = String.valueOf((this.e >= 0)?"+"+this.e+"*Y":this.e+"*Y");
-					f = String.valueOf((this.f >= 0)?"+"+this.f:this.f+"");
+					c = String.valueOf((this.c >= 0)?"+"+Math.abs(this.c)+"*Y^2":this.c+"*Y^2");
+					d = String.valueOf((this.d >= 0)?"+"+Math.abs(this.d)+"*X":this.d+"*X");
+					e = String.valueOf((this.e >= 0)?"+"+Math.abs(this.e)+"*Y":this.e+"*Y");
+					f = String.valueOf((this.f >= 0)?"+"+Math.abs(this.f):this.f+"");
 					f += "=0";
 					result = a + c + d + e + f;
 					/*result = this.a+"*X^2"+
 								(+"*Y^2" +
 								this.d+"*X+"+
 								this.e+"*Y+"+
-								this.f;*/				
+								this.f;*/	 			
 				break;
 			case 'p':
 				a = this.a+"*X^2";
-				d = String.valueOf((this.d >= 0)?"+"+this.d+"*X":this.d+"*X");
-				e = String.valueOf((this.e >= 0)?"+"+this.e+"*Y":this.e+"*Y");
-				f = String.valueOf((this.f >= 0)?"+"+this.f:this.f+"");
+				d = String.valueOf((this.d >= 0)?"+"+Math.abs(this.d)+"*X":this.d+"*X");
+				e = String.valueOf((this.e >= 0)?"+"+Math.abs(this.e)+"*Y":this.e+"*Y");
+				f = String.valueOf((this.f >= 0)?"+"+Math.abs(this.f):this.f+"");
 				f += "=0";
 				result = a + c + d + e + f;
 				/*result = this.a+"*X^2+"+

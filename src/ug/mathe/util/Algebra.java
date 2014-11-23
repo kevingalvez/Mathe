@@ -6,6 +6,8 @@ public class Algebra {
 
 	private Arbol ar;
 	private boolean expander;
+	private boolean reducir;
+	private boolean reparo;
 	private Stack num = new Stack(255); 
 	String postoder = "";
 	
@@ -18,7 +20,13 @@ public class Algebra {
 		try {
 			String apostfix = a.ConvertToPostfix();
 			Log.i("INFIXTOPOSTFIX",apostfix);
-			Arbol ar = new Arbol(new Nodo(String.valueOf(apostfix.charAt(apostfix.length()-1))));
+			char car = apostfix.charAt(apostfix.length()-1);
+			Arbol ar = null;
+			if (car == '#'){
+				ar = new Arbol(new Nodo(String.valueOf(a.getData(apostfix.length()-1))));	
+			}
+			else 
+				ar = new Arbol(new Nodo(String.valueOf(car)));
 			for (int i = apostfix.length()-2; i >= 0 ; i--) {
 				if (apostfix.charAt(i) == '#')
 					ar.addNodo(new Nodo(String.valueOf(a.getData(i))));
@@ -72,7 +80,36 @@ public class Algebra {
 		}
 		return false;
 	}
+
+	private boolean isNegative(Nodo nodo){
+		boolean result = false;
+		if (nodo.getValor().equals("~")) {
+			if (isNumeric(nodo.getHojaDerecha().getValor()))
+				result = true;
+		}
+		return result;
+			
+	}
 	
+	private String getValueNegative(Nodo nodo){
+		return "-"+nodo.getHojaDerecha().getValor(); 			
+	}	
+	
+	private boolean isHojaAdicion(Nodo nodo) {
+		boolean result = false;
+		if (nodo.getValor().equals("+") || nodo.getValor().equals("-"))
+		{
+			if (nodo.getHojaIzquierda() != null && nodo.getHojaDerecha() != null) 
+			{
+			String izq = nodo.getHojaIzquierda().getValor();
+			String der = nodo.getHojaDerecha().getValor();
+			if (isNumeric(izq) || isVar(izq) || isNegative(nodo.getHojaIzquierda())) 
+				if (isNumeric(der) || isVar(der))
+					result = true;
+			}
+		}
+		return result;
+	}
 	
 	private Nodo DistderProducto(Nodo nodo1, Nodo nodo2) {
 		Nodo result = null;
@@ -97,11 +134,23 @@ public class Algebra {
 				result.setHojaIzquierda(nodo1);
 				result.setHojaDerecha(new Nodo(dato3));
 			} else if (isVar(dato3) && dato1.equals(dato3)) {
-				result = new Nodo("^");
-				result.setHojaIzquierda(nodo1);
-				result.setHojaDerecha(new Nodo(String.valueOf(Double.valueOf(dato2) + 1)));				
+				if (nodo2.getValor().equals("^")) {
+					result = new Nodo("^");
+					result.setHojaIzquierda(new Nodo(dato1));
+					result.setHojaDerecha(new Nodo(String.valueOf(Double.valueOf(dato2) + Double.valueOf(dato4))));
+				} else {
+					if (Double.valueOf(dato2+1) > 2) {
+						result = new Nodo("^");
+						result.setHojaIzquierda(new Nodo(dato3));
+						result.setHojaDerecha(new Nodo(String.valueOf(Double.valueOf(dato2) + 1)));
+					} else {
+						result = new Nodo("^");
+						result.setHojaIzquierda(nodo1);
+						result.setHojaDerecha(new Nodo(String.valueOf(Double.valueOf(dato2) + 1)));
+					}
+				}
 			}
-		} if (nodo2.getValor().equals("^")) {
+		} else if (nodo2.getValor().equals("^")) {
 			String dato1 = "", dato2 = "", dato3 = "", dato4="";
 			if (nodo1.getHojaIzquierda() != null  && nodo1.getHojaDerecha() != null)
 			{
@@ -116,15 +165,37 @@ public class Algebra {
 				dato4 = nodo2.getHojaDerecha().getValor();
 			} else
 				dato3 = nodo2.getValor();
-			
 			if (isNumeric(dato1) || (isVar(dato1) && !dato3.equals(dato1))) {
-				result = new Nodo("*");
-				result.setHojaIzquierda(nodo2);
-				result.setHojaDerecha(new Nodo(dato1));
-			} else if (isVar(dato1) && dato1.equals(dato1)) {
-				result = new Nodo("^");
-				result.setHojaIzquierda(nodo2);
-				result.setHojaDerecha(new Nodo(String.valueOf(Double.valueOf(dato4) + 1)));				
+				double a = 0.0;
+				if (isNumeric(dato1))
+					a = Double.valueOf(dato1);
+				if (a == 0) {
+					result = new Nodo("0");
+				} else {
+					result = new Nodo("*");
+					result.setHojaIzquierda(new Nodo(dato1));
+					result.setHojaDerecha(evaluarHoja(nodo2));
+				}
+			} else if (isVar(dato1)) {
+				if (nodo1.getValor().equals("^")) {
+					result = new Nodo("^");
+					result.setHojaIzquierda(new Nodo(dato1));
+					result.setHojaDerecha(new Nodo(String.valueOf(Double.valueOf(dato4) + Double.valueOf(dato2))));
+				} else if (isVar(dato2) && (dato1.equals(dato2))) {
+					result = new Nodo("^");
+					result.setHojaIzquierda(new Nodo(dato1));
+					result.setHojaDerecha(new Nodo(String.valueOf(Double.valueOf(dato4) + 2)));					
+				} else {
+					if (Double.valueOf(dato4+1) > 2) {
+						result = new Nodo("^");
+						result.setHojaIzquierda(new Nodo(dato1));
+						result.setHojaDerecha(new Nodo(String.valueOf(Double.valueOf(dato4) + 1)));
+					} else {
+						result = new Nodo("^");
+						result.setHojaIzquierda(nodo2);
+						result.setHojaDerecha(new Nodo(String.valueOf(Double.valueOf(dato4) + 1)));
+					}
+				}
 			}			
 		} else {
 			String dato1 = "", dato2 = "", dato3 = "", dato4="";
@@ -282,27 +353,153 @@ public class Algebra {
 		return result;		
 	}		
 		
+	private Nodo Binomio(Nodo nodoizq, Nodo nododer) {
+		Nodo result = null;
+		if (!isVar(nodoizq.getValor()) && (isNumeric(nododer.getValor()) || isNegative(nododer))) {
+			double a = 0.0;
+			if (isNegative(nododer)) {
+				a = Double.valueOf(getValueNegative(nododer));
+			} else {
+				a = Double.valueOf(nododer.getValor());				
+			}
+
+			if (a == 2 && reducir) {
+				result = new Nodo("*");
+				result.setHojaIzquierda(nodoizq);
+				result.setHojaDerecha(nodoizq);
+			} else if (a > 2 && reducir) {
+				result = new Nodo("*");
+				result.setHojaIzquierda(nodoizq);
+				result.setHojaDerecha(new Nodo("^"));
+				result.getHojaDerecha().setHojaIzquierda(nodoizq);
+				result.getHojaDerecha().setHojaDerecha(new Nodo(String.valueOf(a - 1)));
+			} else if ( a == 1) {
+				result = nodoizq;
+			} else if( a == 0) {
+				result = new Nodo("1");
+			} else if (a < 0) {
+				result = new Nodo("/");
+				result.setHojaIzquierda(new Nodo("1"));
+				result.setHojaDerecha(nodoizq);
+			}
+		}
+		return result;
+	}
+	
+	private Nodo Exponentes(Nodo nodoizq, Nodo nododer) {
+		Nodo result = null;
+		result = new Nodo(nodoizq.getValor());
+		result.setHojaIzquierda(nodoizq.getHojaIzquierda());
+		result.setHojaDerecha(new Nodo("*"));
+		result.getHojaDerecha().setHojaIzquierda(nodoizq.getHojaDerecha());
+		result.getHojaDerecha().setHojaDerecha(nododer);
+		return result;
+	}
+	
 	private Nodo Order(Nodo nodo)
 	{
 		Nodo n = null;
 	    if (nodo != null) {
-	    	boolean expand = false;
+ 	    	boolean expand = false;
 	    	if (nodo.getValor().equals("*")) {
-	    		if (isDist(String.valueOf(nodo.getHojaDerecha().getValor())))
+	    		if (isDist(String.valueOf(nodo.getHojaDerecha().getValor()))&& reducir)
 				{
 	    			n = Distder(nodo.getHojaIzquierda(),nodo.getHojaDerecha(),String.valueOf(nodo.getHojaDerecha().getValor()));
 	    			expander = expand = true;
 	    			
-				} else if (isDist(String.valueOf(nodo.getHojaIzquierda().getValor())))
+				} else if (isDist(String.valueOf(nodo.getHojaIzquierda().getValor())) && reducir)
 				{
-	    			n = Distizq(nodo.getHojaIzquierda(),nodo.getHojaDerecha(),String.valueOf(nodo.getHojaIzquierda().getValor()));
+	    			//n = Distizq(nodo.getHojaIzquierda(),nodo.getHojaDerecha(),String.valueOf(nodo.getHojaIzquierda().getValor()));
+					n = Distder(nodo.getHojaDerecha(),nodo.getHojaIzquierda(),String.valueOf(nodo.getHojaIzquierda().getValor()));
 	    			expander = expand = true;
 				} else if (isHoja(nodo)) {
 					expand = true;
+					//expander = expand = true;
 					n = evaluarHoja(nodo);
+				} else if (isHoja(nodo.getHojaDerecha()) && isHoja(nodo.getHojaIzquierda())){
+					expand = true;
+					n = DistderProducto(nodo.getHojaIzquierda(),nodo.getHojaDerecha());
+				} else if (isNumeric(nodo.getHojaDerecha().getValor())) {
+					if (Double.valueOf(nodo.getHojaDerecha().getValor()) == 1) {
+						expander = expand = true;
+						n = nodo.getHojaIzquierda();
+					} else if (isNegative(nodo.getHojaDerecha())) {
+						n = new Nodo("~");
+						n.setHojaDerecha(nodo.getHojaIzquierda());
+					} else if (Double.valueOf(nodo.getHojaDerecha().getValor()) == 0) {
+						expander = expand = true;
+						n = new Nodo("0");
+					} else {
+						n = new Nodo("*");
+						n.setHojaDerecha(nodo.getHojaIzquierda());
+						n.setHojaIzquierda(nodo.getHojaDerecha());
+						expander = expand = true;
+					}
+				}  else if (isNumeric(nodo.getHojaIzquierda().getValor())) {
+					if (Double.valueOf(nodo.getHojaIzquierda().getValor()) == 1) {
+						expander = expand = true;
+						n = nodo.getHojaDerecha();
+					} else if (Double.valueOf(nodo.getHojaIzquierda().getValor()) == 0) {
+						expander = expand = true;
+						n = new Nodo("0");
+					} else {
+						n = evaluarNodo(nodo.getHojaIzquierda(), nodo.getHojaDerecha(), nodo.getValor());
+						if (n != null)
+							expander = expand = true;
+					}
+				} else if (isHoja(nodo.getHojaIzquierda())) {
+					n = evaluarNodo(nodo.getHojaIzquierda(), nodo.getHojaDerecha(), nodo.getValor());
+					if (n != null)
+						expander = expand = true;
+				} else if (isHoja(nodo.getHojaDerecha())) {
+					n = evaluarNodo(nodo.getHojaDerecha(), nodo.getHojaIzquierda(),nodo.getValor());
+					if (n != null)
+						expander = expand = true;
 				}
-	    		
-	    	} 
+	    	} else if (nodo.getValor().equals("^")) {
+	    		if (nodo.getHojaIzquierda().getValor().equals("^") && isNumeric(nodo.getHojaDerecha().getValor())) {
+	    			n = Exponentes(nodo.getHojaIzquierda(),nodo.getHojaDerecha());
+	    			expander = expand = true;
+	    		} else 	if (!isVar(nodo.getHojaIzquierda().getValor()) && (isNumeric(nodo.getHojaDerecha().getValor()) || isNegative(nodo.getHojaDerecha()))) {
+	    			n = Binomio(nodo.getHojaIzquierda(),nodo.getHojaDerecha());
+	    			if ( n != null)
+	    				expander = expand = true;
+		    	}  else if (isVar(nodo.getHojaIzquierda().getValor()) && (isNumeric(nodo.getHojaDerecha().getValor()) || isNegative(nodo.getHojaDerecha()))) {
+		    		n = evaluarHoja(nodo);
+		    		expand = true;
+		    	}
+	    	} else if (isHojaAdicion(nodo)) {
+				expand = true;
+				n = evaluarHoja(nodo);	    		
+	    	} else if (nodo.getValor().equals("+") || nodo.getValor().equals("-")) {
+	    		if (isNumeric(nodo.getHojaIzquierda().getValor())){
+	    			double a = Double.valueOf(nodo.getHojaIzquierda().getValor());
+	    			if (a == 0) {
+	    				if (nodo.getValor().equals("-")) {
+	    					n = new Nodo("~");
+	    					n.setHojaDerecha(nodo.getHojaDerecha());
+	    					expand = true;
+	    				} else {
+	    					n = nodo.getHojaDerecha();
+	    					expand = true;
+	    				}
+	    			} else {
+	    				n = evaluarNodo(nodo.getHojaIzquierda(), nodo.getHojaDerecha(), nodo.getValor());
+	    				if (n != null)
+	    					expander = expand = true;
+	    			}
+	    		} else if (isNumeric(nodo.getHojaDerecha().getValor())){
+	    			double a = Double.valueOf(nodo.getHojaDerecha().getValor());
+	    			if (a == 0) {
+    					n = nodo.getHojaIzquierda();
+    					expand = true;
+	    			}  else {
+	    				n = evaluarNodo(nodo.getHojaDerecha(), nodo.getHojaIzquierda(), nodo.getValor());
+	    				if (n != null)
+	    					expander = expand = true;
+	    			}
+	    		}
+	    	}
 	    	
 	    	if (!expand) {
 				n = new Nodo(nodo.getValor());
@@ -313,50 +510,173 @@ public class Algebra {
     	return n;
 	}
 	
-	private Nodo evaluarHoja(Nodo nodo) {
-		String dato1 = "", dato2 = "";
-		dato1 = nodo.getHojaIzquierda().getValor();
-		dato2 = nodo.getHojaDerecha().getValor();
-		Stack num = new Stack(4);
-		double res = 0.0;
-		int exp = 0;
-		if (isNumeric(dato1)) 
-			num.Push(dato1);
-		else if (!dato1.equals(""))
-			exp++;
-		if (isNumeric(dato2)) 
-			num.Push(dato2);
-		else if (!dato2.equals(""))
-			exp++;
-		
-		if (!num.isEmpty())
-			res = Double.valueOf(num.Pop().toString());
-		
-		while (!num.isEmpty()) {
-			res = res*Double.valueOf(num.Pop().toString());
-		}
+	private Nodo evaluarNodo(Nodo nodoizq, Nodo nododer, String signo) {
 		Nodo result = null;
-		if (isNumeric(dato1) && isNumeric(dato2))
-		{
-			result = new Nodo(String.valueOf(res));
-		} else if (isVar(dato1) && isVar(dato2)) {
-			if (exp > 1 || exp <=-1) {
-				result = new Nodo("^");
-				result.setHojaIzquierda(new Nodo("x"));
-				result.setHojaDerecha(new Nodo(String.valueOf(exp)));
-			} else if (exp == 1){
-				result = new Nodo("x");			
-			} else if (exp == 0) {
-				result = new Nodo("1");
+		if (nododer.getValor().equals(signo)) {
+			if (isHoja(nodoizq) && isHoja(nododer.getHojaIzquierda())) {
+				result = new Nodo(nododer.getValor());
+				result.setHojaDerecha(nododer.getHojaDerecha());
+				result.setHojaIzquierda(new Nodo(signo));
+				result.getHojaIzquierda().setHojaIzquierda(nodoizq);
+				result.getHojaIzquierda().setHojaDerecha(nododer.getHojaIzquierda());
+			} else if (isHoja(nodoizq) && isHoja(nododer.getHojaDerecha())) {
+				result = new Nodo(nododer.getValor());
+				result.setHojaDerecha(nododer.getHojaIzquierda());
+				if (signo.equals("-")) {
+					if (nododer.equals("-"))
+						result.setHojaIzquierda(new Nodo("+"));
+					else
+						result.setHojaIzquierda(new Nodo("-"));
+				} else if (signo.equals("+")) {
+					if (nododer.equals("+"))
+						result.setHojaIzquierda(new Nodo("+"));
+					else
+						result.setHojaIzquierda(new Nodo("-"));
+				} else
+					result.setHojaIzquierda(new Nodo(signo));
+				
+				result.getHojaIzquierda().setHojaIzquierda(nodoizq);
+				result.getHojaIzquierda().setHojaDerecha(nododer.getHojaDerecha());				
 			}
 		}
-		else if (isNumeric(dato1) && isVar(dato2) || isVar(dato1) && isNumeric(dato2)) {
-			if (res != 0 && res != 1){
-				result = new Nodo("*");
-				result.setHojaIzquierda(new Nodo(String.valueOf(res)));
-				result.setHojaDerecha(new Nodo("x"));
-			} else if (res == 1) {
-				result = new Nodo("x");
+		return result;
+	}
+	
+	
+	private Nodo evaluarHoja(Nodo nodo) {
+		Nodo result = null;
+		if (nodo.getValor().equals("+") || nodo.getValor().equals("-")) {
+			String dato1 = "", dato2 = "";
+			if (isNegative(nodo.getHojaIzquierda())) {
+				dato1 = getValueNegative(nodo.getHojaIzquierda());
+			} else 
+				dato1 = nodo.getHojaIzquierda().getValor();
+			
+			dato2 = nodo.getHojaDerecha().getValor();
+			if (isNumeric(dato1) && isNumeric(dato2)) {
+				double a1 = Double.valueOf(dato1);
+				double a2 = Double.valueOf(dato2);
+				double resp = 0.0;
+				if (nodo.getValor().equals("+"))
+					resp = a1 + a2;
+				if (nodo.getValor().equals("-"))
+					resp = a1 - a2;
+				
+				if (resp < 0) {
+					result = new Nodo("~");
+					result.setHojaDerecha(new Nodo(String.valueOf(Math.abs(resp))));
+				} else if (resp >= 0) {
+					result = new Nodo(String.valueOf(Math.abs(resp)));
+				}
+				 
+			} else if (isVar(dato1) && isVar(dato2)) {
+				String a1 = "", a2 = "";
+				a1 = nodo.getHojaIzquierda().getValor();
+				a2 = nodo.getHojaDerecha().getValor();
+				if (a1.equals(a2)) {
+					result = new Nodo("*");
+					result.setHojaIzquierda(new Nodo("2"));
+					result.setHojaDerecha(new Nodo(a1));
+				}
+			} else {
+				double a1 = 0.0;
+				String a2 = "";
+				if (isNumeric(nodo.getHojaIzquierda().getValor())) { 
+					a1 = Double.valueOf(dato1);
+					a2 = dato2;
+				}
+				else {
+					a1 = Double.valueOf(dato2);
+					a2 = dato1;
+				}
+				
+				if (a1 != 0) {
+					result = new Nodo(nodo.getValor());
+					result.setHojaIzquierda(nodo.getHojaIzquierda());
+					result.setHojaDerecha(nodo.getHojaDerecha());
+				} else {
+					result = new Nodo(a2);						
+				}
+
+			}
+				
+		} else if (nodo.getValor().equals("*")) {
+			String dato1 = "", dato2 = "";
+			dato1 = nodo.getHojaIzquierda().getValor();
+			dato2 = nodo.getHojaDerecha().getValor();
+			Stack num = new Stack(4);
+			double res = 0.0;
+			int exp = 0;
+			if (isNumeric(dato1)) 
+				num.Push(dato1);
+			else if (!dato1.equals(""))
+				exp++;
+			if (isNumeric(dato2)) 
+				num.Push(dato2);
+			else if (!dato2.equals(""))
+				exp++;
+			
+			if (!num.isEmpty())
+				res = Double.valueOf(num.Pop().toString());
+			
+			while (!num.isEmpty()) {
+				res = res*Double.valueOf(num.Pop().toString());
+			}
+	
+			if (isNumeric(dato1) && isNumeric(dato2))
+			{
+				result = new Nodo(String.valueOf(res));
+			} else if (isVar(dato1) && isVar(dato2)) {
+				if (exp > 1 || exp <=-1) {
+					result = new Nodo("^");
+					result.setHojaIzquierda(new Nodo("x"));
+					result.setHojaDerecha(new Nodo(String.valueOf(exp)));
+				} else if (exp == 1){
+					result = new Nodo("x");			
+				} else if (exp == 0) {
+					result = new Nodo("1");
+				}
+			}
+			else if (isNumeric(dato1) && isVar(dato2) || isVar(dato1) && isNumeric(dato2)) {
+				if (res != 0 && res != 1){
+					result = new Nodo("*");
+					result.setHojaIzquierda(new Nodo(String.valueOf(res)));
+					result.setHojaDerecha(new Nodo("x"));
+				} else if (res == 1) {
+					result = new Nodo("x");
+				} else if (res == 0) {
+					result = new Nodo("0");
+				}
+			}
+		} else if (nodo.getValor().equals("^")) {
+			if (isNumeric(nodo.getHojaIzquierda().getValor()) && isNumeric(nodo.getHojaDerecha().getValor())) {
+				double a = Double.valueOf(nodo.getHojaIzquierda().getValor());
+				double b = Double.valueOf(nodo.getHojaDerecha().getValor());
+				result = new Nodo(String.valueOf(Math.pow(a, b)));
+			} else {
+				double a = 0.0;
+				if (isNegative(nodo.getHojaDerecha())) {
+					a = Double.valueOf(getValueNegative(nodo.getHojaDerecha()));
+				} else {
+					a = Double.valueOf(nodo.getHojaDerecha().getValor());
+				}
+				if (a > 1) {
+					result = new Nodo("^");
+					result.setHojaIzquierda(nodo.getHojaIzquierda());
+					result.setHojaDerecha(nodo.getHojaDerecha());
+				} else if (a == 1) {
+					result = nodo.getHojaIzquierda();
+				} else if (a == 0) {
+					result = new Nodo("1");
+				} else if (a < 0) {
+					result = new Nodo("/");
+					result.setHojaIzquierda(new Nodo("1"));
+					if (a == -1) {
+						result.setHojaDerecha(nodo.getHojaIzquierda());
+					} else if (a != -1) {
+						result.setHojaDerecha(new Nodo(String.valueOf(Math.abs(a))));
+					}
+				}
 			}
 		}
 		return result;
@@ -448,18 +768,27 @@ public class Algebra {
 	    }		
 	}
 	
-	private String SolvePolinomio(double a, double b, double c) {
+	private String SolvePolinomio(double a, double b, double c, double d) {
 		String result = "";
-		double x1 = 0.0, x2 = 0.0;
+		double x1 = 0.0, x2 = 0.0, x3 = 0.0;
 		if (a != 0) {
-			x1 = (-b+Math.sqrt(Math.pow(b, 2)-4*a*c))/(2*a);
-			x2 = (-b-Math.sqrt(Math.pow(b, 2)-4*a*c))/(2*a);
+			b = b/a;
+			c = c/a;
+			d = d/a;
+			double q = (3*c-Math.pow(b, 2))/9;
+			double r = (9*b*c-27*d-2*Math.pow(b, 3))/54;
+			double s1 = Math.pow(r+Math.pow(Math.pow(q, 3)+Math.pow(r, 2), 1/2), 1/3);
+			double s2 = Math.pow(r-Math.pow(Math.pow(q, 3)+Math.pow(r, 2), 1/2), 1/3);
+			x1=s1+s2-b/3;
+		} else if (b != 0) {
+			x1 = (-c+Math.sqrt(Math.pow(c, 2)-4*b*d))/(2*b);
+			x2 = (-c-Math.sqrt(Math.pow(c, 2)-4*b*d))/(2*b);
 			result = "X1= " + x1 + "; X2= " + x2;
-		} else if (a == 0 && b != 0) {
-			x1 = -c/b;
+		} else if (b == 0 && c != 0) {
+			x1 = -d/c;
 			result = "X= " + x1;
-		} else if (a == 0 && b == 0) {
-			if (c == 0)
+		} else if (b == 0 && c == 0) {
+			if (d == 0)
 				result = "Verdadero";
 			else
 				result = "False";
@@ -470,6 +799,7 @@ public class Algebra {
 	private String evaluarNum() {
 		Numero[] arr = new Numero[255];
 		int len_arr = -1;
+		double grado = 0;
 		while (!num.isEmpty()) {
 			Numero aux = (Numero)num.Pop();
 			if (len_arr > -1) {
@@ -478,29 +808,84 @@ public class Algebra {
 					if (aux.getVar().equals(arr[i].getVar()) && aux.getExp() == arr[i].getExp()) {
 						arr[i].setCof(arr[i].getCof()+aux.getCof());
 						suma = true;
+						if (aux.getVar().equals("x"))
+							if (grado < aux.getExp())
+								grado = aux.getExp();						
 					}
 				}
 				if (!suma) {
 					len_arr++;
-					arr[len_arr] = new Numero(aux);					
+					arr[len_arr] = new Numero(aux);
+					if (aux.getVar().equals("x"))
+						if (grado < aux.getExp())
+							grado = aux.getExp();
 				}
 			} else {
 				len_arr++;
-				arr[len_arr] = new Numero(aux);  
+				arr[len_arr] = new Numero(aux);
+				grado = aux.getVar().equals("x")?aux.getExp():grado;
 			}
 		}
 		
-		double a = 0.0, b = 0.0, c = 0.0;
+		String result = "";
+		boolean primero = true;
+		double a = 0.0, b = 0.0, c = 0.0, d = 0;
 		for (int i=0; i <= len_arr;i++) {
-			
-			if (arr[i].getVar().equals("x") && arr[i].getExp() == 2 )
+			if (arr[i].getVar().equals("x") && arr[i].getExp() == 3 )
 				a = arr[i].getCof();
-			if (arr[i].getVar().equals("x") && arr[i].getExp() == 1 )
+			if (arr[i].getVar().equals("x") && arr[i].getExp() == 2 )
 				b = arr[i].getCof();
-			if (arr[i].getVar().equals("") && arr[i].getExp() == 1 )
+			if (arr[i].getVar().equals("x") && arr[i].getExp() == 1 )
 				c = arr[i].getCof();
+			if (arr[i].getVar().equals("") && arr[i].getExp() == 1 )
+				d = arr[i].getCof();
+			
+			if (arr[i].getCof() != 0)
+				if (primero) {
+					if (arr[i].getVar().equals("")) {
+						result += arr[i].getCof();
+					} else {
+						String expo = "";
+						String coef = "";
+						if (arr[i].getExp() > 1) {
+							expo = "^"+arr[i].getExp();
+						}
+						if (arr[i].getCof() != 1 && arr[i].getCof() != -1) 
+							coef = arr[i].getCof()+"";
+						else if (arr[i].getCof() == -1)
+							coef = "-";
+						 if (arr[i].getCof() == 1)
+								coef = "";						
+						result += coef+arr[i].getVar()+expo;
+					}
+					primero = false;
+				} else {
+					String signo = ""; 
+					String coef = "";
+					if (arr[i].getCof()>0)
+						signo = "+";
+					
+					if (arr[i].getVar().equals("")) {
+						result += signo+arr[i].getCof();
+					} else {
+						String expo = "";
+						if (arr[i].getExp() > 1) {
+							expo = "^"+arr[i].getExp();
+						}
+						if (arr[i].getCof() != 1 && arr[i].getCof() != -1) 
+							coef = arr[i].getCof()+"";
+						else if (arr[i].getCof() == -1)
+							coef = "-";
+						else if (arr[i].getCof() == 1)
+							coef = "";						
+						result += signo+coef+arr[i].getVar()+expo;
+					}
+				}
+					
 		}
-		return SolvePolinomio(a, b, c);
+		if (grado >= 0 && grado <= 2)
+			result = SolvePolinomio(a, b, c, d);
+		return result;
 		/*String result = "";
 		for (int i=0; i <= len_arr;i++) {
 			if (i == 0) {
@@ -523,15 +908,20 @@ public class Algebra {
 	}
 		
 	public String Expand() {
-		expander = true;
-		while (expander) {
-			expander = false;
-			ar = new Arbol(Order(ar.getRaiz()));
-			ar.Order(ar.getRaiz());
-		}	
+		
+		reducir = true;
+		for (int i = 0; i < 5; i++) {
+			expander = true;
+			while (expander) {
+				expander = false;
+				ar = new Arbol(Order(ar.getRaiz()));
+				ar.Order(ar.getRaiz());
+			}	
+		}
 		ar.Order(ar.getRaiz());
 		Simplificar(ar.getRaiz(),false);
 		String result = evaluarNum();
+		//String result = toString(ar.getRaiz());
 		return result; 
 		//ar.Order(ar.getRaiz());
 	}
@@ -573,14 +963,14 @@ public class Algebra {
 		    		n.getHojaDerecha().setHojaDerecha(new Nodo("2"));
 		    	} else if (nodo.getValor().equals("^" )) {
 		    		n = new Nodo("*");
-		    		n.setHojaIzquierda(new Nodo("^"));
-		    		n.getHojaIzquierda().setHojaIzquierda(new Nodo("*"));
-		    		n.getHojaIzquierda().getHojaIzquierda().setHojaIzquierda(nodo.getHojaDerecha());
-		    		n.getHojaIzquierda().getHojaIzquierda().setHojaDerecha(nodo.getHojaIzquierda());
+		    		n.setHojaIzquierda(new Nodo("*"));
+		    		n.getHojaIzquierda().setHojaIzquierda(new Nodo("^"));
+		    		n.getHojaIzquierda().setHojaDerecha(nodo.getHojaDerecha());
 		    		
-		    		n.getHojaIzquierda().setHojaDerecha(new Nodo("-"));
-		    		n.getHojaIzquierda().getHojaDerecha().setHojaIzquierda(nodo.getHojaDerecha());
-		    		n.getHojaIzquierda().getHojaDerecha().setHojaDerecha(new Nodo("1"));
+		    		n.getHojaIzquierda().getHojaIzquierda().setHojaIzquierda(nodo.getHojaIzquierda());
+		    		n.getHojaIzquierda().getHojaIzquierda().setHojaDerecha(new Nodo("-"));
+		    		n.getHojaIzquierda().getHojaIzquierda().getHojaDerecha().setHojaIzquierda(nodo.getHojaDerecha());
+		    		n.getHojaIzquierda().getHojaIzquierda().getHojaDerecha().setHojaDerecha(new Nodo("1"));
 		    		
 		    		n.setHojaDerecha(Deriva(nodo.getHojaIzquierda()));
 		    	} else if (nodo.getValor().equals("c")) {
@@ -637,11 +1027,21 @@ public class Algebra {
 		    }
 	    	return n;			
 	}
-	
+		
 	public String Diff() {
 		String result = "";
 		ar = new Arbol(Deriva(ar.getRaiz()));
 		ar.Order(ar.getRaiz());
+		Log.i("Derivadas",toString(ar.getRaiz()));
+		reducir = false;
+		for (int i = 0; i < 5; i++) {
+			expander = true;
+			while (expander) {
+				expander = false;
+				ar = new Arbol(Order(ar.getRaiz()));
+				ar.Order(ar.getRaiz());
+			}
+		}		
 		result = toString(ar.getRaiz());
 		return result;
 	}
