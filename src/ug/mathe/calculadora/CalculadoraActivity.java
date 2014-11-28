@@ -1,5 +1,6 @@
 package ug.mathe.calculadora;
 
+
 import ug.mathe.R;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,7 +9,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar.Tab;
 import android.support.v7.app.ActionBar.TabListener;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
 import android.view.MenuItem;
 
 public class CalculadoraActivity extends ActionBarActivity  implements TabListener {

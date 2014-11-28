@@ -4,9 +4,15 @@
     tools:context="ug.mathe.Graficador3dActivity" >
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/grafica3D"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/Grafica3D"
         app:showAsAction="never"/>
+    
+    <item
+        android:id="@+id/Grafica4D"
+        android:orderInCategory="100"
+        android:title="@string/Grafica4D"
+        app:showAsAction="never"/>    
 
 </menu>

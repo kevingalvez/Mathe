@@ -13,7 +13,10 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,6 +24,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 @SuppressLint("ClickableViewAccessibility")
 public class GraficadorActivity extends Activity {
@@ -31,6 +35,8 @@ public class GraficadorActivity extends Activity {
 	String[] parametros;
 	public int algo = 0;
 	double ini_x, ini_y, fin_x, fin_y;
+	boolean normal = true, integrales, interseccion;
+	Canvas canvas;
 	private SparseArray<PointF> mActivePointers;
 
 	@SuppressWarnings("deprecation")
@@ -66,7 +72,7 @@ public class GraficadorActivity extends Activity {
 		        String func[] = String.valueOf(((EditText) findViewById(R.id.txtFuncion)).getText()).split(";");
 		        
 				
-		        Canvas canvas = new Canvas(bg);
+		        canvas = new Canvas(bg);
 
 			    grap = new Graph2d(ll.getWidth(),ll.getHeight(),5,5);
 
@@ -96,6 +102,7 @@ public class GraficadorActivity extends Activity {
 			
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
+				if (normal) {
 				try {
 			    // get pointer index from the event object
 			    int pointerIndex = event.getActionIndex();
@@ -154,7 +161,7 @@ public class GraficadorActivity extends Activity {
 						
 				        String func[] = String.valueOf(((EditText) findViewById(R.id.txtFuncion)).getText()).split(";");
 				        
-				        Canvas canvas = new Canvas(bg);
+				        canvas = new Canvas(bg);
 				     		        
 				        grap.dibujaplano(canvas, grap.ConvertToPixelX(0), grap.ConvertToPixelY(0), paint);
 				        
@@ -176,7 +183,7 @@ public class GraficadorActivity extends Activity {
 							
 					        String func[] = String.valueOf(((EditText) findViewById(R.id.txtFuncion)).getText()).split(";");
 					        
-					        Canvas canvas = new Canvas(bg);
+					        canvas = new Canvas(bg);
 					     		        
 					        grap.setZoomIn();
 					        grap.dibujaplano(canvas, grap.ConvertToPixelX(0), grap.ConvertToPixelY(0), paint);
@@ -198,7 +205,7 @@ public class GraficadorActivity extends Activity {
 								
 						        String func[] = String.valueOf(((EditText) findViewById(R.id.txtFuncion)).getText()).split(";");
 						        
-						        Canvas canvas = new Canvas(bg);
+						        canvas = new Canvas(bg);
 						     		        
 						        grap.setZoomOut();
 						        grap.dibujaplano(canvas, grap.ConvertToPixelX(0), grap.ConvertToPixelY(0), paint);
@@ -218,7 +225,7 @@ public class GraficadorActivity extends Activity {
 			    }
 			    //invalidate();
 
-			    return true;	
+
 				} catch (Exception ex) {
 						Log.e(MainActivity.TAG,GraficadorActivity.class.toString() + " - Error en Touch!");
 						return false;
@@ -296,20 +303,126 @@ public class GraficadorActivity extends Activity {
 		    }
 				
    			 return false;*/
-			}			
+				} else if (integrales) {
+					switch (event.getAction()) {
+			    		case MotionEvent.ACTION_DOWN:
+			    			ini_x = event.getX();
+			    			ini_y = event.getY();
+			    		break;
+			    		case MotionEvent.ACTION_UP:
+							LinearLayout ll = (LinearLayout) findViewById(R.id.graph2d);
+						    
+					        Paint paint = new Paint();
+					        paint.setColor(Color.parseColor("#000000"));
+					        Bitmap bg = Bitmap.createBitmap(ll.getWidth(), ll.getHeight(), Bitmap.Config.ARGB_8888);
+					        
+							
+					        String func[] = String.valueOf(((EditText) findViewById(R.id.txtFuncion)).getText()).split(";");
+					        
+					        Canvas canvas = new Canvas(bg);
+					     		
+					        grap.dibujaplano(canvas, grap.ConvertToPixelX(0), grap.ConvertToPixelY(0), paint);
+					        
+					        grap.setPunto(grap.ConvertToPuntoX(ini_x));
+
+					        for (int i = 0; i < func.length;i++) {
+						        grap.setExpr(func[i].toString());
+						        grap.graficar(canvas, paint);
+					        }
+					        try 
+					        {
+						        if (grap.isReady()) {
+						        	Toast.makeText(getApplicationContext(), "Area Total = "+grap.getArea(canvas,paint), Toast.LENGTH_LONG).show();
+						        }
+					        } catch (Exception ex) {
+					        	
+					        }
+					        //-------------------------------				
+					        
+					        ll.setBackgroundDrawable(new BitmapDrawable(bg));
+		    			break;
+					}
+				} else if (interseccion) {
+					switch (event.getAction()) {
+		    		case MotionEvent.ACTION_DOWN:
+		    			ini_x = event.getX();
+		    			ini_y = event.getY();
+		    		break;
+		    		case MotionEvent.ACTION_UP:
+						LinearLayout ll = (LinearLayout) findViewById(R.id.graph2d);
+					    
+				        Paint paint = new Paint();
+				        paint.setColor(Color.parseColor("#000000"));
+				        Bitmap bg = Bitmap.createBitmap(ll.getWidth(), ll.getHeight(), Bitmap.Config.ARGB_8888);
+				        
+						
+				        String func[] = String.valueOf(((EditText) findViewById(R.id.txtFuncion)).getText()).split(";");
+				        
+				        Canvas canvas = new Canvas(bg);
+				     		
+				        grap.dibujaplano(canvas, grap.ConvertToPixelX(0), grap.ConvertToPixelY(0), paint);
+				        
+				        grap.setPunto(grap.ConvertToPuntoX(ini_x));
+				        for (int i = 0; i < func.length;i++) {
+					        grap.setExpr(func[i].toString());
+					        grap.graficar(canvas, paint);
+				        }
+				        try {
+				        	if (grap.isReady()) {
+				        		Toast.makeText(getApplicationContext(), "Interseccion = "+grap.getInterseccion(), Toast.LENGTH_LONG).show();
+				        	}
+				        } catch (Exception ex) {
+				        	Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_LONG).show();
+				        }
+				        //-------------------------------				
+				        
+				        ll.setBackgroundDrawable(new BitmapDrawable(bg));
+	    			break;
+				}
+				}
+			    return true;
+			}
 		});
 	}
 
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.graficador, menu);
+		return true;
+	}	
+	
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+	    super.onCreateContextMenu(menu, v, menuInfo);
+	    menu.setHeaderTitle(R.string.abc_action_mode_done);
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.graficador, menu);
+	}
+	
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
+		if (id == R.id.normal) {
+			normal = true;
+			integrales = interseccion = false;
+			item.setChecked(true);
+		} else 	if (id == R.id.integrales) {
+			integrales = true;
+			normal = interseccion = false;
+			item.setChecked(true);
+		} else 	if (id == R.id.interseccion) {
+			interseccion = true;
+			normal = integrales = false;
+			item.setChecked(true);
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	
 }

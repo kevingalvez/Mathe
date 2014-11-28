@@ -14,6 +14,7 @@ public class Graph3d {
     private double step;
     private double inclinacion, rotacion;
     private double mover = 25*Math.PI/180;
+    private double alt = 1;
     
     public Graph3d(int x, int y, int margenX, int margenY){
     	Log.i("Graph2D","X="+x+" Y="+y);
@@ -23,6 +24,13 @@ public class Graph3d {
         this.margenY = margenY;
         this.inclinacion = Math.PI/3;
         this.rotacion = 11*Math.PI/6;  
+    }
+    
+    public void setTiempo(double t) {
+    	if (alt > 1.5)
+    		alt=0.1;
+    	else
+    		alt +=t;
     }
     
     public void setLimitesX(double xi, double xs)
@@ -147,7 +155,7 @@ public class Graph3d {
             double puntoZ = 0.0;
             boolean iter = true;
             double[] vector = new double[2];
-            int actX = 0,actY = 0, alt = 1;
+            int actX = 0,actY = 0;
             paint.setColor(Color.parseColor("#DF0101"));
             boolean asinto = false;
   		  	int lineaX = 0;

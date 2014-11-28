@@ -131,8 +131,8 @@ public class Algebra {
 			
 			if (isNumeric(dato3) || (isVar(dato3) && !dato1.equals(dato3))) {
 				result = new Nodo("*");
-				result.setHojaIzquierda(nodo1);
-				result.setHojaDerecha(new Nodo(dato3));
+				result.setHojaDerecha(nodo1);
+				result.setHojaIzquierda(new Nodo(dato3));
 			} else if (isVar(dato3) && dato1.equals(dato3)) {
 				if (nodo2.getValor().equals("^")) {
 					result = new Nodo("^");
@@ -418,7 +418,11 @@ public class Algebra {
 					n = evaluarHoja(nodo);
 				} else if (isHoja(nodo.getHojaDerecha()) && isHoja(nodo.getHojaIzquierda())){
 					expand = true;
-					n = DistderProducto(nodo.getHojaIzquierda(),nodo.getHojaDerecha());
+					Nodo aux = new Nodo("*");;
+					aux.setHojaIzquierda(evaluarHoja(nodo.getHojaIzquierda()));
+					aux.setHojaDerecha(evaluarHoja(nodo.getHojaDerecha()));
+					n = DistderProducto(aux.getHojaIzquierda(),aux.getHojaDerecha());
+					//n = DistderProducto(nodo.getHojaIzquierda(),nodo.getHojaDerecha());
 				} else if (isNumeric(nodo.getHojaDerecha().getValor())) {
 					if (Double.valueOf(nodo.getHojaDerecha().getValor()) == 1) {
 						expander = expand = true;
@@ -431,8 +435,8 @@ public class Algebra {
 						n = new Nodo("0");
 					} else {
 						n = new Nodo("*");
-						n.setHojaDerecha(nodo.getHojaIzquierda());
-						n.setHojaIzquierda(nodo.getHojaDerecha());
+						n.setHojaDerecha(Order(nodo.getHojaIzquierda()));
+						n.setHojaIzquierda(Order(nodo.getHojaDerecha()));
 						expander = expand = true;
 					}
 				}  else if (isNumeric(nodo.getHojaIzquierda().getValor())) {
@@ -455,7 +459,7 @@ public class Algebra {
 					n = evaluarNodo(nodo.getHojaDerecha(), nodo.getHojaIzquierda(),nodo.getValor());
 					if (n != null)
 						expander = expand = true;
-				}
+				} 
 	    	} else if (nodo.getValor().equals("^")) {
 	    		if (nodo.getHojaIzquierda().getValor().equals("^") && isNumeric(nodo.getHojaDerecha().getValor())) {
 	    			n = Exponentes(nodo.getHojaIzquierda(),nodo.getHojaDerecha());
@@ -678,6 +682,8 @@ public class Algebra {
 					}
 				}
 			}
+		} else {
+			result = nodo;
 		}
 		return result;
 	}
@@ -767,6 +773,7 @@ public class Algebra {
 	    		Simplificar(nodo.getHojaIzquierda(),minus);
 	    }		
 	}
+	
 	
 	private String SolvePolinomio(double a, double b, double c, double d) {
 		String result = "";
@@ -910,12 +917,24 @@ public class Algebra {
 	public String Expand() {
 		
 		reducir = true;
+		String ant = "", act = "";
+		int cant = 0;
 		for (int i = 0; i < 5; i++) {
 			expander = true;
+			cant = 0;
 			while (expander) {
 				expander = false;
 				ar = new Arbol(Order(ar.getRaiz()));
-				ar.Order(ar.getRaiz());
+				act = toString(ar.getRaiz());
+				if (ant.equals(act))
+					cant++;
+				ant = act;
+				if (cant == 3) {
+					expander = false;
+				}
+				Log.i("ORDER",toString(ar.getRaiz()));
+				//ar.Order(ar.getRaiz());
+				
 			}	
 		}
 		ar.Order(ar.getRaiz());

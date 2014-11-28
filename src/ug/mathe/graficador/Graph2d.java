@@ -12,6 +12,11 @@ public class Graph2d {
     private String expr;
     private int margenX,margenY;
     private double step;
+    private double[] puntos;
+    private int ind;
+    private boolean ready;
+
+    
     
     public Graph2d(int x, int y, int margenX, int margenY){
     	Log.i("Graph2D","X="+x+" Y="+y);
@@ -19,6 +24,82 @@ public class Graph2d {
         this.scalaY = y-2*margenY;
         this.margenX = margenX;
         this.margenY = margenY;
+        puntos = new double[2];
+        ind = 0;
+        ready = false;
+    }
+    
+    public void setPunto(double punto) {
+  
+    	if (ind < 2) {
+    		puntos[ind] = punto;
+    		ind++;
+    	}
+    }
+       
+    public boolean isReady() {
+    	return this.ready;
+    }
+    
+    public double getArea(Canvas canvas, Paint paint) throws Exception {
+    	double puntoX, puntoY, result = 0;
+    	int lineaY, actY, actX;
+    	try {
+        if (this.ready) {
+        	InfixToPostfix a = new InfixToPostfix(this.expr);
+        	paint.setColor(Color.parseColor("#336600"));
+        	puntoX = puntos[0];
+        	lineaY = ConvertToPixelY(0);
+        	result =-1;
+        	while (puntoX < puntos[1]) {
+          		puntoY = a.evaluar(puntoX);
+            	actY = this.ConvertToPixelY(puntoY);
+            	actX = this.ConvertToPixelX(puntoX);
+        		canvas.drawLine(actX, lineaY, actX, actY, paint);
+        		result += Math.abs(puntoX*puntoY);
+        		puntoX +=this.step;
+        	}
+        }
+    	} catch (Exception ex) {
+    		result = 0;
+    	}
+    	return result;
+    }
+    
+    public double getInterseccion() throws Exception{
+    	double result = 0;
+    	try {
+    		if (this.ready){
+	    		InfixToPostfix a = new InfixToPostfix(this.expr);
+	        	double li = puntos[0], ls = puntos[1], pn = 0, error = -1;
+	        	int itera = 100;
+	        	boolean punto = false;
+	        	double tolerancia = 1/Math.pow(10, 10);
+	        	for (int i = 0; (i <= itera)&&((!punto)||(error != 0)); i++) {
+	        		pn = (li+ls)/2;
+	        		
+	        		if (a.evaluar(li)*a.evaluar(pn) >= 0) {
+	        			li = pn;
+	        		}
+	        		
+	        		if (a.evaluar(ls)*a.evaluar(pn) >= 0) {
+	        			ls = pn;
+	        		}
+	        		
+	        		error = Math.abs(ls-li)/Math.pow(2, 100);
+	        		if (Math.abs(a.evaluar(pn)) <= tolerancia) {
+	        			punto = true;
+	        		}
+	        	}
+	        	if (punto) 
+	        		result = pn;
+	        	else
+	        		throw new Exception("No se encontro interseccion");
+	        } 
+    	} catch (Exception ex) {
+    		throw new Exception(ex.getMessage());
+    	}
+    	return result;
     }
     
     public void setLimitesX(double xi, double xs)
@@ -88,6 +169,17 @@ public class Graph2d {
     public void setExpr(String expr)
     {
         this.expr = expr;
+    }
+    
+    public void dibujalinea(Canvas canvas, Paint  paint) {
+    	if (ind > 0) {
+	    	int y1 = ConvertToPixelY(this.limiY);
+	    	int y2 = ConvertToPixelY(this.limsY);            
+	        for (int i = 0; i >=0 && i < 2; i++) {
+	        	int x = ConvertToPixelX(puntos[i]);
+	        	canvas.drawLine(x, y1, x, y2, paint);
+	        }
+    	}
     }
     
     public void dibujaplano(Canvas canvas, int origenX, int origenY, Paint paint){
@@ -168,6 +260,10 @@ public class Graph2d {
                 }
                 puntoX +=this.step;	                    		                    
             }
+            dibujalinea(canvas, paint);
+            ready = false;
+            if (ind == 2)
+            	ready = true;
         } catch (Exception e) 
         {
             //System.err.println("Exception: " + e.getMessage());

@@ -1,5 +1,8 @@
 package ug.mathe.graficador;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import ug.mathe.MainActivity;
 import ug.mathe.R;
 import android.annotation.SuppressLint;
@@ -31,13 +34,18 @@ public class Graficador3dActivity extends Activity {
 	String[] parametros;
 	public int algo = 0;
 	double ini_x, ini_y, fin_x, fin_y;
+	Timer timer;
+	boolean activa4d = false;
+	Thread thread;
+	 MyTimerTask myTimerTask;
 	private SparseArray<PointF> mActivePointers;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_graficador3d);
-		
+		 
+	    
 		EditText a = (EditText)findViewById(R.id.txtFuncion);
 		a.setKeyListener(null);
 		mActivePointers = new SparseArray<PointF>();
@@ -185,6 +193,13 @@ public class Graficador3dActivity extends Activity {
 		});		
 
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.graficador3d, menu);
+		return true;
+	}	
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -192,9 +207,56 @@ public class Graficador3dActivity extends Activity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
+		if (id == R.id.grafica3D) {
+			//return true;
+			if (timer != null)
+				timer.cancel();
+			timer = null;
+		}		
+		if (id == R.id.Grafica4D) {
+			//thread.start();
+			if (timer == null) {
+				timer = new Timer();
+		    	myTimerTask = new MyTimerTask();			
+		    	timer.schedule(myTimerTask, 1000,250);
+			}
+			//return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	class MyTimerTask extends TimerTask {
+
+		  @Override
+		  public void run() {
+		   
+				   runOnUiThread(new Runnable(){
+		
+				    @Override
+				    public void run() {
+							LinearLayout ll = (LinearLayout) findViewById(R.id.graph2d);
+							    
+						        Paint paint = new Paint();
+						        paint.setColor(Color.parseColor("#000000"));
+						        Bitmap bg = Bitmap.createBitmap(ll.getWidth(), ll.getHeight(), Bitmap.Config.ARGB_8888);
+						        
+								
+						        String func[] = String.valueOf(((EditText) findViewById(R.id.txtFuncion)).getText()).split(";");
+						        
+						        Canvas canvas = new Canvas(bg);
+						     		        
+						        grap.dibujaplano(canvas, paint);
+						        grap.setTiempo(0.1);
+						        for (int i = 0; i < func.length;i++) {
+							        grap.setExpr(func[i].toString());
+							        grap.graficar(canvas, paint);
+						        }
+						        //-------------------------------				
+						        
+						        ll.setBackgroundDrawable(new BitmapDrawable(bg));
+		                }
+		
+				    });
+				  }
 	}
 }
