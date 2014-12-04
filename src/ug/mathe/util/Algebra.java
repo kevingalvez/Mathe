@@ -950,6 +950,7 @@ public class Algebra {
 		reducir = true;
 		String ant = "", act = "";
 		int cant = 0;
+		Arbol original = new Arbol(ar.getRaiz());
 		for (int i = 0; i < 5; i++) {
 			expander = true;
 			cant = 0;
@@ -968,10 +969,30 @@ public class Algebra {
 				
 			}	
 		}
+	
 		ar.Order(ar.getRaiz());
 		Simplificar(ar.getRaiz(),false);
-		String result = evaluarNum();
+		//String result = evaluarNum();
+		String result ="";
 		//String result = toString(ar.getRaiz());
+		
+		try
+		{
+			InfixToPostfix a = new InfixToPostfix(toString(original.getRaiz()));
+			InfixToPostfix b = new InfixToPostfix(toString(ar.getRaiz()));
+			boolean val = true;
+			for (int i = 1; (i < 100)&&val; i=i+5) {
+				if (a.evaluar(i) != b.evaluar(i)) {
+					val = false;
+				}
+			}
+			if (val)
+				result = evaluarNum();
+			else
+				result = toString(original.getRaiz());
+		} catch (Exception ex) {
+			result = toString(original.getRaiz());
+		}		
 		return result; 
 		//ar.Order(ar.getRaiz());
 	}
@@ -1086,6 +1107,7 @@ public class Algebra {
 		reducir = false;
 		String ant = "", act = "";
 		int cant = 0;
+		Arbol original = new Arbol(ar.getRaiz());
 		for (int i = 0; i < 5; i++) {
 			expander = true;
 			cant = 0;
@@ -1104,7 +1126,24 @@ public class Algebra {
 			}
 		}
 		
-		result = toString(ar.getRaiz());
+		try
+		{
+			InfixToPostfix a = new InfixToPostfix(toString(original.getRaiz()));
+			InfixToPostfix b = new InfixToPostfix(toString(ar.getRaiz()));
+			boolean val = true;
+			for (int i = 1; (i < 100)&&val; i=i+5) {
+			if (a.evaluar(i) != b.evaluar(i))
+				val = false;
+			}
+			if (val)
+				result = toString(ar.getRaiz());
+			else
+				result = toString(original.getRaiz());
+				
+		} catch (Exception ex) {
+			result = toString(original.getRaiz());
+		}
+		//result = toString(ar.getRaiz());
 		return result;
 	}
 		
