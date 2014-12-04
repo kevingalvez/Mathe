@@ -483,7 +483,14 @@ public class Algebra {
 	    					n = new Nodo("~");
 	    					n.setHojaDerecha(nodo.getHojaDerecha());
 	    					expand = true;
-	    				} else {
+	    				}   if (isHojaAdicion(nodo.getHojaDerecha())) {
+							expand = true;
+							Nodo aux = new Nodo(nodo.getValor());
+							aux.setHojaIzquierda(evaluarHoja(nodo.getHojaDerecha()));
+							aux.setHojaDerecha(nodo.getHojaIzquierda());
+							n = aux;
+								expand = true;
+		    			} else {
 	    					n = nodo.getHojaDerecha();
 	    					expand = true;
 	    				}
@@ -497,7 +504,14 @@ public class Algebra {
 	    			if (a == 0) {
     					n = nodo.getHojaIzquierda();
     					expand = true;
-	    			}  else {
+	    			}  if (isHojaAdicion(nodo.getHojaIzquierda())) {
+						expand = true;
+						Nodo aux = new Nodo(nodo.getValor());
+						aux.setHojaIzquierda(evaluarHoja(nodo.getHojaIzquierda()));
+						aux.setHojaDerecha(nodo.getHojaDerecha());
+						n = aux;
+							expand = true;
+	    			} else {
 	    				n = evaluarNodo(nodo.getHojaDerecha(), nodo.getHojaIzquierda(), nodo.getValor());
 	    				if (n != null)
 	    					expander = expand = true;
@@ -551,8 +565,13 @@ public class Algebra {
 		Nodo result = null;
 		if (nodo.getValor().equals("+") || nodo.getValor().equals("-")) {
 			String dato1 = "", dato2 = "";
+			boolean negative = false;
 			if (isNegative(nodo.getHojaIzquierda())) {
-				dato1 = getValueNegative(nodo.getHojaIzquierda());
+				if (isNumeric(nodo.getHojaIzquierda().getHojaDerecha().getValor()))
+						dato1 = getValueNegative(nodo.getHojaIzquierda());
+				else
+					dato1 = nodo.getHojaIzquierda().getHojaDerecha().getValor();
+				negative = true;
 			} else 
 				dato1 = nodo.getHojaIzquierda().getValor();
 			
@@ -577,14 +596,26 @@ public class Algebra {
 				String a1 = "", a2 = "";
 				a1 = nodo.getHojaIzquierda().getValor();
 				a2 = nodo.getHojaDerecha().getValor();
-				if (a1.equals(a2)) {
-					result = new Nodo("*");
-					result.setHojaIzquierda(new Nodo("2"));
-					result.setHojaDerecha(new Nodo(a1));
+				if (nodo.getValor().equals("+")) {
+					if (a1.equals(a2)) {
+						result = new Nodo("*");
+						result.setHojaIzquierda(new Nodo("2"));
+						result.setHojaDerecha(new Nodo(a1));
+					}
+				} else if (nodo.getValor().equals("-")) {
+					if (a1.equals(a2)) {
+						result = new Nodo("0");
+					}
 				}
 			} else {
 				double a1 = 0.0;
 				String a2 = "";
+				if (negative) {
+					if (isNumeric(nodo.getHojaIzquierda().getHojaDerecha().getValor())) { 
+						a1 = Double.valueOf(dato1);
+						a2 = dato2;
+					}
+				} else 
 				if (isNumeric(nodo.getHojaIzquierda().getValor())) { 
 					a1 = Double.valueOf(dato1);
 					a2 = dato2;
@@ -1047,20 +1078,32 @@ public class Algebra {
 	    	return n;			
 	}
 		
-	public String Diff() {
+	public String Diff() throws Exception {
 		String result = "";
 		ar = new Arbol(Deriva(ar.getRaiz()));
 		ar.Order(ar.getRaiz());
 		Log.i("Derivadas",toString(ar.getRaiz()));
 		reducir = false;
+		String ant = "", act = "";
+		int cant = 0;
 		for (int i = 0; i < 5; i++) {
 			expander = true;
+			cant = 0;
 			while (expander) {
 				expander = false;
 				ar = new Arbol(Order(ar.getRaiz()));
 				ar.Order(ar.getRaiz());
+				act = toString(ar.getRaiz());
+				if (ant.equals(act))
+					cant++;
+				ant = act;
+				if (cant == 3) {
+					expander = false;
+				}
+				Log.i("ORDER",toString(ar.getRaiz()));				
 			}
-		}		
+		}
+		
 		result = toString(ar.getRaiz());
 		return result;
 	}
