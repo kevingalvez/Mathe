@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="circulo">
+        <item >Radio y Angulo</item>
+        <item >Area y Angulo</item>
+        <item >Perimetro y Angulo</item>
+        <item >Area Sector y Angulo</item>
+        <item >Area Sector y Radio</item>
+        <item >Area Sector y Area</item>
+        <item >Area Segmento y Angulo</item>
+    </string-array>
+    <string-array name="rectangulo">
+	    <item >Dos lados (a,b)</item>
+		<item >Lado y Perimetro (a,P)</item>
+		<item >Lado y Area (a,A)</item>
+		<item >Perimetro y Area (P,A)  </item>      
+    </string-array>
+	<string-array name="triangulo">
+	    <item >Tres Lados (a,b,c)</item>
+		<item >Dos lados y un angulo (a,b,Alfa)</item>
+		<item >Un lados y dos angulos (a,Alfa, Beta)</item>
+		<item >Area y dos Lados (A,a,b)</item>
+		<item >Perimetro y dos Lados (P,a,b)</item>
+	</string-array>
+	<string-array name="trapecio">
+		<item >Dos lados y Altura</item>
+		<item >Dos lados y Area</item>
+		<item >Dos lados y perimetro</item>
+		<item >Perimetro, Diagonal y LadoB</item>
+		<item >Perimetro, Diagonal y LadoA</item>
+		<item >Area, LadoA y Altura</item>
+		<item >Area, LadoB y Altura</item>
+    </string-array>
+
+</resources>

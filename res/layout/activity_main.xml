@@ -26,4 +26,11 @@
         android:layout_marginTop="35dp"
         android:text="@string/btn_geometria" />
     
+    <Button
+        android:id="@+id/btn_geometriaplana"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="35dp"
+        android:text="@string/btn_geometriaplana" />    
+    
 </LinearLayout>

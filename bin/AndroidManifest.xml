@@ -50,6 +50,10 @@
             android:name=".ResultActivity"
             android:label="@string/title_activity_result" >
         </activity>
+        <activity
+            android:name="ug.mathe.geometria_plana.GeometriaPlanaActivity"
+            android:label="@string/title_activity_geometria_plana" >
+        </activity>
     </application>
 
 </manifest>
