@@ -6,9 +6,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -55,6 +57,54 @@ public class GeoPlanaRectFragment extends Fragment {
 			
 		});
 		
+		btn = (Button)getActivity().findViewById(R.id.btn_calcular_rectangulo);
+		btn.setOnClickListener(new OnClickListener() {
+			
+			private double ladoa = 0.0;
+			private double ladob = 0.0;
+			private double area = 0.0;
+			private double perimetro = 0.0;
+			double[] param = new double[2];
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+				switch (caso) {
+					case 0:
+						this.ladoa =  Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_ladoa)).getText()));
+						this.ladob = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_ladob)).getText()));
+						param[0] = this.ladoa;
+						param[1] = this.ladob;
+						break;
+					case 1:
+						this.ladoa =  Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_ladoa)).getText()));
+						this.perimetro = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_perimetroR)).getText()));
+						param[0] = this.ladoa;
+						param[1] = this.perimetro;						
+						break;
+					case 2:
+						this.ladoa =  Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_ladoa)).getText()));
+						this.area = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_areaR)).getText()));
+						param[0] = this.ladoa;
+						param[1] = this.area;						
+						break;
+					case 3:
+						this.perimetro =  Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_perimetroR)).getText()));
+						this.area = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_areaR)).getText()));
+						param[0] = this.perimetro;
+						param[1] = this.area;						
+						break;
+				}
+
+				GeometriaPlana geo = new GeometriaPlana(param, "RECTANGULO", caso);
+				TextView a = (TextView)getActivity().findViewById(R.id.txt_RespRectangulo);
+				if (geo.resolve())
+					a.setText(geo.toString());
+				else
+					a.setText("Error");
+			}
+		});			
 	}
 	
 	

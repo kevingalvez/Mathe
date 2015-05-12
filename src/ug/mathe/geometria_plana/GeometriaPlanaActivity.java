@@ -52,17 +52,17 @@ public class GeometriaPlanaActivity extends ActionBarActivity implements TabList
 					.setText(getString(R.string.title_fragment_triangulo))
 					.setTabListener(this));
 		
-		actionbar.addTab(
+		/*actionbar.addTab(
 				actionbar.newTab()
 					.setText(getString(R.string.title_fragment_trapecio))
-					.setTabListener(this));
+					.setTabListener(this));*/
 				
 		FragmentManager manager = getSupportFragmentManager();
 		manager.beginTransaction()
 			.add(R.id.mainGeoPlanaContent,fragments[0])
 			.add(R.id.mainGeoPlanaContent,fragments[1])
 			.add(R.id.mainGeoPlanaContent,fragments[2])
-			.add(R.id.mainGeoPlanaContent,fragments[3])
+			//.add(R.id.mainGeoPlanaContent,fragments[3])
 			.commit();
 
 		

@@ -21,7 +21,7 @@
             android:text="@string/txtView_LadoA" />
 
         <EditText
-            android:id="@+id/txt_ladoa"
+            android:id="@+id/txt_ladoaT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -45,7 +45,7 @@
             android:text="@string/txtView_LadoB" />
 
         <EditText
-            android:id="@+id/txt_ladob"
+            android:id="@+id/txt_ladobT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -68,7 +68,7 @@
             android:text="@string/txtView_LadoC" />
 
         <EditText
-            android:id="@+id/txt_ladoc"
+            android:id="@+id/txt_ladocT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -91,7 +91,7 @@
             android:text="@string/txtView_AnguloAlfa" />
 
         <EditText
-            android:id="@+id/txt_anguloalfa"
+            android:id="@+id/txt_anguloalfaT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -114,7 +114,7 @@
             android:text="@string/txtView_AnguloBeta" />
 
         <EditText
-            android:id="@+id/txt_angulobeta"
+            android:id="@+id/txt_angulobetaT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -137,7 +137,7 @@
             android:text="@string/txtView_AnguloTeta" />
 
         <EditText
-            android:id="@+id/txt_anguloteta"
+            android:id="@+id/txt_angulotetaT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -160,7 +160,7 @@
             android:text="@string/txtView_Area" />
 
         <EditText
-            android:id="@+id/txt_area"
+            android:id="@+id/txt_areaT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -179,7 +179,7 @@
             android:text="@string/txtView_Perimetro" />
 
         <EditText
-            android:id="@+id/txt_perimetro"
+            android:id="@+id/txt_perimetroT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -197,7 +197,7 @@
         android:layout_height="wrap_content" >
 
         <Button
-            android:id="@+id/btn_calcular_circulo"
+            android:id="@+id/btn_calcular_triangulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"

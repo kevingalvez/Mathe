@@ -68,7 +68,7 @@
             android:text="@string/txtView_Area" />
 
         <EditText
-            android:id="@+id/txt_area"
+            android:id="@+id/txt_areaR"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -87,7 +87,7 @@
             android:text="@string/txtView_Perimetro" />
 
         <EditText
-            android:id="@+id/txt_perimetro"
+            android:id="@+id/txt_perimetroR"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -105,7 +105,7 @@
         android:layout_height="wrap_content" >
 
         <Button
-            android:id="@+id/btn_calcular_circulo"
+            android:id="@+id/btn_calcular_rectangulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
