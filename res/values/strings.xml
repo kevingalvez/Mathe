@@ -12,6 +12,7 @@
     <string name="Normal">Normal</string>
     <string name="Grafica3D">3D</string>
     <string name="Grafica4D">4D</string>
+    <string name="Agregar">Agregar</string>
     <string name="btn_graficador">Graficador 2D</string>
     <string name="btn_geometria">Geometría Analítica</string>
     <string name="btn_geometriaplana">Geometría Plana</string>

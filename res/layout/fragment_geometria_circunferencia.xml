@@ -93,7 +93,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/btn_graficarCircunferencia"
         android:text="@string/vacio"
-        android:textSize="20dp"         
+        android:textSize="20sp"         
     />    
          <Button
         android:id="@+id/btn_calcularCircunferencia"

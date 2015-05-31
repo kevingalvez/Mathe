@@ -4,17 +4,39 @@ import ug.mathe.R;
 import ug.mathe.R.id;
 import ug.mathe.R.layout;
 import ug.mathe.R.menu;
+import ug.mathe.geometria_plana.GeoPlanaCircFragment;
+import ug.mathe.geometria_plana.GeoPlanaRectFragment;
+import ug.mathe.geometria_plana.GeoPlanaTrapeFragment;
+import ug.mathe.geometria_plana.GeoPlanaTrianFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 public class GeometriaCombActivity extends ActionBarActivity {
 
+	Fragment[] fragments = new Fragment[] {
+			new GeoCombFragment()
+		};		
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_geometria_comb);
+		
+		FragmentManager manager = getSupportFragmentManager();
+		manager.beginTransaction()
+			.add(R.id.mainGeoCombContent,fragments[0])
+			.commit();		
+
 	}
 
 	@Override

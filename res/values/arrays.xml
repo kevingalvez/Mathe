@@ -31,5 +31,11 @@
 		<item >Area, LadoA y Altura</item>
 		<item >Area, LadoB y Altura</item>
     </string-array>
+	<string-array name="geocomp">
+		<item >Circulo</item>
+		<item >Rectangulo</item>
+		<item >Triangulo</item>
+		<item >Linea Recta</item>
+    </string-array>    
 
 </resources>
