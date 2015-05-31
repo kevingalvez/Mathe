@@ -1,6 +1,8 @@
 package ug.mathe.geometria_plana;
 
 import ug.mathe.R;
+import ug.mathe.graficador.GraficadorActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -17,8 +19,72 @@ import android.widget.AdapterView.OnItemSelectedListener;
 
 public class GeoPlanaTrianFragment extends Fragment {
 
-	Button btn;
-	int caso = -1;		
+	Button btn, btn2;
+	int caso = -1;
+	
+	private double ladoa = 0.0;
+	private double ladob = 0.0;
+	private double ladoc = 0.0;
+	private double alfa = 0.0;
+	private double beta = 0.0;
+	private double teta = 0.0;
+	private double area = 0.0;
+	private double perimetro = 0.0;
+	double[] param = new double[3];
+	
+	GeometriaPlana geo;
+	
+	public void calcular(){
+		switch (caso) {
+		case 0:
+			this.ladoa =  Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_ladoaT)).getText()));
+			this.ladob = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_ladobT)).getText()));
+			this.ladoc = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_ladocT)).getText()));
+			param[0] = this.ladoa;
+			param[1] = this.ladob;
+			param[2] = this.ladoc;
+			break;
+		case 1:
+			this.ladoa =  Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_ladoaT)).getText()));
+			this.ladob = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_ladobT)).getText()));
+			this.alfa = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_anguloalfaT)).getText()));
+			param[0] = this.ladoa;
+			param[1] = this.ladob;
+			param[2] = this.alfa;
+			break;
+		case 2:
+			this.ladoa =  Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_ladoaT)).getText()));
+			this.alfa = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_anguloalfaT)).getText()));
+			this.beta = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_angulobetaT)).getText()));
+			param[0] = this.ladoa;
+			param[1] = this.alfa;
+			param[2] = this.beta;						
+			break;
+		case 3:
+			this.area =  Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_areaT)).getText()));
+			this.ladoa = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_ladoaT)).getText()));
+			this.ladob = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_ladobT)).getText()));
+			param[0] = this.area;
+			param[1] = this.ladoa;
+			param[2] = this.ladob;						
+			break;
+		case 4:
+			this.perimetro =  Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_perimetroT)).getText()));
+			this.ladoa = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_ladoaT)).getText()));
+			this.ladob = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_ladobT)).getText()));
+			param[0] = this.perimetro;
+			param[1] = this.ladoa;
+			param[2] = this.ladob;						
+			break;
+	}
+
+	geo = new GeometriaPlana(param, "TRIANGULO", caso);
+	TextView a = (TextView)getActivity().findViewById(R.id.txt_RespTriangulo);
+	if (geo.resolve())
+		a.setText(geo.toString());
+	else
+		a.setText("Error");
+	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,73 +126,27 @@ public class GeoPlanaTrianFragment extends Fragment {
 		btn = (Button)getActivity().findViewById(R.id.btn_calcular_triangulo);
 		btn.setOnClickListener(new OnClickListener() {
 			
-			private double ladoa = 0.0;
-			private double ladob = 0.0;
-			private double ladoc = 0.0;
-			private double alfa = 0.0;
-			private double beta = 0.0;
-			private double teta = 0.0;
-			private double area = 0.0;
-			private double perimetro = 0.0;
-			double[] param = new double[3];
-			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				
-				switch (caso) {
-					case 0:
-						this.ladoa =  Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_ladoaT)).getText()));
-						this.ladob = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_ladobT)).getText()));
-						this.ladoc = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_ladocT)).getText()));
-						param[0] = this.ladoa;
-						param[1] = this.ladob;
-						param[2] = this.ladoc;
-						break;
-					case 1:
-						this.ladoa =  Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_ladoaT)).getText()));
-						this.ladob = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_ladobT)).getText()));
-						this.alfa = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_anguloalfaT)).getText()));
-						param[0] = this.ladoa;
-						param[1] = this.ladob;
-						param[2] = this.alfa;
-						break;
-					case 2:
-						this.ladoa =  Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_ladoaT)).getText()));
-						this.alfa = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_anguloalfaT)).getText()));
-						this.beta = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_angulobetaT)).getText()));
-						param[0] = this.ladoa;
-						param[1] = this.alfa;
-						param[2] = this.beta;						
-						break;
-					case 3:
-						this.area =  Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_areaT)).getText()));
-						this.ladoa = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_ladoaT)).getText()));
-						this.ladob = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_ladobT)).getText()));
-						param[0] = this.area;
-						param[1] = this.ladoa;
-						param[2] = this.ladob;						
-						break;
-					case 4:
-						this.perimetro =  Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_perimetroT)).getText()));
-						this.ladoa = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_ladoaT)).getText()));
-						this.ladob = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_ladobT)).getText()));
-						param[0] = this.perimetro;
-						param[1] = this.ladoa;
-						param[2] = this.ladob;						
-						break;
-				}
-
-				GeometriaPlana geo = new GeometriaPlana(param, "TRIANGULO", caso);
-				TextView a = (TextView)getActivity().findViewById(R.id.txt_RespTriangulo);
-				if (geo.resolve())
-					a.setText(geo.toString());
-				else
-					a.setText("Error");
+				calcular();
 			}
 		});			
 		
-		
+		btn2 = (Button)getActivity().findViewById(R.id.btn_graficar_triangulo);
+		btn2.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				calcular();
+				Intent intent = new Intent(getActivity(),GraficadorActivity.class);
+				intent.putExtra("funciones", "#Trian("+ geo.getladoaT() +"," + geo.getladocT() + "," + geo.getbetaT() + ")");
+				intent.putExtra("parametros", "-10,10,-10,10");
+				startActivity(intent);		
+			}
+		});			
 	}
 	
 	

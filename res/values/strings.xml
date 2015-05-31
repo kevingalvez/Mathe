@@ -15,6 +15,8 @@
     <string name="btn_graficador">Graficador 2D</string>
     <string name="btn_geometria">Geometría Analítica</string>
     <string name="btn_geometriaplana">Geometría Plana</string>
+    <string name="btn_figurascomb">Figuras Combinadas</string>
+    <string name="btn_vectores">Vectores</string>
     <string name="btn_ecuaciones">Calculadora</string>
     <string name="btn_sistecua">Sistema de Ecuaciones</string>
     <string name="btn_graficar">Graficar</string>
@@ -66,10 +68,10 @@
     <string name="title_fragment_parabola">Parabola</string>
     <string name="title_fragment_elipse">Elipse</string>
     <string name="title_fragment_hiperbola">Hiperbola</string>
-	<string name="title_fragment_circulo">Circulo</string>
-	<string name="title_fragment_rectangulo">Rectangulo</string>
-	<string name="title_fragment_triangulo">Triangulo</string>
-	<string name="title_fragment_trapecio">Trapecio</string>	    
+    <string name="title_fragment_circulo">Circulo</string>
+    <string name="title_fragment_rectangulo">Rectangulo</string>
+    <string name="title_fragment_triangulo">Triangulo</string>
+    <string name="title_fragment_trapecio">Trapecio</string>
     <string name="fragment_coef_a">A</string>
     <string name="fragment_coef_b">B</string>
     <string name="fragment_coef_c">C</string>
@@ -100,23 +102,21 @@
     <string name="title_activity_graficador3d">Graficador 3D</string>
     <string name="title_activity_result">ResultActivity</string>
     <string name="title_activity_geometria_plana">GeometriaPlanaActivity</string>
-    
     <string name="txtView_Radio">Radio</string>
     <string name="txtView_Angulo">Angulo</string>
     <string name="txtView_Area_Segmento">Area Segmento</string>
     <string name="txtView_Area">Area</string>
     <string name="txtView_Perimetro">Perimetro</string>
     <string name="txtView_Area_Sector">Area Sector</string>
-    
     <string name="txtView_LadoA">Lado A</string>
     <string name="txtView_LadoB">Lado B</string>
-    
     <string name="txtView_LadoC">Lado C</string>
     <string name="txtView_AnguloAlfa">Angulo Alfa</string>
     <string name="txtView_AnguloBeta">Angulo Beta</string>
     <string name="txtView_AnguloTeta">Angulo Teta</string>
-    
     <string name="txtView_Altura">Altura</string>
     <string name="txtView_Diagonal">Diagonal</string>
+    <string name="title_activity_geometria_comb">Figuras Combinadas</string>
+    <string name="title_activity_vectores">Vectores</string>
 
 </resources>

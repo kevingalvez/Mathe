@@ -2,8 +2,10 @@ package ug.mathe;
 
 import ug.mathe.calculadora.CalculadoraActivity;
 import ug.mathe.geometria.GeometriaActivity;
+import ug.mathe.geometria_comb.GeometriaCombActivity;
 import ug.mathe.geometria_plana.GeometriaPlanaActivity;
 import ug.mathe.graficador.GraficadorActivity;
+import ug.mathe.vectores.VectoresActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +20,8 @@ public class MainActivity extends Activity {
 	Button btnEcuaciones;
 	Button btnSistEcua;
 	Button btnGeometriaPlana;
+	Button btnGeometriaComb;
+	Button btnVectores;
 	
 	public static final String TAG = "MATHE";
 	
@@ -30,10 +34,14 @@ public class MainActivity extends Activity {
 		btnGeometria = (Button) findViewById(R.id.btn_geometria);
 		btnEcuaciones = (Button) findViewById(R.id.btn_ecuaciones);
 		btnGeometriaPlana = (Button) findViewById(R.id.btn_geometriaplana);
+		btnGeometriaComb = (Button) findViewById(R.id.btn_geometriacomb);
+		btnVectores = (Button) findViewById(R.id.btn_vectores);
 		
 		btnGeometria .setOnClickListener(new ButtonListener(2));
 		btnEcuaciones .setOnClickListener(new ButtonListener(3));
 		btnGeometriaPlana .setOnClickListener(new ButtonListener(4));
+		btnGeometriaComb .setOnClickListener(new ButtonListener(5));
+		btnVectores .setOnClickListener(new ButtonListener(6));
 	}
 
 	@Override
@@ -70,6 +78,12 @@ public class MainActivity extends Activity {
 				startActivity(intent);				
 			} else if (menu == 4) {
 				Intent intent = new Intent(getApplicationContext(), GeometriaPlanaActivity.class);
+				startActivity(intent);				
+			}  else if (menu == 5) {
+				Intent intent = new Intent(getApplicationContext(), GeometriaCombActivity.class);
+				startActivity(intent);				
+			}  else if (menu == 6) {
+				Intent intent = new Intent(getApplicationContext(), VectoresActivity.class);
 				startActivity(intent);				
 			}
 		}

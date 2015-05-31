@@ -21,8 +21,75 @@ import android.widget.Toast;
 
 public class GeoPlanaCircFragment extends Fragment {
 
-	Button btn;
+	Button btn, btn2;
 	int caso = -1;
+	
+	private double radio = 0.0;
+	private double angulo = 0.0;
+	private double area = 0.0;
+	private double perimetro = 0.0;
+	private double area_sector = 0.0;
+	private double area_segmento = 0.0;
+	double[] param = new double[2];	
+	
+	public GeometriaPlana geo;
+	
+	public void calcular() {
+		switch (caso) {
+		case 0:
+			this.radio =  Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_radio)).getText()));
+			this.angulo = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_angulo)).getText()));
+			param[0] = this.radio;
+			param[1] = this.angulo;
+			break;
+		case 1:
+			this.area =  Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_area)).getText()));
+			this.angulo = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_angulo)).getText()));
+			param[0] = this.area;
+			param[1] = this.angulo;						
+			break;
+		case 2:
+			this.perimetro =  Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_perimetro)).getText()));
+			this.angulo = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_angulo)).getText()));
+			param[0] = this.perimetro;
+			param[1] = this.angulo;						
+			break;
+		case 3:
+			this.area_sector =  Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_area_sector)).getText()));
+			this.angulo = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_angulo)).getText()));
+			param[0] = this.area_sector;
+			param[1] = this.angulo;						
+			break;
+		case 4:
+			this.area_sector =  Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_area_sector)).getText()));
+			this.radio = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_radio)).getText()));
+			param[0] = this.area_sector;
+			param[1] = this.radio;							
+			break;
+		case 5:
+			this.area_sector =  Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_area_sector)).getText()));
+			this.area = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_area)).getText()));
+			param[0] = this.area_sector;
+			param[1] = this.area;							
+			break;
+		case 6:
+			this.area_segmento =  Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_area_segmento)).getText()));
+			this.angulo = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_angulo)).getText()));
+			param[0] = this.area_segmento;
+			param[1] = this.angulo;							
+			break;
+			
+		}
+		
+		geo = new GeometriaPlana(param, "CIRCULO", caso);
+		TextView a = (TextView)getActivity().findViewById(R.id.txt_RespCirculo);
+		if (geo.resolve())
+			a.setText(geo.toString());
+		else
+			a.setText("Error");		
+		
+	}
+	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,19 +130,19 @@ public class GeoPlanaCircFragment extends Fragment {
 		btn = (Button)getActivity().findViewById(R.id.btn_calcular_circulo);
 		btn.setOnClickListener(new OnClickListener() {
 			
-			private double radio = 0.0;
+			/*private double radio = 0.0;
 			private double angulo = 0.0;
 			private double area = 0.0;
 			private double perimetro = 0.0;
 			private double area_sector = 0.0;
 			private double area_segmento = 0.0;
-			double[] param = new double[2];
+			double[] param = new double[2];*/
 			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				
-				switch (caso) {
+				/*switch (caso) {
 					case 0:
 						this.radio =  Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_radio)).getText()));
 						this.angulo = Double.valueOf(String.valueOf(((EditText)getActivity().findViewById(R.id.txt_angulo)).getText()));
@@ -119,14 +186,23 @@ public class GeoPlanaCircFragment extends Fragment {
 						param[1] = this.angulo;							
 						break;
 						
-				}
+				}*/
 
-				GeometriaPlana geo = new GeometriaPlana(param, "CIRCULO", caso);
-				TextView a = (TextView)getActivity().findViewById(R.id.txt_RespCirculo);
-				if (geo.resolve())
-					a.setText(geo.toString());
-				else
-					a.setText("Error");
+				calcular();
+			}
+		});
+		
+		btn2 = (Button)getActivity().findViewById(R.id.btn_graficar_circulo);
+		btn2.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				calcular();
+				Intent intent = new Intent(getActivity(),GraficadorActivity.class);
+				intent.putExtra("funciones", "#Circ("+ geo.getRadio() +"," + geo.getAngulo() + ")");
+				intent.putExtra("parametros", "-10,10,-10,10");
+				startActivity(intent);		
 			}
 		});
 	}

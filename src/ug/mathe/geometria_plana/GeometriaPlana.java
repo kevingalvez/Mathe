@@ -119,6 +119,8 @@ public class GeometriaPlana {
 		}
 	}
 	
+	// Get values para Circulo
+	
 	public double getRadio() {
 		return this.radio;
 	}
@@ -141,8 +143,59 @@ public class GeometriaPlana {
 	
 	public double getAreaSegmento() {
 		return this.area_segmento;
-	}	
+	}
 	
+	
+	// Get values para Rectangulo
+	public double getladoa() {
+		return this.ladoa;
+	}
+	
+	public double getladob() {
+		return this.ladob;
+	}
+	
+	public double getareaR() {
+		return this.areaR;
+	}
+	
+	public double getperimetroR() {
+		return this.perimetroR;
+	}
+	
+	// Get values para Triangulo
+	public double getladoaT() {
+		return this.ladoaT;
+	}
+	
+	public double getladobT() {
+		return this.ladobT;
+	}
+	
+	public double getladocT() {
+		return this.ladocT;
+	}
+	
+	public double getalfaT() {
+		return this.alfaT;
+	}
+	
+	public double getbetaT() {
+		return this.betaT;
+	}
+	
+	public double gettetaT() {
+		return this.tetaT;
+	}
+	
+	public double getareaT() {
+		return this.areaT;
+	}	
+
+	public double getperimetroT() {
+		return this.perimetroT;
+	}	
+			
 	public boolean resolve()
 	{
 		boolean result = false;

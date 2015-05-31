@@ -51,9 +51,17 @@
             android:label="@string/title_activity_result" >
         </activity>
         <activity
-            android:name="ug.mathe.geometria_plana.GeometriaPlanaActivity"
+            android:name=".geometria_plana.GeometriaPlanaActivity"
             android:label="@string/title_activity_geometria_plana"
             android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".geometria_comb.GeometriaCombActivity"
+            android:label="@string/title_activity_geometria_comb" >
+        </activity>
+        <activity
+            android:name="ug.mathe.vectores.VectoresActivity"
+            android:label="@string/title_activity_vectores" >
         </activity>
     </application>
 

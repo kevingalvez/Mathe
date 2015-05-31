@@ -4,6 +4,7 @@ import ug.mathe.util.InfixToPostfix;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.util.Log;
 
 public class Graph2d {
@@ -218,56 +219,103 @@ public class Graph2d {
     }
     
     public void graficar(Canvas canvas, Paint paint) {
-        try 
-        {
-            //InfixToPostfix a = new InfixToPostfix(grap.expr);
-        	InfixToPostfix a = new InfixToPostfix(this.expr);
-            double puntoX = this.limiX;
-            boolean iter = true;
-            int actX = 0,actY = 0, lineaY = 0, lineaX = 0;
-            paint.setColor(Color.parseColor("#DF0101"));
-            while (puntoX < this.limsX)
-            {
-            	double puntoY = 0.0;
-                try
-                {
-              		puntoY = a.evaluar(puntoX);
-                	actY = this.ConvertToPixelY(puntoY);
-                	actX = this.ConvertToPixelX(puntoX);
-                    if (iter)
-                    {
-                        canvas.drawLine(lineaX, lineaY, lineaX, lineaY,paint);
-                    	//canvas.drawCircle(lineaX, lineaY, 1, paint);
-                        lineaX = actX;
-                        lineaY = actY;
-                        iter = false;
-                    }
-                    else
-                    {
-                    	//canvas.drawLine(actX, actY, lineaX, lineaY,paint);
-                    	canvas.drawLine(lineaX, lineaY, actX, actY, paint);
-                    	//canvas.drawCircle(actX, actY, 1, paint);
-                        lineaX = actX;
-                        lineaY = actY;
-                        
-                    }
-                    /*actX = lineaX;
-                    actY = lineaY;
-                    iter = false;*/
-                } catch (Exception e) {
-                	Log.i("Graficador",e.getMessage());
-                	iter = true;
-                }
-                puntoX +=this.step;	                    		                    
-            }
-            dibujalinea(canvas, paint);
-            ready = false;
-            if (ind == 2)
-            	ready = true;
-        } catch (Exception e) 
-        {
-            //System.err.println("Exception: " + e.getMessage());
-        }    	
+    	if (this.expr.charAt(0) != '#') {
+	        try 
+	        {
+	            //InfixToPostfix a = new InfixToPostfix(grap.expr);
+	        	InfixToPostfix a = new InfixToPostfix(this.expr);
+	            double puntoX = this.limiX;
+	            boolean iter = true;
+	            int actX = 0,actY = 0, lineaY = 0, lineaX = 0;
+	            paint.setColor(Color.parseColor("#DF0101"));
+	            while (puntoX < this.limsX)
+	            {
+	            	double puntoY = 0.0;
+	                try
+	                {
+	              		puntoY = a.evaluar(puntoX);
+	                	actY = this.ConvertToPixelY(puntoY);
+	                	actX = this.ConvertToPixelX(puntoX);
+	                    if (iter)
+	                    {
+	                        canvas.drawLine(lineaX, lineaY, lineaX, lineaY,paint);
+	                    	//canvas.drawCircle(lineaX, lineaY, 1, paint);
+	                        lineaX = actX;
+	                        lineaY = actY;
+	                        iter = false;
+	                    }
+	                    else
+	                    {
+	                    	//canvas.drawLine(actX, actY, lineaX, lineaY,paint);
+	                    	canvas.drawLine(lineaX, lineaY, actX, actY, paint);
+	                    	//canvas.drawCircle(actX, actY, 1, paint);
+	                        lineaX = actX;
+	                        lineaY = actY;
+	                        
+	                    }
+	                    /*actX = lineaX;
+	                    actY = lineaY;
+	                    iter = false;*/
+	                } catch (Exception e) {
+	                	Log.i("Graficador",e.getMessage());
+	                	iter = true;
+	                }
+	                puntoX +=this.step;	                    		                    
+	            }
+	            dibujalinea(canvas, paint);
+	            ready = false;
+	            if (ind == 2)
+	            	ready = true;
+	        } catch (Exception e) 
+	        {
+	            //System.err.println("Exception: " + e.getMessage());
+	        }    	
+    	} else {
+    		if (this.expr.contains("Circ")) {
+    			int idxizq = this.expr.indexOf("(");
+    			int idxder = this.expr.indexOf(")");
+    			String param = this.expr.substring(idxizq + 1,idxder - 1);
+    			String[] valueparam = param.split(",");
+    			double radio = Double.parseDouble(valueparam[0]);
+    			double angulo = Double.parseDouble(valueparam[1]);
+    			
+    			paint.setColor(Color.parseColor("#DF0101"));
+    			paint.setStyle(Paint.Style.STROKE);
+    			canvas.drawOval(new RectF((float)this.ConvertToPixelX(-radio),(float)this.ConvertToPixelY(radio),(float)this.ConvertToPixelX(radio),(float)this.ConvertToPixelY(-radio)), paint);
+    			
+    			canvas.drawLine((float)this.ConvertToPixelX(0), (float)this.ConvertToPixelY(0), (float)this.ConvertToPixelX(radio*Math.cos(angulo*Math.PI/180)), (float)this.ConvertToPixelY(radio*Math.sin(angulo*Math.PI/180)),paint);
+    			canvas.drawLine((float)this.ConvertToPixelX(radio*Math.cos(angulo*Math.PI/180)), (float)this.ConvertToPixelY(radio*Math.sin(angulo*Math.PI/180)),(float)this.ConvertToPixelX(radio), (float)this.ConvertToPixelY(0),paint);
+    			
+    			canvas.drawLine((float)this.ConvertToPixelX(0), (float)this.ConvertToPixelY(0), (float)this.ConvertToPixelX(radio), (float)this.ConvertToPixelY(0),paint);
+    		} else if (this.expr.contains("Rect")) {
+    			int idxizq = this.expr.indexOf("(");
+    			int idxder = this.expr.indexOf(")");
+    			String param = this.expr.substring(idxizq + 1,idxder - 1);
+    			String[] valueparam = param.split(",");
+    			double ladoa = Double.parseDouble(valueparam[0]);
+    			double ladob = Double.parseDouble(valueparam[1]);
+    			
+    			paint.setColor(Color.parseColor("#DF0101"));
+    			paint.setStyle(Paint.Style.STROKE);
+    			canvas.drawRect((float)this.ConvertToPixelX(0), (float)this.ConvertToPixelY(ladob), (float)this.ConvertToPixelX(ladoa), (float)this.ConvertToPixelY(0), paint);
+    		} else if (this.expr.contains("Trian")) {
+    			int idxizq = this.expr.indexOf("(");
+    			int idxder = this.expr.indexOf(")");
+    			String param = this.expr.substring(idxizq + 1,idxder - 1);
+    			String[] valueparam = param.split(",");
+    			double ladoaT = Double.parseDouble(valueparam[0]);
+    			double ladocT = Double.parseDouble(valueparam[1]);
+    			double angbeta = Double.parseDouble(valueparam[2]);
+    			
+    			paint.setColor(Color.parseColor("#DF0101"));
+    			paint.setStyle(Paint.Style.STROKE);
+    			
+    			canvas.drawLine((float)this.ConvertToPixelX(0), (float)this.ConvertToPixelY(0), (float)this.ConvertToPixelX(ladocT*Math.cos(angbeta*Math.PI/180)), (float)this.ConvertToPixelY(ladocT*Math.sin(angbeta*Math.PI/180)), paint);
+    			canvas.drawLine((float)this.ConvertToPixelX(ladocT*Math.cos(angbeta*Math.PI/180)), (float)this.ConvertToPixelY(ladocT*Math.sin(angbeta*Math.PI/180)), (float)this.ConvertToPixelX(ladoaT), (float)this.ConvertToPixelY(0), paint);
+    			canvas.drawLine((float)this.ConvertToPixelX(ladoaT), (float)this.ConvertToPixelY(0), (float)this.ConvertToPixelX(0), (float)this.ConvertToPixelY(0), paint);
+    			   			
+    		}
+    	}
     }
    
 }
