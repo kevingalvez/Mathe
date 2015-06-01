@@ -218,7 +218,14 @@ public class GeoCombFragment extends Fragment {
 					    	if (!userInput.getText().toString().equals("")) {
 						    	Spinner spn = (Spinner) getActivity().findViewById(R.id.spn_geocomb);
 						    	adapter2.remove(itemValue);
-								adapter2.add("$" + spn.getSelectedItem().toString() + "(" + userInput.getText().toString() + ")");
+						    	String  parametro = "";
+						    	if (itemValue.contains("Circulo"))
+						    		parametro = "Circulo";
+						    	else  	if (itemValue.contains("Rectangulo"))
+						    		parametro = "Rectangulo";
+						    	else  	if (itemValue.contains("Linea Recta"))
+						    		parametro = "Linea Recta";						    	
+						    	adapter2.add("$" + parametro + "(" + userInput.getText().toString() + ")");
 								adapter2.setNotifyOnChange(true);
 					    	} else 
 					    	{
