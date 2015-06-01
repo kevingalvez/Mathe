@@ -216,16 +216,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-        <EditText
-            android:id="@+id/txt_RespTriangulo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/vacio"
-            android:textAppearance="?android:attr/textAppearanceLarge" 
-            android:inputType="none"
-            android:singleLine="true"  
-            />
-
     </LinearLayout>      
 
 </LinearLayout>

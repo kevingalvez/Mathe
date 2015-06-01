@@ -34,6 +34,26 @@ public class GeoPlanaCircFragment extends Fragment {
 	
 	public GeometriaPlana geo;
 	
+	public void inicializar(){
+		EditText txt = (EditText)getActivity().findViewById(R.id.txt_radio);
+		txt.setText("");
+		
+		txt = (EditText)getActivity().findViewById(R.id.txt_angulo);
+		txt.setText("");
+		
+		txt = (EditText)getActivity().findViewById(R.id.txt_area_segmento);
+		txt.setText("");	
+		
+		txt = (EditText)getActivity().findViewById(R.id.txt_area);
+		txt.setText("");
+		
+		txt = (EditText)getActivity().findViewById(R.id.txt_perimetro);
+		txt.setText("");
+		
+		txt = (EditText)getActivity().findViewById(R.id.txt_area_sector);
+		txt.setText("");		
+	}
+	
 	public void calcular() {
 		switch (caso) {
 		case 0:
@@ -82,11 +102,28 @@ public class GeoPlanaCircFragment extends Fragment {
 		}
 		
 		geo = new GeometriaPlana(param, "CIRCULO", caso);
-		TextView a = (TextView)getActivity().findViewById(R.id.txt_RespCirculo);
-		if (geo.resolve())
-			a.setText(geo.toString());
+		if (geo.resolve()) {
+			EditText txt = (EditText)getActivity().findViewById(R.id.txt_radio);
+			txt.setText(String.valueOf(geo.getRadio()));
+			
+			txt = (EditText)getActivity().findViewById(R.id.txt_angulo);
+			txt.setText(String.valueOf(geo.getAngulo()));
+			
+			txt = (EditText)getActivity().findViewById(R.id.txt_area_segmento);
+			txt.setText(String.valueOf(geo.getAreaSegmento()));	
+			
+			txt = (EditText)getActivity().findViewById(R.id.txt_area);
+			txt.setText(String.valueOf(geo.getArea()));
+			
+			txt = (EditText)getActivity().findViewById(R.id.txt_perimetro);
+			txt.setText(String.valueOf(geo.getPerimetro()));
+			
+			txt = (EditText)getActivity().findViewById(R.id.txt_area_sector);
+			txt.setText(String.valueOf(geo.getAreaSector()));
+			//a.setText(geo.toString());
+		}
 		else
-			a.setText("Error");		
+			Toast.makeText(getActivity(), "Error!", Toast.LENGTH_LONG).show();
 		
 	}
 	
@@ -114,8 +151,7 @@ public class GeoPlanaCircFragment extends Fragment {
 			public void onItemSelected(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-				TextView a = (TextView)getActivity().findViewById(R.id.txt_RespCirculo);
-				a.setText("");
+				inicializar();
 				caso = position;
 			}
 
@@ -148,6 +184,7 @@ public class GeoPlanaCircFragment extends Fragment {
 				Intent intent = new Intent(getActivity(),GraficadorActivity.class);
 				intent.putExtra("funciones", "#Circ("+ geo.getRadio() +"," + geo.getAngulo() + ")");
 				intent.putExtra("parametros", "-10,10,-10,10");
+				intent.putExtra("menu", "geometriaplana");
 				startActivity(intent);		
 			}
 		});

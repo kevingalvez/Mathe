@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 public class GeoPlanaRectFragment extends Fragment {
@@ -29,6 +30,20 @@ public class GeoPlanaRectFragment extends Fragment {
 	double[] param = new double[2];
 	
 	GeometriaPlana geo;
+	
+	public void inicializar(){
+		EditText txt = (EditText)getActivity().findViewById(R.id.txt_ladoa);
+		txt.setText("");
+		
+		txt = (EditText)getActivity().findViewById(R.id.txt_ladob);
+		txt.setText("");
+		
+		txt = (EditText)getActivity().findViewById(R.id.txt_areaR);
+		txt.setText("");
+		
+		txt = (EditText)getActivity().findViewById(R.id.txt_perimetroR);
+		txt.setText("");		
+	}
 	
 	public void calcular() {
 		switch (caso) {
@@ -59,11 +74,21 @@ public class GeoPlanaRectFragment extends Fragment {
 		}
 	
 		geo = new GeometriaPlana(param, "RECTANGULO", caso);
-		TextView a = (TextView)getActivity().findViewById(R.id.txt_RespRectangulo);
-		if (geo.resolve())
-			a.setText(geo.toString());
+		if (geo.resolve()) {
+			EditText txt = (EditText)getActivity().findViewById(R.id.txt_ladoa);
+			txt.setText(String.valueOf(geo.getladoa()));
+			
+			txt = (EditText)getActivity().findViewById(R.id.txt_ladob);
+			txt.setText(String.valueOf(geo.getladob()));
+			
+			txt = (EditText)getActivity().findViewById(R.id.txt_areaR);
+			txt.setText(String.valueOf(geo.getareaR()));
+			
+			txt = (EditText)getActivity().findViewById(R.id.txt_perimetroR);
+			txt.setText(String.valueOf(geo.getperimetroR()));			
+		}
 		else
-			a.setText("Error");
+			Toast.makeText(getActivity(), "Error!", Toast.LENGTH_LONG).show();
 	}
 	
 	@Override
@@ -90,8 +115,7 @@ public class GeoPlanaRectFragment extends Fragment {
 			public void onItemSelected(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-				TextView a = (TextView)getActivity().findViewById(R.id.txt_RespRectangulo);
-				a.setText("");
+				inicializar();
 				caso = position;
 			}
 

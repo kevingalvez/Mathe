@@ -36,6 +36,7 @@ public class MainActivity extends Activity {
 		btnGeometriaPlana = (Button) findViewById(R.id.btn_geometriaplana);
 		btnGeometriaComb = (Button) findViewById(R.id.btn_geometriacomb);
 		btnVectores = (Button) findViewById(R.id.btn_vectores);
+
 		
 		btnGeometria .setOnClickListener(new ButtonListener(2));
 		btnEcuaciones .setOnClickListener(new ButtonListener(3));

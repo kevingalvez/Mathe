@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 public class GeoPlanaTrianFragment extends Fragment {
@@ -33,6 +34,32 @@ public class GeoPlanaTrianFragment extends Fragment {
 	double[] param = new double[3];
 	
 	GeometriaPlana geo;
+	
+	public void inicializar(){
+		EditText txt = (EditText)getActivity().findViewById(R.id.txt_ladoaT);
+		txt.setText("");
+		
+		txt = (EditText)getActivity().findViewById(R.id.txt_ladobT);
+		txt.setText("");
+		
+		txt = (EditText)getActivity().findViewById(R.id.txt_ladocT);
+		txt.setText("");
+		
+		txt = (EditText)getActivity().findViewById(R.id.txt_anguloalfaT);
+		txt.setText("");
+		
+		txt = (EditText)getActivity().findViewById(R.id.txt_angulobetaT);
+		txt.setText("");
+		
+		txt = (EditText)getActivity().findViewById(R.id.txt_angulotetaT);
+		txt.setText("");
+		
+		txt = (EditText)getActivity().findViewById(R.id.txt_areaT);
+		txt.setText("");
+		
+		txt = (EditText)getActivity().findViewById(R.id.txt_perimetroT);
+		txt.setText("");	
+	}
 	
 	public void calcular(){
 		switch (caso) {
@@ -79,11 +106,33 @@ public class GeoPlanaTrianFragment extends Fragment {
 	}
 
 	geo = new GeometriaPlana(param, "TRIANGULO", caso);
-	TextView a = (TextView)getActivity().findViewById(R.id.txt_RespTriangulo);
-	if (geo.resolve())
-		a.setText(geo.toString());
+	if (geo.resolve()) {
+		EditText txt = (EditText)getActivity().findViewById(R.id.txt_ladoaT);
+		txt.setText(String.valueOf(geo.getladoaT()));
+		
+		txt = (EditText)getActivity().findViewById(R.id.txt_ladobT);
+		txt.setText(String.valueOf(geo.getladobT()));
+		
+		txt = (EditText)getActivity().findViewById(R.id.txt_ladocT);
+		txt.setText(String.valueOf(geo.getladocT()));
+		
+		txt = (EditText)getActivity().findViewById(R.id.txt_anguloalfaT);
+		txt.setText(String.valueOf(geo.getalfaT()));
+		
+		txt = (EditText)getActivity().findViewById(R.id.txt_angulobetaT);
+		txt.setText(String.valueOf(geo.getbetaT()));
+		
+		txt = (EditText)getActivity().findViewById(R.id.txt_angulotetaT);
+		txt.setText(String.valueOf(geo.gettetaT()));
+		
+		txt = (EditText)getActivity().findViewById(R.id.txt_areaT);
+		txt.setText(String.valueOf(geo.getareaT()));
+		
+		txt = (EditText)getActivity().findViewById(R.id.txt_perimetroT);
+		txt.setText(String.valueOf(geo.getperimetroT()));		
+	}
 	else
-		a.setText("Error");
+		Toast.makeText(getActivity(), "Error!", Toast.LENGTH_LONG).show();
 	}
 	
 	@Override
@@ -110,8 +159,7 @@ public class GeoPlanaTrianFragment extends Fragment {
 			public void onItemSelected(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-				TextView a = (TextView)getActivity().findViewById(R.id.txt_RespTriangulo);
-				a.setText("");
+				inicializar();
 				caso = position;
 			}
 

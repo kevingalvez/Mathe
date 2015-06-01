@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class GeoCombFragment extends Fragment {
@@ -90,6 +91,16 @@ public class GeoCombFragment extends Fragment {
 				final EditText userInput = (EditText) promptsView
 						.findViewById(R.id.editTextDialogUserInput);
  
+				TextView txt = (TextView)promptsView.findViewById(R.id.txtView_msg);
+				
+				Spinner spn = (Spinner) getActivity().findViewById(R.id.spn_geocomb);
+				if (spn.getSelectedItem().toString().equals("Circulo"))
+					txt.setText("Ingrese: Centro X, Centro Y, Radio");
+				else if (spn.getSelectedItem().toString().equals("Rectangulo"))
+					txt.setText("Ingrese: Centro X, Centro Y, LadoA, LadoB");
+				else if (spn.getSelectedItem().toString().equals("Linea Recta"))
+					txt.setText("Ingrese: PuntoX1, PuntoY1, PuntoX2, PuntoY2");
+				
 				// set dialog message
 				alertDialogBuilder
 					.setCancelable(false)
@@ -99,9 +110,8 @@ public class GeoCombFragment extends Fragment {
 						// get user input and set it to result
 						// edit text
 					    	
-							Spinner spn = (Spinner) getActivity().findViewById(R.id.spn_geocomb);
-							
-							adapter2.add("#" + spn.getSelectedItem().toString() + "(" + userInput.getText().toString() + ")");
+					    	Spinner spn = (Spinner) getActivity().findViewById(R.id.spn_geocomb);
+							adapter2.add("$" + spn.getSelectedItem().toString() + "(" + userInput.getText().toString() + ")");
 							adapter2.setNotifyOnChange(true);
 							
 						//result.setText(userInput.getText());
@@ -152,13 +162,86 @@ public class GeoCombFragment extends Fragment {
                int itemPosition     = position;
                
                // ListView Clicked item value
-               String  itemValue    = (String) listView.getItemAtPosition(position);
+               final String  itemValue    = (String) listView.getItemAtPosition(position);
                   
                 // Show Alert 
-                Toast.makeText(getActivity(),
+                /*Toast.makeText(getActivity(),
                   "Position :"+itemPosition+"  ListItem : " +itemValue , Toast.LENGTH_LONG)
-                  .show();
+                  .show();*/
              
+				// get prompts.xml view
+				LayoutInflater li = LayoutInflater.from(getActivity());
+				View promptsView = li.inflate(R.layout.prompt, null);
+
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+						getActivity());
+
+				// set prompts.xml to alertdialog builder
+				alertDialogBuilder.setView(promptsView);
+
+				final EditText userInput = (EditText) promptsView
+						.findViewById(R.id.editTextDialogUserInput);
+
+				TextView txt = (TextView)promptsView.findViewById(R.id.txtView_msg);
+				
+				if (itemValue.contains("Circulo")) {
+					txt.setText("Ingrese: Centro X, Centro Y, Radio");
+	       			int idxizq = itemValue.indexOf("(");
+	    			int idxder = itemValue.indexOf(")");
+	    			String param = itemValue.substring(idxizq + 1,idxder);		
+	    			userInput.setText(param);
+				}
+				else if (itemValue.contains("Rectangulo")) {
+					txt.setText("Ingrese: Centro X, Centro Y, LadoA, LadoB");
+	       			int idxizq = itemValue.indexOf("(");
+	    			int idxder = itemValue.indexOf(")");
+	    			String param = itemValue.substring(idxizq + 1,idxder);		
+	    			userInput.setText(param);					
+				}
+				else if (itemValue.contains("Linea Recta")) {
+					txt.setText("Ingrese: PuntoX1, PuntoY1, PuntoX2, PuntoY2");
+	       			int idxizq = itemValue.indexOf("(");
+	    			int idxder = itemValue.indexOf(")");
+	    			String param = itemValue.substring(idxizq + 1,idxder);		
+	    			userInput.setText(param);					
+				}
+				
+				// set dialog message
+				alertDialogBuilder
+					.setCancelable(false)
+					.setPositiveButton("OK",
+					  new DialogInterface.OnClickListener() {
+					    public void onClick(DialogInterface dialog,int id) {
+						// get user input and set it to result
+						// edit text
+					    	
+					    	if (!userInput.getText().toString().equals("")) {
+						    	Spinner spn = (Spinner) getActivity().findViewById(R.id.spn_geocomb);
+						    	adapter2.remove(itemValue);
+								adapter2.add("$" + spn.getSelectedItem().toString() + "(" + userInput.getText().toString() + ")");
+								adapter2.setNotifyOnChange(true);
+					    	} else 
+					    	{
+					    		adapter2.remove(itemValue);
+					    		adapter2.setNotifyOnChange(true);
+					    	}
+							
+						//result.setText(userInput.getText());
+					    }
+					  })
+					.setNegativeButton("Cancel",
+					  new DialogInterface.OnClickListener() {
+					    public void onClick(DialogInterface dialog,int id) {
+						dialog.cancel();
+					    }
+					  });
+
+				// create alert dialog
+				AlertDialog alertDialog = alertDialogBuilder.create();
+
+				// show it
+				alertDialog.show();               
+               
               }
 
          });
@@ -177,6 +260,7 @@ public class GeoCombFragment extends Fragment {
 				Intent intent = new Intent(getActivity(),GraficadorActivity.class);
 				intent.putExtra("funciones", res);
 				intent.putExtra("parametros", "-10,10,-10,10");
+				intent.putExtra("menu", "geometriacomb");
 				startActivity(intent);					
 			}
 		});

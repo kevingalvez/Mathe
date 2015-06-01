@@ -34,7 +34,6 @@
 	<string-array name="geocomp">
 		<item >Circulo</item>
 		<item >Rectangulo</item>
-		<item >Triangulo</item>
 		<item >Linea Recta</item>
     </string-array>    
 

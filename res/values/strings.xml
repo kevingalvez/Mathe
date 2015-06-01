@@ -102,7 +102,7 @@
     <string name="title_activity_sist_ecua">Sistema de Ecuaciones</string>
     <string name="title_activity_graficador3d">Graficador 3D</string>
     <string name="title_activity_result">ResultActivity</string>
-    <string name="title_activity_geometria_plana">GeometriaPlanaActivity</string>
+    <string name="title_activity_geometria_plana">Geometria Plana</string>
     <string name="txtView_Radio">Radio</string>
     <string name="txtView_Angulo">Angulo</string>
     <string name="txtView_Area_Segmento">Area Segmento</string>

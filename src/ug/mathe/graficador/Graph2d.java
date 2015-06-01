@@ -4,6 +4,7 @@ import ug.mathe.util.InfixToPostfix;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.RectF;
 import android.util.Log;
 
@@ -219,7 +220,7 @@ public class Graph2d {
     }
     
     public void graficar(Canvas canvas, Paint paint) {
-    	if (this.expr.charAt(0) != '#') {
+    	if (this.expr.charAt(0) != '#' && this.expr.charAt(0) != '$') {
 	        try 
 	        {
 	            //InfixToPostfix a = new InfixToPostfix(grap.expr);
@@ -270,7 +271,48 @@ public class Graph2d {
 	        {
 	            //System.err.println("Exception: " + e.getMessage());
 	        }    	
-    	} else {
+    	} else if (this.expr.charAt(0) == '$') {
+    		if (this.expr.contains("Circulo")) {
+       			int idxizq = this.expr.indexOf("(");
+    			int idxder = this.expr.indexOf(")");
+    			String param = this.expr.substring(idxizq + 1,idxder);
+    			String[] valueparam = param.split(",");
+    			double centroX = Double.parseDouble(valueparam[0]);
+    			double centroY = Double.parseDouble(valueparam[1]);
+    			double radio = Double.parseDouble(valueparam[2]);
+    			
+    			paint.setColor(Color.parseColor("#DF0101"));
+    			paint.setStyle(Paint.Style.STROKE);
+    			canvas.drawOval(new RectF((float)this.ConvertToPixelX(centroX-radio),(float)this.ConvertToPixelY(centroY+radio),(float)this.ConvertToPixelX(centroX+radio),(float)this.ConvertToPixelY(centroY-radio)), paint);
+    		} else if (this.expr.contains("Rectangulo")) {
+       			int idxizq = this.expr.indexOf("(");
+    			int idxder = this.expr.indexOf(")");
+    			String param = this.expr.substring(idxizq + 1,idxder);
+    			String[] valueparam = param.split(",");
+    			double centroX = Double.parseDouble(valueparam[0]);
+    			double centroY = Double.parseDouble(valueparam[1]);
+    			double ladoa = Double.parseDouble(valueparam[2]);
+    			double ladob = Double.parseDouble(valueparam[3]);
+    			
+    			paint.setColor(Color.parseColor("#DF0101"));
+    			paint.setStyle(Paint.Style.STROKE);
+
+    			canvas.drawRect((float)this.ConvertToPixelX(centroX-ladoa), (float)this.ConvertToPixelY(centroY+ladob), (float)this.ConvertToPixelX(centroX+ladoa), (float)this.ConvertToPixelY(centroY-ladob), paint);
+    		} else  if (this.expr.contains("Linea Recta")) {
+       			int idxizq = this.expr.indexOf("(");
+    			int idxder = this.expr.indexOf(")");
+    			String param = this.expr.substring(idxizq + 1,idxder);
+    			String[] valueparam = param.split(",");
+    			double puntoX1 = Double.parseDouble(valueparam[0]);
+    			double puntoY1 = Double.parseDouble(valueparam[1]);
+    			double puntoX2 = Double.parseDouble(valueparam[2]);
+    			double puntoY2 = Double.parseDouble(valueparam[3]);
+    			
+    			paint.setColor(Color.parseColor("#DF0101"));
+    			paint.setStyle(Paint.Style.STROKE);
+    			canvas.drawLine((float)this.ConvertToPixelX(puntoX1), (float)this.ConvertToPixelY(puntoY1), (float)this.ConvertToPixelX(puntoX2), (float)this.ConvertToPixelY(puntoY2), paint);
+    		}
+    	} else if (this.expr.charAt(0) == '#') {
     		if (this.expr.contains("Circ")) {
     			int idxizq = this.expr.indexOf("(");
     			int idxder = this.expr.indexOf(")");

@@ -28,15 +28,10 @@
 
         <EditText
             android:id="@+id/txt_radio"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:ems="10"
-            android:inputType="numberSigned"
-             >
-
-            <requestFocus />
-        </EditText>
+            android:inputType="numberSigned" />
 
     </LinearLayout>
     
@@ -52,7 +47,7 @@
 
         <EditText
             android:id="@+id/txt_angulo"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
@@ -173,16 +168,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-
-        <EditText
-            android:id="@+id/txt_RespCirculo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/vacio"
-            android:textAppearance="?android:attr/textAppearanceLarge" 
-            android:inputType="none"
-            android:singleLine="true"  
-            />
 
     </LinearLayout>      
 

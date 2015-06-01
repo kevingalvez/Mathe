@@ -1,5 +1,8 @@
 package ug.mathe.graficador;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 import ug.mathe.MainActivity;
 import ug.mathe.R;
 import android.annotation.SuppressLint;
@@ -8,6 +11,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -33,12 +38,14 @@ public class GraficadorActivity extends Activity {
 	Graph2d grap;
 	String[] funciones;
 	String[] parametros;
+	String menu;
 	public int algo = 0;
 	double ini_x, ini_y, fin_x, fin_y;
-	boolean normal = true, integrales, interseccion;
+	boolean normal = true, integrales, interseccion, area;
+	double area_comb = 0.0;
 	Canvas canvas;
 	private SparseArray<PointF> mActivePointers;
-
+	
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +61,7 @@ public class GraficadorActivity extends Activity {
 		EditText func = (EditText) findViewById(R.id.txtFuncion);
 		func.setText(bundle.getString("funciones"));
 		parametros = bundle.getString("parametros").split(",");
+		menu = bundle.getString("menu");
 		btn_graficar = (Button) findViewById(R.id.btn_graficar);
 		btn_graficar.setOnClickListener(new OnClickListener() {
 
@@ -180,7 +188,6 @@ public class GraficadorActivity extends Activity {
 					        paint.setColor(Color.parseColor("#000000"));
 					        Bitmap bg = Bitmap.createBitmap(ll.getWidth(), ll.getHeight(), Bitmap.Config.ARGB_8888);
 					        
-							
 					        String func[] = String.valueOf(((EditText) findViewById(R.id.txtFuncion)).getText()).split(";");
 					        
 					        canvas = new Canvas(bg);
@@ -379,6 +386,82 @@ public class GraficadorActivity extends Activity {
 				        ll.setBackgroundDrawable(new BitmapDrawable(bg));
 	    			break;
 				}
+				} else if (area) {
+					switch (event.getAction()) {
+		    		case MotionEvent.ACTION_DOWN:
+		    			ini_x = event.getX();
+		    			ini_y = event.getY();
+		    		break;
+		    		case MotionEvent.ACTION_UP:
+						LinearLayout ll = (LinearLayout) findViewById(R.id.graph2d);
+					    
+				        Paint paint = new Paint();
+				        paint.setColor(Color.parseColor("#000000"));
+				        Bitmap bg = Bitmap.createBitmap(ll.getWidth(), ll.getHeight(), Bitmap.Config.ARGB_8888);
+				        
+						
+				        String func[] = String.valueOf(((EditText) findViewById(R.id.txtFuncion)).getText()).split(";");
+				        
+				        Canvas canvas = new Canvas(bg);
+				     		
+				        //grap.dibujaplano(canvas, grap.ConvertToPixelX(0), grap.ConvertToPixelY(0), paint);
+				        
+				        grap.setPunto(grap.ConvertToPuntoX(ini_x));
+
+				        for (int i = 0; i < func.length;i++) {
+					        grap.setExpr(func[i].toString());
+					        grap.graficar(canvas, paint);
+				        }
+				        try 
+				        {
+				        	paint.setColor(Color.parseColor("#336600"));
+				        	int x = (int)ini_x;
+				        	int y = (int)ini_y;
+				        	
+				        	final Point p1 = new Point();
+				        	p1.x=(int) x; //x co-ordinate where the user touches on the screen
+				        	p1.y=(int) y; //y co-ordinate where the user touches on the screen  
+
+				        	area_comb = 0.0;
+				        	FloodFill(bg, p1, bg.getPixel(x, y), Color.parseColor("#336600"));
+				        	
+				        	/*for (int j = 1; j < ll.getHeight(); j++)
+				        		for (int i = 1; i < ll.getWidth(); i++)
+				        			if (bg.getPixel(i, j) == Color.parseColor("#336600"))
+				        				//Log.i("VALUAR","P("+i+","+j+")="+grap.ConvertToPuntoX(i));
+				        				area_comb += 0.0007257;//Math.abs(grap.ConvertToPuntoX(i));*/
+				        	/*canvas.drawPoint(x, y, paint);
+				        	canvas.drawColor(Color.parseColor("#336600"));
+				        	Path path = new Path();
+				        	while (bg.getPixel(x, y) != Color.parseColor("#DF0101")) {
+				        		//path.moveTo(x, y);
+					        	while (bg.getPixel(x, y) != Color.parseColor("#DF0101")) {
+					        		canvas.drawPoint(x, y, paint);
+					        		x++;
+					        		//path.lineTo(x, y);
+					        	}
+					        	//canvas.drawPath(path, paint);
+					        	x = (int)ini_x;
+					        	i++;
+					        	y++;
+					        	
+				        	}*/
+				        	
+				        	
+				        	
+				        	//Toast.makeText(getApplicationContext(), "Color: " + bg.getPixel(grap.ConvertToPixelX(-5), grap.ConvertToPixelY(0)), Toast.LENGTH_LONG).show();
+				        	//Toast.makeText(getApplicationContext(), "Color2: " + Color.parseColor("#DF0101") , Toast.LENGTH_LONG).show();
+				        	
+				        	//fillarea((int)ini_x, (int)ini_y, ll.getWidth(), ll.getHeight(), bg, canvas, paint);
+				        	Toast.makeText(getApplicationContext(), "Area Total = " + area_comb, Toast.LENGTH_LONG).show();
+				        } catch (Exception ex) {
+				        	Toast.makeText(getApplicationContext(), "Error: " + ex.getMessage(), Toast.LENGTH_LONG).show();
+				        }
+				        //-------------------------------				
+				        
+				        ll.setBackgroundDrawable(new BitmapDrawable(bg));
+	    			break;
+				}
 				}
 			    return true;
 			}
@@ -389,7 +472,11 @@ public class GraficadorActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.graficador, menu);
+	    if ((this.menu != null) && (!this.menu.equals(""))) {
+	    	if (this.menu.equals("geometriacomb"))
+	    		getMenuInflater().inflate(R.menu.geometria_comb, menu);
+	    } else		
+	    	getMenuInflater().inflate(R.menu.graficador, menu);
 		return true;
 	}	
 	
@@ -398,6 +485,10 @@ public class GraficadorActivity extends Activity {
 	    super.onCreateContextMenu(menu, v, menuInfo);
 	    menu.setHeaderTitle(R.string.abc_action_mode_done);
 	    MenuInflater inflater = getMenuInflater();
+	    if ((this.menu != null) && (!this.menu.equals(""))) {
+	    	if (this.menu.equals("geometria_comp"))
+	    		inflater.inflate(R.menu.geometria_comb, menu);	
+	    } else
 	    inflater.inflate(R.menu.graficador, menu);
 	}
 	
@@ -410,7 +501,7 @@ public class GraficadorActivity extends Activity {
 		int id = item.getItemId();
 		if (id == R.id.normal) {
 			normal = true;
-			integrales = interseccion = false;
+			integrales = interseccion = area =false;
 			item.setChecked(true);
 		} else 	if (id == R.id.integrales) {
 			integrales = true;
@@ -418,11 +509,51 @@ public class GraficadorActivity extends Activity {
 			item.setChecked(true);
 		} else 	if (id == R.id.interseccion) {
 			interseccion = true;
-			normal = integrales = false;
+			normal = integrales = area = false;
+			item.setChecked(true);
+		} else 	if (id == R.id.area) {
+			area = true;
+			normal = integrales = interseccion = false;
 			item.setChecked(true);
 		}
 		return super.onOptionsItemSelected(item);
 	}
 	
-	
+	private void FloodFill(Bitmap bmp, Point pt, int targetColor, int replacementColor) 
+	{
+	    Queue<Point> q = new LinkedList<Point>();
+	    q.add(pt);
+	    while (q.size() > 0) {
+	        Point n = q.poll();
+	        if (bmp.getPixel(n.x, n.y) != targetColor)
+	            continue;
+
+	        Point w = n, e = new Point(n.x + 1, n.y);
+	        while ((w.x > 0) && (bmp.getPixel(w.x, w.y) == targetColor)) {
+	            bmp.setPixel(w.x, w.y, replacementColor);
+	            area_comb += 0.0007257;
+	            
+	            if ((w.y > 0) && (bmp.getPixel(w.x, w.y - 1) == targetColor))
+	                q.add(new Point(w.x, w.y - 1));
+	            if ((w.y < bmp.getHeight() - 1)
+	                    && (bmp.getPixel(w.x, w.y + 1) == targetColor))
+	                q.add(new Point(w.x, w.y + 1));
+	            w.x--;
+	        }
+	        while ((e.x < bmp.getWidth() - 1)
+	                && (bmp.getPixel(e.x, e.y) == targetColor)) {
+	            bmp.setPixel(e.x, e.y, replacementColor);
+	            area_comb += 0.0007257;
+	            
+	            if ((e.y > 0) && (bmp.getPixel(e.x, e.y - 1) == targetColor))
+	                q.add(new Point(e.x, e.y - 1));
+	            if ((e.y < bmp.getHeight() - 1)
+	                    && (bmp.getPixel(e.x, e.y + 1) == targetColor))
+	                q.add(new Point(e.x, e.y + 1));
+	            e.x++;
+	        }
+	    }
+	}	
 }
+
+

@@ -45,6 +45,8 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="25dp"
-        android:text="@string/btn_vectores" />    
+        android:text="@string/btn_vectores"
+        android:visibility="gone"
+         />    
     
 </LinearLayout>
