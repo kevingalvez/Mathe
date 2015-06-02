@@ -288,7 +288,7 @@ int drawable selector_color 0x7f020066
 int drawable selector_gradient 0x7f020067
 int drawable selector_gradient_all_in_one 0x7f020068
 int drawable selector_multi_gradients 0x7f020069
-int id Grafica4D 0x7f0500e2
+int id Grafica4D 0x7f0500e3
 int id TxtcoefA 0x7f050091
 int id TxtcoefC 0x7f050092
 int id TxtcoefD 0x7f050093
@@ -404,7 +404,7 @@ int id fragment_geoplana_circulo 0x7f0500a8
 int id fragment_geoplana_rectangulo 0x7f0500b8
 int id fragment_geoplana_trapecio 0x7f0500c2
 int id fragment_geoplana_triangulo 0x7f0500c9
-int id grafica3D 0x7f0500e1
+int id grafica3D 0x7f0500e2
 int id graph2d 0x7f050042
 int id home 0x7f050014
 int id homeAsUp 0x7f050005
@@ -412,8 +412,8 @@ int id icon 0x7f05002a
 int id ifRoom 0x7f05000a
 int id image 0x7f050027
 int id imageView1 0x7f050077
-int id integrales 0x7f0500df
-int id interseccion 0x7f0500e0
+int id integrales 0x7f0500e0
+int id interseccion 0x7f0500e1
 int id layout_root 0x7f0500da
 int id listMode 0x7f050001
 int id listView1 0x7f050049
@@ -427,6 +427,7 @@ int id middle 0x7f050012
 int id never 0x7f050009
 int id none 0x7f050010
 int id normal 0x7f050000
+int id perimetro 0x7f0500df
 int id progress_circular 0x7f050018
 int id progress_horizontal 0x7f050019
 int id radio 0x7f05002f
@@ -672,6 +673,7 @@ int string funcion 0x7f0a0011
 int string hello_world 0x7f0a000f
 int string image_geometria_circunferencia 0x7f0a0049
 int string menu 0x7f0a000e
+int string perimetro 0x7f0a0083
 int string title_activity_calculadora 0x7f0a006e
 int string title_activity_geometria 0x7f0a004b
 int string title_activity_geometria_comb 0x7f0a0081

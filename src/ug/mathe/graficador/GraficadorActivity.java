@@ -41,8 +41,8 @@ public class GraficadorActivity extends Activity {
 	String menu;
 	public int algo = 0;
 	double ini_x, ini_y, fin_x, fin_y;
-	boolean normal = true, integrales, interseccion, area;
-	double area_comb = 0.0;
+	boolean normal = true, integrales, interseccion, area, perimetro;
+	double area_comb = 0.0, perimetro_comb = 0.0;
 	Canvas canvas;
 	private SparseArray<PointF> mActivePointers;
 	
@@ -462,6 +462,55 @@ public class GraficadorActivity extends Activity {
 				        ll.setBackgroundDrawable(new BitmapDrawable(bg));
 	    			break;
 				}
+				} else if (perimetro) {
+					switch (event.getAction()) {
+		    		case MotionEvent.ACTION_DOWN:
+		    			ini_x = event.getX();
+		    			ini_y = event.getY();
+		    		break;
+		    		case MotionEvent.ACTION_UP:
+						LinearLayout ll = (LinearLayout) findViewById(R.id.graph2d);
+					    
+				        Paint paint = new Paint();
+				        paint.setColor(Color.parseColor("#000000"));
+				        Bitmap bg = Bitmap.createBitmap(ll.getWidth(), ll.getHeight(), Bitmap.Config.ARGB_8888);
+				        
+						
+				        String func[] = String.valueOf(((EditText) findViewById(R.id.txtFuncion)).getText()).split(";");
+				        
+				        Canvas canvas = new Canvas(bg);
+				     		
+				        //grap.dibujaplano(canvas, grap.ConvertToPixelX(0), grap.ConvertToPixelY(0), paint);
+				        
+				        for (int i = 0; i < func.length;i++) {
+					        grap.setExpr(func[i].toString());
+					        grap.graficar(canvas, paint);
+				        }
+				        try 
+				        {			        	 
+
+				        	perimetro_comb = 0.0;
+				        	//31.415926535897932384626433832795
+				        	//1074
+				        	for (int j = 1; j < ll.getHeight(); j++)
+				        		for (int i = 1; i < ll.getWidth(); i++)
+				        			if (bg.getPixel(i, j) == Color.parseColor("#DF0101"))
+				        				perimetro_comb += 0.02665;
+				        				//perimetro_comb += 0.0007257;
+			        	
+				        	//Toast.makeText(getApplicationContext(), "Color: " + bg.getPixel(grap.ConvertToPixelX(-5), grap.ConvertToPixelY(0)), Toast.LENGTH_LONG).show();
+				        	//Toast.makeText(getApplicationContext(), "Color2: " + Color.parseColor("#DF0101") , Toast.LENGTH_LONG).show();
+				        	
+				        	//fillarea((int)ini_x, (int)ini_y, ll.getWidth(), ll.getHeight(), bg, canvas, paint);
+				        	Toast.makeText(getApplicationContext(), "Perimetro Total = " + perimetro_comb, Toast.LENGTH_LONG).show();
+				        } catch (Exception ex) {
+				        	Toast.makeText(getApplicationContext(), "Error: " + ex.getMessage(), Toast.LENGTH_LONG).show();
+				        }
+				        //-------------------------------				
+				        
+				        ll.setBackgroundDrawable(new BitmapDrawable(bg));
+	    			break;
+				}
 				}
 			    return true;
 			}
@@ -501,19 +550,23 @@ public class GraficadorActivity extends Activity {
 		int id = item.getItemId();
 		if (id == R.id.normal) {
 			normal = true;
-			integrales = interseccion = area =false;
+			integrales = interseccion = area = perimetro = false;
 			item.setChecked(true);
 		} else 	if (id == R.id.integrales) {
 			integrales = true;
-			normal = interseccion = false;
+			normal = interseccion = area = perimetro = false;
 			item.setChecked(true);
 		} else 	if (id == R.id.interseccion) {
 			interseccion = true;
-			normal = integrales = area = false;
+			normal = integrales = area = perimetro = false;
 			item.setChecked(true);
 		} else 	if (id == R.id.area) {
 			area = true;
-			normal = integrales = interseccion = false;
+			normal = integrales = interseccion = perimetro = false;
+			item.setChecked(true);
+		} else 	if (id == R.id.perimetro) {
+			perimetro = true;
+			normal = integrales = interseccion = area = false;
 			item.setChecked(true);
 		}
 		return super.onOptionsItemSelected(item);

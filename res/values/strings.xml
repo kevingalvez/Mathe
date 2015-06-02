@@ -119,5 +119,6 @@
     <string name="txtView_Diagonal">Diagonal</string>
     <string name="title_activity_geometria_comb">Figuras Combinadas</string>
     <string name="title_activity_vectores">Vectores</string>
+    <string name="perimetro">Perimetro</string>
 
 </resources>

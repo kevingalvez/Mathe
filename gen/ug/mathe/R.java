@@ -1047,7 +1047,7 @@ containing a value of this type.
         public static final int selector_multi_gradients=0x7f020069;
     }
     public static final class id {
-        public static final int Grafica4D=0x7f0500e2;
+        public static final int Grafica4D=0x7f0500e3;
         public static final int TxtcoefA=0x7f050091;
         public static final int TxtcoefC=0x7f050092;
         public static final int TxtcoefD=0x7f050093;
@@ -1163,7 +1163,7 @@ containing a value of this type.
         public static final int fragment_geoplana_rectangulo=0x7f0500b8;
         public static final int fragment_geoplana_trapecio=0x7f0500c2;
         public static final int fragment_geoplana_triangulo=0x7f0500c9;
-        public static final int grafica3D=0x7f0500e1;
+        public static final int grafica3D=0x7f0500e2;
         public static final int graph2d=0x7f050042;
         public static final int home=0x7f050014;
         public static final int homeAsUp=0x7f050005;
@@ -1171,8 +1171,8 @@ containing a value of this type.
         public static final int ifRoom=0x7f05000a;
         public static final int image=0x7f050027;
         public static final int imageView1=0x7f050077;
-        public static final int integrales=0x7f0500df;
-        public static final int interseccion=0x7f0500e0;
+        public static final int integrales=0x7f0500e0;
+        public static final int interseccion=0x7f0500e1;
         public static final int layout_root=0x7f0500da;
         public static final int listMode=0x7f050001;
         public static final int listView1=0x7f050049;
@@ -1186,6 +1186,7 @@ containing a value of this type.
         public static final int never=0x7f050009;
         public static final int none=0x7f050010;
         public static final int normal=0x7f050000;
+        public static final int perimetro=0x7f0500df;
         public static final int progress_circular=0x7f050018;
         public static final int progress_horizontal=0x7f050019;
         public static final int radio=0x7f05002f;
@@ -1488,6 +1489,7 @@ containing a value of this type.
         public static final int hello_world=0x7f0a000f;
         public static final int image_geometria_circunferencia=0x7f0a0049;
         public static final int menu=0x7f0a000e;
+        public static final int perimetro=0x7f0a0083;
         public static final int title_activity_calculadora=0x7f0a006e;
         public static final int title_activity_geometria=0x7f0a004b;
         public static final int title_activity_geometria_comb=0x7f0a0081;
